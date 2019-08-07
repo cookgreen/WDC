@@ -1,2 +1,2 @@
 # Wardeclarer
-a funny winform game which destroy one country by using missile :)
+a funny winform game which can destroy one country by using missile :)

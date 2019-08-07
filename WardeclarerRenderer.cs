@@ -158,7 +158,7 @@ namespace Wardeclarer
             }
             else if(counter > counter2 + 20)
             {
-                ShutdownShowMessage?.Invoke("Program warclarer.exe has stopped working\r\nbecause you are fucking capitalist!", "warclarer.exe");
+                ShutdownShowMessage?.Invoke("Program wardeclarer.exe has stopped working\r\nbecause you are fucking capitalist!", "wardeclarer.exe");
             }
             counter++;
         }
