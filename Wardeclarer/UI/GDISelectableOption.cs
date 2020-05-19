@@ -4,16 +4,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Common;
 
-namespace Wardeclarer
+namespace Wardeclarer.UI
 {
-    public enum AlignMethod
-    {
-        CENTER,
-        LEFT,
-        RIGHT,
-        BOTTOM,
-    }
 
     /// <summary>
     /// Can render an text option which can receive the mouse click command

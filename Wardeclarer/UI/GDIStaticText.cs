@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Common;
 
-namespace Wardeclarer
+namespace Wardeclarer.UI
 {
-    class GDIStaticText
+    public class GDIStaticText
     {
         private string text;
         private Font font;

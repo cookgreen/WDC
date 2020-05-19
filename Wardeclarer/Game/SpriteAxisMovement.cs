@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wardeclarer
+namespace Wardeclarer.Game
 {
-    public class SpriteAxisMovement
+    public class SpriteAxisMovement : SpriteMovement
     {
         private int type;
         private int direction;
@@ -20,7 +20,7 @@ namespace Wardeclarer
             this.startPos = startPos;
             this.speed = speed;
         }
-        public PointF GetNext()
+        public override PointF GetNext()
         {
             switch(type)
             {
@@ -33,7 +33,7 @@ namespace Wardeclarer
             }
         }
 
-        private PointF GextNextX()
+        protected override PointF GextNextX()
         {
             int mulValue = 1;
             if (direction == 1)
@@ -44,7 +44,7 @@ namespace Wardeclarer
             return startPos;
         }
 
-        private PointF GextNextY()
+        protected override PointF GextNextY()
         {
             int mulValue = 1;
             if (direction == 1)

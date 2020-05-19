@@ -7,24 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Interface;
 using Wardeclarer.Properties;
+using Wardeclarer.Script;
 
 namespace Wardeclarer
 {
-    public partial class frmMain : Form
+    public partial class frmRenderPanel : Form
     {
         private bool isEditMode;
         private Timer timer = new Timer();
-        private WardeclarerRenderer wardeclarerRender;
+        private WDCScript currentScript;
         private int mouseX;
         private int mouseY;
-        public frmMain()
+        private Bitmap worldmap;
+        public frmRenderPanel(WDCScript currentScript)
         {
             InitializeComponent();
-            timer.Interval = 10;
-            timer.Tick += Timer_Tick;
-            timer.Start();
             isEditMode = false;
+            this.currentScript = currentScript;
+            currentScript.BeforeRunScript();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -35,8 +37,15 @@ namespace Wardeclarer
         private void frmMain_Load(object sender, EventArgs e)
         {
             //TODO: Loop play the music
-            wardeclarerRender = new WardeclarerRenderer(Width, Height);
-            wardeclarerRender.ShutdownShowMessage += WardeclarerRender_ShutdownShowMessage;
+            currentScript.Init(Width, Height);
+            currentScript.SetRenderPanel(this);
+            if ((currentScript as INotifyMessageWhenShutdown) != null)
+            {
+                ((INotifyMessageWhenShutdown)currentScript).ShutdownShowMessage += WardeclarerRender_ShutdownShowMessage;
+            }
+            timer.Interval = 10;
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
         private void WardeclarerRender_ShutdownShowMessage(string message, string title)
@@ -52,14 +61,14 @@ namespace Wardeclarer
         {
             Graphics g = e.Graphics;
             g.Clear(Color.White);
-            g.DrawImage(Resources.worldmap, 0, 0, Width, Height);
+            g.DrawImage(worldmap, 0, 0, Width, Height);
             if (isEditMode)
             {
                 Font font = new Font("Baskerville Old Face", 50);
                 e.Graphics.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
             }
             //Execute run script
-            wardeclarerRender.Paint(e.Graphics);
+            currentScript.Update(e.Graphics);
             g.Flush();
         }
 
@@ -71,7 +80,7 @@ namespace Wardeclarer
             }
             else
             {
-                wardeclarerRender.MouseClicked(e.X, e.Y);
+                currentScript.MouseClicked(e.X, e.Y);
             }
         }
 
@@ -80,5 +89,10 @@ namespace Wardeclarer
             mouseX = e.X;
             mouseY = e.Y;
         }
-    }
+
+		public void SetWorldMap(Bitmap worldmap)
+		{
+            this.worldmap = worldmap;
+		}
+	}
 }

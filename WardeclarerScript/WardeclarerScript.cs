@@ -4,12 +4,19 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Common;
+using Wardeclarer.Game;
 using Wardeclarer.Properties;
+using Wardeclarer.UI;
+using Wardeclarer.Interface;
+using WardeclarerScript.Properties;
+using System.Windows.Forms;
 
-namespace Wardeclarer
+namespace Wardeclarer.Script
 {
-    public class WardeclarerRenderer
+    public class WardeclarerScript : WDCScript, INotifyMessageWhenShutdown
     {
+        private frmRenderPanel renderPanel;
         private PointF missileShootStartPosition = new PointF(-1, -1);
         private PointF missileShootEndPosition = new PointF(-1, -1);
         private PointF missileShootEndPositionUSA = new PointF(-1, -1);
@@ -46,7 +53,11 @@ namespace Wardeclarer
         private bool clicked;
         private bool reached;
         public event Action<string, string> ShutdownShowMessage;
-        public WardeclarerRenderer(int winWidth, int winHeight)
+        public WardeclarerScript()
+        {
+        }
+
+        public void Init(int winWidth, int winHeight)
         {
             this.winHeight = winHeight;
             this.winWidth = winWidth;
@@ -96,7 +107,8 @@ namespace Wardeclarer
                 missileShootTolerance = missileShootToleranceOriginal;
             }
 
-            missile = new Sprite(Resources.missile, missileShootStartPosition, 10, missileShootTolerance, 0.8f);
+            missile = new Sprite(Resources.missile, missileShootStartPosition, missileShootTolerance, 0.8f);
+            missile.SetSteering(new SpriteAxisMovement(0, 1, missileShootStartPosition, 10));
             missile.DestReached += Sprite_DestReached;
         }
 
@@ -112,7 +124,7 @@ namespace Wardeclarer
             clicked = true;
             missileShootEndPosition = missileShootEndPositionUSA;
             missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0, 0.6f, AlignMethod.BOTTOM);
+            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
         }
         private void Option2_Clicked()
         {
@@ -120,13 +132,13 @@ namespace Wardeclarer
             clicked = true;
             missileShootEndPosition = missileShootEndPositionGermany;
             missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0, 0.6f, AlignMethod.BOTTOM);
+            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
         }
 
         private int counter = 0;
         private int counter2 = 0;
         private int deadline = 100;
-        public void Paint(Graphics g)
+        public void Update(Graphics g)
         {
             if (counter >= 0 && counter <= 35)
             {
@@ -173,6 +185,17 @@ namespace Wardeclarer
             {
                 option2.Click();
             }
+        }
+
+        public void SetRenderPanel(frmRenderPanel renderPanel)
+        {
+            this.renderPanel = renderPanel;
+            renderPanel.SetWorldMap(Resources.worldmap);
+        }
+
+        public void BeforeRunScript()
+        {
+            MessageBox.Show("We are warning you that this is not a game\r\n\r\nAre you sure continue?", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

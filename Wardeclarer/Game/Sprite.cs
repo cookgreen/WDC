@@ -4,8 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Common;
 
-namespace Wardeclarer
+namespace Wardeclarer.Game
 {
     public class Sprite
     {
@@ -13,11 +14,11 @@ namespace Wardeclarer
         private PointF position;
         private float scale;
         private PointF destPos;
-        private SpriteAxisMovement movement;
+        private SpriteMovement movement;
         private int movement_type;
         private int collideCheckTolerance;
         public event Action DestReached;
-        public Sprite(Image image, PointF position, float speed, int collideCheckTolerance = 15, float scale = 1, AlignMethod alignment = AlignMethod.CENTER, int movement_type = 0)
+        public Sprite(Image image, PointF position, int collideCheckTolerance = 15, float scale = 1, AlignMethod alignment = AlignMethod.CENTER, int movement_type = 0)
         {
             this.image = image;
             this.position = position;
@@ -25,7 +26,6 @@ namespace Wardeclarer
             this.movement_type = movement_type;
             this.collideCheckTolerance = collideCheckTolerance;
             destPos = new PointF(-1, -1);
-            movement = new SpriteAxisMovement(movement_type, 1, position, speed);
             switch (alignment)
             {
                 case AlignMethod.CENTER:
@@ -35,6 +35,11 @@ namespace Wardeclarer
                     this.position = new PointF(position.X - (image.Width * scale) / 2, position.Y - (image.Height * scale) / 3 * 2);
                     break;
             }
+        }
+
+        public void SetSteering(SpriteMovement movement)
+        {
+            this.movement = movement;
         }
 
         public void Render(Graphics g)

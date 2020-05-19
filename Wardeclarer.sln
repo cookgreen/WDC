@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wardeclarer", "Wardeclarer.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wardeclarer", "Wardeclarer\Wardeclarer.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardeclarerScript", "WardeclarerScript\WardeclarerScript.csproj", "{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF2DC172-BED7-436C-A6B9-5A93F8F33C6F}
 	EndGlobalSection
 EndGlobal
