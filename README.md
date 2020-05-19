@@ -1,5 +1,5 @@
 # Wardeclarer
-2D game engine which allows you destroy one country by using missile
+2D game app which allows you destroy one country by using missile
 
 ## Scripting
 If you want to create your own script, you can check this:  
