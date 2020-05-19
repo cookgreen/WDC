@@ -70,6 +70,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(TargetPath) $(SolutionDir)bin\Scripts /V /Y</PostBuildEvent>
+    <PostBuildEvent>mkdir $(SolutionDir)bin\Scripts
+xcopy $(TargetPath) $(SolutionDir)bin\Scripts /V /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

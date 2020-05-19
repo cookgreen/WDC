@@ -32,18 +32,6 @@ namespace Wardeclarer
                 frmRenderPanel mainWindow = new frmRenderPanel(scriptSelector.SelectedScript);
                 Application.Run(mainWindow);
             }
-
-            //if (MessageBox.Show("We are warning you that this is not a game\r\n\r\nAre you sure continue?", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
-            //{
-            //    int counter = 0;
-            //    while (counter < 100)
-            //    {
-            //        counter++;
-            //        System.Threading.Thread.Sleep(10);
-            //    }
-            //    frmRenderPanel mainWindow = new frmRenderPanel();
-            //    Application.Run(mainWindow);
-            //}
         }
     }
 }
