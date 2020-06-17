@@ -50,25 +50,33 @@ namespace Wardeclarer.Script
             rand = new Random(10);
         }
 
-        public void Init(int winWidth, int winHeight, Engine engine)
+        public void Init(Engine engine)
         {
-            this.winHeight = winHeight;
-            this.winWidth = winWidth;
+            winHeight = Engine.WinHeight;
+            winWidth = Engine.WinWidth;
 
-            text1 = new GDIStaticText("准备", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
-            text2 = new GDIStaticText("Go!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
-            text3 = new GDIStaticText("请选择!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
-            text4 = new GDIStaticText("答错了!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), winWidth, winHeight, true);
-            text5 = new GDIStaticText("回答正确!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), winWidth, winHeight, true);
+            text1 = new GDIStaticText("准备", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), true);
+            text2 = new GDIStaticText("Go!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
+            text3 = new GDIStaticText("请选择!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
+            text4 = new GDIStaticText("答错了!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), true);
+            text5 = new GDIStaticText("回答正确!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), true);
 
-            box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(443, 836));
-            box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(733, 836));
-            box3 = new GDISpriteButton(Resources.box_3, Resources.box_3_hover, new PointF(1059, 836));
-            box4 = new GDISpriteButton(Resources.box_4, Resources.box_4_hover, new PointF(1396, 836));
-            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(1390, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
-            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(1579, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
-            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
-            txtGarbageName = new GDIStaticText("{!}Garbage Name", "Baskerville Old Face", 55, Brushes.White, new PointF(240, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
+            box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(0.15f, 0.6f));
+            box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(0.35f, 0.6f));
+            box3 = new GDISpriteButton(Resources.box_3, Resources.box_3_hover, new PointF(0.55f, 0.6f));
+            box4 = new GDISpriteButton(Resources.box_4, Resources.box_4_hover, new PointF(0.75f, 0.6f));
+            box1.Metrics = UIMetrics.Relative;
+            box2.Metrics = UIMetrics.Relative;
+            box3.Metrics = UIMetrics.Relative;
+            box4.Metrics = UIMetrics.Relative;
+
+            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, Common.AlignMethod.FLOATING);
+            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, Common.AlignMethod.FLOATING);
+            txtScoreLabel.Metrics = UIMetrics.Relative;
+            txtScoreValue.Metrics = UIMetrics.Relative;
+
+            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, Common.AlignMethod.FLOATING);
+            txtGarbageName = new GDIStaticText("{!}Garbage Name", "Baskerville Old Face", 55, Brushes.White, new PointF(240, 90), false, Common.AlignMethod.FLOATING);
 
 
             box1.MouseClicked += Box1_MouseClicked;

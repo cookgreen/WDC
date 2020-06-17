@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wardeclarer.Common;
+using Wardeclarer.Core;
 using Wardeclarer.Game;
 
 namespace Wardeclarer.UI
@@ -15,23 +16,31 @@ namespace Wardeclarer.UI
 		private Sprite hoverSprite;
 
 		public GDISpriteButton(Bitmap image, Bitmap hoverImage, PointF position, int tolenrece = 15, float scale = 1, AlignMethod align = AlignMethod.CENTER)
-		{
-			sprite = new Sprite(image, position, tolenrece, scale, align);
+        {
+            winHeight = Engine.WinHeight;
+            winWidth = Engine.WinWidth;
+            sprite = new Sprite(image, position, tolenrece, scale, align);
 			hoverSprite = new Sprite(hoverImage, position, tolenrece, scale, align);
 
 			this.position = position;
 			area = new RectangleF(position.X - (image.Width * scale / 2), position.Y - (image.Height * scale / 2), image.Width * scale, image.Height * scale);
-		}
+
+            left = new UIWidgetValue(metrics, position.X, winWidth);
+            top = new UIWidgetValue(metrics, position.Y, winHeight);
+        }
 
 		public override void Update(Graphics g)
-		{
-			if (state == LayerDetectedState.None || state == LayerDetectedState.Leave)
+        {
+            area = new RectangleF(left.ActualValue, top.ActualValue, sprite.Image.Width * sprite.Scale, sprite.Image.Height * sprite.Scale);
+            if (state == LayerDetectedState.None || state == LayerDetectedState.Leave)
 			{
-				sprite.Render(g);
+                sprite.Position = new PointF(left.ActualValue, top.ActualValue);
+                sprite.Render(g);
 			}
 			else if (state == LayerDetectedState.Enter)
-			{
-				hoverSprite.Render(g);
+            {
+                hoverSprite.Position = new PointF(left.ActualValue, top.ActualValue);
+                hoverSprite.Render(g);
 			}
 		}
 	}

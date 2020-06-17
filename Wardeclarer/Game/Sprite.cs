@@ -17,6 +17,15 @@ namespace Wardeclarer.Game
         private int movement_type;
         private int collideCheckTolerance;
         public event Action DestReached;
+        public Image Image
+        {
+            get { return image; }
+        }
+
+        public float Scale
+        {
+            get { return scale; }
+        }
         public Sprite(Image image, PointF position, int collideCheckTolerance = 15, float scale = 1, AlignMethod alignment = AlignMethod.CENTER, int movement_type = 0)
         {
             this.image = image;

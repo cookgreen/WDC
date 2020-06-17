@@ -19,7 +19,7 @@ namespace Wardeclarer
     {
         private bool isEditMode;
         private Timer timer = new Timer();
-        private WDCScript currentScript;
+        //private WDCScript currentScript;
         private int mouseX;
         private int mouseY;
         private Bitmap worldmap;
@@ -34,9 +34,8 @@ namespace Wardeclarer
         {
             InitializeComponent();
             isEditMode = false;
-            this.currentScript = currentScript;
-            currentScript.BeforeRunScript();
             engine = new Engine();
+            engine.Init(currentScript);
             engine.StartNewGame();
             developerConsole = new frmDeveloperConsole();
         }
@@ -49,24 +48,10 @@ namespace Wardeclarer
         private void frmMain_Load(object sender, EventArgs e)
         {
             //TODO: Loop play the music
-            currentScript.Init(Width, Height, engine);
-            currentScript.SetRenderPanel(this);
-            if ((currentScript as INotifyMessageWhenShutdown) != null)
-            {
-                ((INotifyMessageWhenShutdown)currentScript).ShutdownShowMessage += WardeclarerRender_ShutdownShowMessage;
-            }
+            engine.MainFormLoaded(this);
             timer.Interval = 10;
             timer.Tick += Timer_Tick;
             timer.Start();
-        }
-
-        private void WardeclarerRender_ShutdownShowMessage(string message, string title)
-        {
-            Hide();
-            if(MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
-            {
-                Application.Exit();
-            }
         }
 
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -81,7 +66,6 @@ namespace Wardeclarer
             }
             //Execute run script
             engine.Update(e.Graphics);
-            currentScript.Update(e.Graphics);
             g.Flush();
         }
 

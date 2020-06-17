@@ -59,19 +59,19 @@ namespace Wardeclarer.Script
         {
         }
 
-        public void Init(int winWidth, int winHeight, Engine engine)
+        public void Init(Engine engine)
         {
-            this.winHeight = winHeight;
-            this.winWidth = winWidth;
+            winHeight = Engine.WinHeight;
+            winWidth = Engine.WinWidth;
             clicked = false;
             reached = false;
-            text1 = new GDIStaticText("Hello Comrade", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
-            text2 = new GDIStaticText("Which country do you wanna destroy today?", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
-            text3 = new GDIStaticText("OK", "Baskerville Old Face", 60, Brushes.White, new PointF(0, winHeight), winWidth, winHeight, true);
+            text1 = new GDIStaticText("Hello Comrade", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), true);
+            text2 = new GDIStaticText("Which country do you wanna destroy today?", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
+            text3 = new GDIStaticText("OK", "Baskerville Old Face", 60, Brushes.White, new PointF(0, winHeight), true);
             options = new List<GDISelectableOption>();
-            option1 = new GDISelectableOption("a:) USA[imperialists]", "Arial", 40, Brushes.White, winWidth, winHeight, new PointF(0, winHeight), ref options, true);
+            option1 = new GDISelectableOption("a:) USA[imperialists]", "Arial", 40, Brushes.White, new PointF(0, winHeight), ref options, true);
             options.Add(option1);
-            option2 = new GDISelectableOption("b:) Germany[Nazis]", "Arial", 40, Brushes.White, winWidth, winHeight, new PointF(0, winHeight), ref options, true);
+            option2 = new GDISelectableOption("b:) Germany[Nazis]", "Arial", 40, Brushes.White, new PointF(0, winHeight), ref options, true);
             options.Add(option2);
             for (int i = 0; i < options.Count; i++)
             {

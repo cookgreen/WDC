@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wardeclarer.Common;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.UI
 {
@@ -16,8 +17,6 @@ namespace Wardeclarer.UI
         private AlignMethod alignment;
         private bool inited;
         private bool neededAdjustWithFont;
-        private int winWidth;
-        private int winHeight;
 
         public string Text
 		{
@@ -25,16 +24,19 @@ namespace Wardeclarer.UI
 			set { text = value; }
 		}
 
-        public GDIStaticText(string text, string fontName, int fontSize, Brush brush, PointF position, int winWidth, int winHeight, bool neededAdjustWithFont, AlignMethod alignment = AlignMethod.CENTER)
+        public GDIStaticText(string text, string fontName, int fontSize, Brush brush, PointF position, bool neededAdjustWithFont, AlignMethod alignment = AlignMethod.CENTER)
         {
-            this.winHeight = winHeight;
-            this.winWidth = winWidth;
+            winHeight = Engine.WinHeight;
+            winWidth = Engine.WinWidth;
             font = new Font(fontName, fontSize);
             this.text = text;
             this.brush = brush;
             this.position = position;
             this.alignment = alignment;
             this.neededAdjustWithFont = neededAdjustWithFont;
+
+            left = new UIWidgetValue(metrics, position.X, winWidth);
+            top = new UIWidgetValue(metrics, position.Y, winHeight);
         }
 
         public void Draw(Graphics g)
@@ -54,6 +56,7 @@ namespace Wardeclarer.UI
                         position = new PointF(winWidth - fontSize.Width, position.Y);
                         break;
                     case AlignMethod.FLOATING:
+                        position = new PointF(left.ActualValue, top.ActualValue);
                         break;
                 }
                 if(neededAdjustWithFont)

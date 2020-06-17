@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wardeclarer.Common;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.UI
 {
@@ -19,10 +20,8 @@ namespace Wardeclarer.UI
         private Font font;
         private bool inited;
         private AlignMethod alignment;
-        private int winHeight;
-        private int winWidth;
 
-        public event Action Clicked;
+        //public event Action Clicked;
         public bool Enabled
         {
             get
@@ -38,10 +37,10 @@ namespace Wardeclarer.UI
             }
         }
 
-        public GDISelectableOption(string text, string fontName, int fontSize, Brush brush, int winWidth, int winHeight, PointF position, ref List<GDISelectableOption> options, bool needAdjustWithFont = false, AlignMethod alignment = AlignMethod.CENTER)
+        public GDISelectableOption(string text, string fontName, int fontSize, Brush brush, PointF position, ref List<GDISelectableOption> options, bool needAdjustWithFont = false, AlignMethod alignment = AlignMethod.CENTER, UIMetrics metrics = UIMetrics.Absolute)
         {
-            this.winHeight = winHeight;
-            this.winWidth = winWidth;
+            winHeight = Engine.WinHeight;
+            winWidth = Engine.WinWidth;
             font = new Font(fontName, fontSize);
             this.brush = brush;
             this.position = position;

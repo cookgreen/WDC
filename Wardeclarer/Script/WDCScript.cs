@@ -12,7 +12,7 @@ namespace Wardeclarer.Script
 	{
 		void BeforeRunScript();
 
-		void Init(int winWidth, int winHeight, Engine engine);
+		void Init(Engine engine);
 
 		void Update(Graphics g);
 

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.Game
 {
@@ -50,6 +51,8 @@ namespace Wardeclarer.Game
 		{
 			
 		}
+
+        public Engine engine { get; set; }
 
 		public void Click()
 		{
