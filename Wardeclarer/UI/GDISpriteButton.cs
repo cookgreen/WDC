@@ -20,12 +20,19 @@ namespace Wardeclarer.UI
 			hoverSprite = new Sprite(hoverImage, position, tolenrece, scale, align);
 
 			this.position = position;
-			area = new RectangleF(position.X, position.Y, image.Width * scale, image.Height * scale);
+			area = new RectangleF(position.X - (image.Width * scale / 2), position.Y - (image.Height * scale / 2), image.Width * scale, image.Height * scale);
 		}
 
 		public override void Update(Graphics g)
 		{
-			sprite.Render(g);
+			if (state == LayerDetectedState.None || state == LayerDetectedState.Leave)
+			{
+				sprite.Render(g);
+			}
+			else if (state == LayerDetectedState.Enter)
+			{
+				hoverSprite.Render(g);
+			}
 		}
 	}
 }

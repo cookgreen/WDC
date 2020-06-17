@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wardeclarer.Core;
+using Wardeclarer.Forms;
 using Wardeclarer.Interface;
 using Wardeclarer.Properties;
 using Wardeclarer.Script;
@@ -23,6 +24,8 @@ namespace Wardeclarer
         private int mouseY;
         private Bitmap worldmap;
         private Engine engine;
+        private frmDeveloperConsole developerConsole;
+
         public Engine Engine
 		{
 			get { return engine; }
@@ -35,6 +38,7 @@ namespace Wardeclarer
             currentScript.BeforeRunScript();
             engine = new Engine();
             engine.StartNewGame();
+            developerConsole = new frmDeveloperConsole();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -97,11 +101,29 @@ namespace Wardeclarer
         {
             mouseX = e.X;
             mouseY = e.Y;
+
+            engine.MouseMoved(e.X, e.Y);
         }
 
 		public void SetWorldMap(Bitmap worldmap)
 		{
             this.worldmap = worldmap;
+		}
+
+		private void frmRenderPanel_KeyDown(object sender, KeyEventArgs e)
+		{
+            if (e.KeyCode == Keys.I)
+            {
+                if (!developerConsole.Visible)
+                {
+                    developerConsole.Show();
+                    developerConsole.BringToFront();
+                }
+				else
+				{
+                    developerConsole.Hide();
+				}
+            }
 		}
 	}
 }

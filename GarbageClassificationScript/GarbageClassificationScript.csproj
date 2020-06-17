@@ -57,6 +57,10 @@
     <None Include="Resources\box_2.png" />
     <None Include="Resources\box_3.png" />
     <None Include="Resources\box_4.png" />
+    <None Include="Resources\box_1_hover.png" />
+    <None Include="Resources\box_2_hover.png" />
+    <None Include="Resources\box_3_hover.png" />
+    <None Include="Resources\box_4_hover.png" />
     <Content Include="Resources\worldmap.png" />
   </ItemGroup>
   <ItemGroup>

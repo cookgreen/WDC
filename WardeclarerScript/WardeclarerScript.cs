@@ -53,6 +53,7 @@ namespace Wardeclarer.Script
         private Sprite cloud;
         private bool clicked;
         private bool reached;
+        private Engine engine;
         public event Action<string, string> ShutdownShowMessage;
         public WardeclarerScript()
         {
@@ -112,13 +113,7 @@ namespace Wardeclarer.Script
 
 			option1.MouseClicked += Option1_MouseClicked;
 			option2.MouseClicked += Option2_MouseClicked;
-
-            engine.GameObjects.Add(option1);
-            engine.GameObjects.Add(option2);
-            engine.GameObjects.Add(text1);
-            engine.GameObjects.Add(text2);
-            engine.GameObjects.Add(text3);
-            engine.GameObjects.Add(missile);
+            this.engine = engine;
         }
 
 		private void Option1_MouseClicked()
@@ -128,6 +123,8 @@ namespace Wardeclarer.Script
             missileShootEndPosition = missileShootEndPositionUSA;
             missile.MoveTo(missileShootEndPosition);
             cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
+            engine.GameObjects.Remove(option1);
+            engine.GameObjects.Remove(option2);
         }
 
         private void Option2_MouseClicked()
@@ -137,29 +134,14 @@ namespace Wardeclarer.Script
             missileShootEndPosition = missileShootEndPositionGermany;
             missile.MoveTo(missileShootEndPosition);
             cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
+            engine.GameObjects.Remove(option1);
+            engine.GameObjects.Remove(option2);
         }
 
         private void Sprite_DestReached()
         {
             reached = true;
             deadline = 30;
-        }
-
-        private void Option1_Clicked()
-        {
-            counter2 = counter;
-            clicked = true;
-            missileShootEndPosition = missileShootEndPositionUSA;
-            missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
-        }
-        private void Option2_Clicked()
-        {
-            counter2 = counter;
-            clicked = true;
-            missileShootEndPosition = missileShootEndPositionGermany;
-            missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
         }
 
         private int counter = 0;
@@ -179,8 +161,8 @@ namespace Wardeclarer.Script
             }
             else if (!clicked)
             {
-                option1.Draw(g);
-                option2.Draw(g);
+                engine.AddIfNotExisted(option1);
+                engine.AddIfNotExisted(option2);
             }
             else if (counter > counter2 && counter <= counter2 + 20)
             {
@@ -200,18 +182,6 @@ namespace Wardeclarer.Script
                 ShutdownShowMessage?.Invoke("Program wardeclarer.exe has stopped working\r\nbecause you are fucking capitalist!", "wardeclarer.exe");
             }
             counter++;
-        }
-
-        public void MouseClicked(int x, int y)
-        {
-            if(option1.Enabled && option1.CheckEnterArea(x, y))
-            {
-                option1.Click();
-            }
-            else if(option2.Enabled && option2.CheckEnterArea(x, y))
-            {
-                option2.Click();
-            }
         }
 
         public void SetRenderPanel(frmRenderPanel renderPanel)

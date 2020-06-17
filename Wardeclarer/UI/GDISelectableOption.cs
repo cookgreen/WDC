@@ -53,7 +53,13 @@ namespace Wardeclarer.UI
             }
             this.alignment = alignment;
         }
-        public void Draw(Graphics g)
+
+		public override void Update(Graphics g)
+		{
+            Draw(g);
+		}
+
+		public void Draw(Graphics g)
         {
             if (!inited)
             {
@@ -74,17 +80,10 @@ namespace Wardeclarer.UI
                         position = new PointF(winWidth - fontSize.Width, position.Y);
                         break;
                 }
+                area.X = position.X;
+                area.Y = position.Y;
             }
             g.DrawString(text, font, brush, Position);
-        }
-
-        public bool CheckEnterArea(float x, float y)
-        {
-            if (area == null)
-            {
-                return false;
-            }
-            return x > Position.X && x < Position.X + area.Width && y > Position.Y && y < Position.Y + area.Height;
         }
     }
 }

@@ -65,6 +65,12 @@
   <ItemGroup>
     <Compile Include="Common\AlignMethod.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Forms\frmDeveloperConsole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDeveloperConsole.Designer.cs">
+      <DependentUpon>frmDeveloperConsole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmScriptSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     <Compile Include="Game\Sprite.cs" />
     <Compile Include="Game\SpriteAxisMovement.cs" />
     <Compile Include="UI\Widget.cs" />
+    <EmbeddedResource Include="Forms\frmDeveloperConsole.resx">
+      <DependentUpon>frmDeveloperConsole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmScriptSelector.resx">
       <DependentUpon>frmScriptSelector.cs</DependentUpon>
     </EmbeddedResource>

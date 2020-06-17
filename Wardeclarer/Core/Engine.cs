@@ -10,12 +10,23 @@ namespace Wardeclarer.Core
 {
 	public class Engine
 	{
+		private GameObject lastEnterGameObject;
 		private List<GameObject> gameObjects;
 		public List<GameObject> GameObjects { get { return gameObjects; } }
 		public event Action CanvasClicked;
 
 		public Engine()
 		{
+			lastEnterGameObject = null;
+		}
+
+		public void AddIfNotExisted(GameObject gameObject)
+		{
+			var result = gameObjects.Where(o => o.UID == gameObject.UID);
+			if (result.Count() == 0)
+			{
+				gameObjects.Add(gameObject);
+			}
 		}
 
 		public void StartNewGame()
@@ -44,6 +55,29 @@ namespace Wardeclarer.Core
 				{
 					gameObjects[i].Click();
 				}
+			}
+		}
+
+		public void MouseMoved(int x, int y)
+		{
+			for (int i = 0; i < gameObjects.Count; i++)
+			{
+				var currentGameObject = gameObjects[i];
+				if (currentGameObject.CheckEnterArea(x, y))
+				{
+					if (lastEnterGameObject != null &&
+						currentGameObject.UID != lastEnterGameObject.UID)
+					{
+						lastEnterGameObject.Leave();
+					}
+					currentGameObject.Enter();
+					lastEnterGameObject = currentGameObject;
+					return;
+				}
+			}
+			if (lastEnterGameObject != null)
+			{
+				lastEnterGameObject.Leave();
 			}
 		}
 	}

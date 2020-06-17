@@ -61,10 +61,10 @@ namespace Wardeclarer.Script
             text4 = new GDIStaticText("答错了!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), winWidth, winHeight, true);
             text5 = new GDIStaticText("回答正确!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), winWidth, winHeight, true);
 
-            box1 = new GDISpriteButton(Resources.box_1, Resources.box_1, new PointF(443, 836));
-            box2 = new GDISpriteButton(Resources.box_2, Resources.box_2, new PointF(733, 836));
-            box3 = new GDISpriteButton(Resources.box_3, Resources.box_3, new PointF(1059, 836));
-            box4 = new GDISpriteButton(Resources.box_4, Resources.box_4, new PointF(1396, 836));
+            box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(443, 836));
+            box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(733, 836));
+            box3 = new GDISpriteButton(Resources.box_3, Resources.box_3_hover, new PointF(1059, 836));
+            box4 = new GDISpriteButton(Resources.box_4, Resources.box_4_hover, new PointF(1396, 836));
             txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(1390, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
             txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(1579, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
             txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), winWidth, winHeight, false, Common.AlignMethod.FLOATING);
@@ -86,28 +86,45 @@ namespace Wardeclarer.Script
 
 		private void Box1_MouseClicked()
         {
+            if(!started)
+			{
+                return;
+			}
             waitingForInput = false;
             CheckIsCorrect(0);
         }
 
         private void Box2_MouseClicked()
         {
+            if (!started)
+            {
+                return;
+            }
             waitingForInput = false;
             CheckIsCorrect(1);
         }
 
         private void Box3_MouseClicked()
         {
+            if (!started)
+            {
+                return;
+            }
             waitingForInput = false;
             CheckIsCorrect(2);
         }
 
         private void Box4_MouseClicked()
         {
+            if (!started)
+            {
+                return;
+            }
             waitingForInput = false;
             CheckIsCorrect(3);
         }
 
+        private bool started = false;
         private int counter = 0;
         private bool waitingForInput = false;
 		private int currentResult;
@@ -125,6 +142,7 @@ namespace Wardeclarer.Script
             {
                 //Go!
                 text2.Draw(g);
+                started = true;
             }
             else if (score <= 0)
             {
@@ -185,6 +203,10 @@ namespace Wardeclarer.Script
 
         private void CheckIsCorrect(int selectIndex)
         {
+            if (currentGarbage == null)
+            {
+                return;
+            }
             if (((int)currentGarbage.Box) == selectIndex)
             {
                 currentResult = 1;
