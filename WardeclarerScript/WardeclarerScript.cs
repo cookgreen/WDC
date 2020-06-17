@@ -11,6 +11,7 @@ using Wardeclarer.UI;
 using Wardeclarer.Interface;
 using WardeclarerScript.Properties;
 using System.Windows.Forms;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.Script
 {
@@ -57,7 +58,7 @@ namespace Wardeclarer.Script
         {
         }
 
-        public void Init(int winWidth, int winHeight)
+        public void Init(int winWidth, int winHeight, Engine engine)
         {
             this.winHeight = winHeight;
             this.winWidth = winWidth;
@@ -75,8 +76,6 @@ namespace Wardeclarer.Script
             {
                 options[i].Position = new PointF(0, winHeight - ((options.Count - i) * options[i].Height));
             }
-            option1.Clicked += Option1_Clicked;
-            option2.Clicked += Option2_Clicked;
 
             if (winWidth == 1920 && winHeight == 1080)
             {
@@ -110,6 +109,34 @@ namespace Wardeclarer.Script
             missile = new Sprite(Resources.missile, missileShootStartPosition, missileShootTolerance, 0.8f);
             missile.SetSteering(new SpriteAxisMovement(0, 1, missileShootStartPosition, 10));
             missile.DestReached += Sprite_DestReached;
+
+			option1.MouseClicked += Option1_MouseClicked;
+			option2.MouseClicked += Option2_MouseClicked;
+
+            engine.GameObjects.Add(option1);
+            engine.GameObjects.Add(option2);
+            engine.GameObjects.Add(text1);
+            engine.GameObjects.Add(text2);
+            engine.GameObjects.Add(text3);
+            engine.GameObjects.Add(missile);
+        }
+
+		private void Option1_MouseClicked()
+        {
+            counter2 = counter;
+            clicked = true;
+            missileShootEndPosition = missileShootEndPositionUSA;
+            missile.MoveTo(missileShootEndPosition);
+            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
+        }
+
+        private void Option2_MouseClicked()
+        {
+            counter2 = counter;
+            clicked = true;
+            missileShootEndPosition = missileShootEndPositionGermany;
+            missile.MoveTo(missileShootEndPosition);
+            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
         }
 
         private void Sprite_DestReached()

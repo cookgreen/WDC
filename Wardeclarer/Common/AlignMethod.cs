@@ -12,5 +12,6 @@ namespace Wardeclarer.Common
         LEFT,
         RIGHT,
         BOTTOM,
+        FLOATING
     }
 }

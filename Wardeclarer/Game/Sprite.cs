@@ -8,10 +8,9 @@ using Wardeclarer.Common;
 
 namespace Wardeclarer.Game
 {
-    public class Sprite
+    public class Sprite : GameObject
     {
         private Image image;
-        private PointF position;
         private float scale;
         private PointF destPos;
         private SpriteMovement movement;

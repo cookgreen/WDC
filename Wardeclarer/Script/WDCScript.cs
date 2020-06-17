@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.Script
 {
@@ -11,9 +12,7 @@ namespace Wardeclarer.Script
 	{
 		void BeforeRunScript();
 
-		void Init(int winWidth, int winHeight);
-
-		void MouseClicked(int x, int y);
+		void Init(int winWidth, int winHeight, Engine engine);
 
 		void Update(Graphics g);
 

@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AlignMethod.cs" />
+    <Compile Include="Core\Engine.cs" />
     <Compile Include="Forms\frmScriptSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,16 +77,19 @@
     <Compile Include="Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game\GameObject.cs" />
     <Compile Include="Game\SpriteMovement.cs" />
     <Compile Include="Interface\IShutdownMessage.cs" />
     <Compile Include="Script\WDCScript.cs" />
     <Compile Include="Script\ScriptManager.cs" />
+    <Compile Include="UI\GDISpriteButton.cs" />
     <Compile Include="UI\GDIStaticText.cs" />
     <Compile Include="UI\GDISelectableOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\Sprite.cs" />
     <Compile Include="Game\SpriteAxisMovement.cs" />
+    <Compile Include="UI\Widget.cs" />
     <EmbeddedResource Include="Forms\frmScriptSelector.resx">
       <DependentUpon>frmScriptSelector.cs</DependentUpon>
     </EmbeddedResource>

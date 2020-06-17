@@ -8,17 +8,22 @@ using Wardeclarer.Common;
 
 namespace Wardeclarer.UI
 {
-    public class GDIStaticText
+    public class GDIStaticText : Widget
     {
         private string text;
         private Font font;
         private Brush brush;
-        private PointF position;
         private AlignMethod alignment;
         private bool inited;
         private bool neededAdjustWithFont;
         private int winWidth;
         private int winHeight;
+
+        public string Text
+		{
+			get { return text; }
+			set { text = value; }
+		}
 
         public GDIStaticText(string text, string fontName, int fontSize, Brush brush, PointF position, int winWidth, int winHeight, bool neededAdjustWithFont, AlignMethod alignment = AlignMethod.CENTER)
         {
@@ -48,6 +53,8 @@ namespace Wardeclarer.UI
                     case AlignMethod.RIGHT:
                         position = new PointF(winWidth - fontSize.Width, position.Y);
                         break;
+                    case AlignMethod.FLOATING:
+                        break;
                 }
                 if(neededAdjustWithFont)
                 {
@@ -57,5 +64,10 @@ namespace Wardeclarer.UI
             }
             g.DrawString(text, font, brush, position);
         }
-    }
+
+		public override void Update(Graphics g)
+		{
+            Draw(g);
+		}
+	}
 }

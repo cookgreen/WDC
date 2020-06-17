@@ -26,6 +26,10 @@ namespace Wardeclarer.Forms
 			{
 				listBox1.Items.Add(ScriptManager.Instance.scripts.ElementAt(i).Key);
 			}
+			if (listBox1.Items.Count > 0)
+			{
+				listBox1.SelectedIndex = 0;
+			}
 		}
 
 		private void btnOK_Click(object sender, EventArgs e)

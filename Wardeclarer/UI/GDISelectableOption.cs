@@ -12,12 +12,10 @@ namespace Wardeclarer.UI
     /// <summary>
     /// Can render an text option which can receive the mouse click command
     /// </summary>
-    public class GDISelectableOption
+    public class GDISelectableOption : Widget
     {
         private string text;
-        private PointF position;
         private Brush brush;
-        private RectangleF area;
         private Font font;
         private bool inited;
         private AlignMethod alignment;
@@ -37,19 +35,6 @@ namespace Wardeclarer.UI
             get
             {
                 return font.Height;
-            }
-        }
-
-        public PointF Position
-        {
-            get
-            {
-                return position;
-            }
-
-            set
-            {
-                position = value;
             }
         }
 
@@ -100,11 +85,6 @@ namespace Wardeclarer.UI
                 return false;
             }
             return x > Position.X && x < Position.X + area.Width && y > Position.Y && y < Position.Y + area.Height;
-        }
-
-        public void Click()
-        {
-            Clicked?.Invoke();
         }
     }
 }

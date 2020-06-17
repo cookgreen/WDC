@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wardeclarer", "Wardeclarer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardeclarerScript", "WardeclarerScript\WardeclarerScript.csproj", "{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarbageClassificationScript", "GarbageClassificationScript\GarbageClassificationScript.csproj", "{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

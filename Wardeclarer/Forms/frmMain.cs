@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Core;
 using Wardeclarer.Interface;
 using Wardeclarer.Properties;
 using Wardeclarer.Script;
@@ -21,12 +22,19 @@ namespace Wardeclarer
         private int mouseX;
         private int mouseY;
         private Bitmap worldmap;
+        private Engine engine;
+        public Engine Engine
+		{
+			get { return engine; }
+		}
         public frmRenderPanel(WDCScript currentScript)
         {
             InitializeComponent();
             isEditMode = false;
             this.currentScript = currentScript;
             currentScript.BeforeRunScript();
+            engine = new Engine();
+            engine.StartNewGame();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -37,7 +45,7 @@ namespace Wardeclarer
         private void frmMain_Load(object sender, EventArgs e)
         {
             //TODO: Loop play the music
-            currentScript.Init(Width, Height);
+            currentScript.Init(Width, Height, engine);
             currentScript.SetRenderPanel(this);
             if ((currentScript as INotifyMessageWhenShutdown) != null)
             {
@@ -68,6 +76,7 @@ namespace Wardeclarer
                 e.Graphics.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
             }
             //Execute run script
+            engine.Update(e.Graphics);
             currentScript.Update(e.Graphics);
             g.Flush();
         }
@@ -80,7 +89,7 @@ namespace Wardeclarer
             }
             else
             {
-                currentScript.MouseClicked(e.X, e.Y);
+                engine.MouseClicked(e.X, e.Y);
             }
         }
 
