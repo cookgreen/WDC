@@ -1,4 +1,5 @@
 # Wardeclarer
+<img src="https://media.moddb.com/images/members/4/3399/3398047/logo.4.png" width="85" />
 2D game app which allows you destroy one country by using missile
 
 ## Scripting
