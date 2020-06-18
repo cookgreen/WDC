@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Forms;
 using Wardeclarer.Game;
 using Wardeclarer.Interface;
 using Wardeclarer.Script;
@@ -18,11 +19,22 @@ namespace Wardeclarer.Core
         private frmRenderPanel mainForm;
         private WDCScript script;
 		private GameObject lastEnterGameObject;
+		private bool isEnableCheat;
 		private List<GameObject> gameObjects;
+		private frmDeveloperConsole developerConsole;
+
+		public void DisableCheat()
+		{
+			throw new NotImplementedException();
+		}
+
 		public List<GameObject> GameObjects { get { return gameObjects; } }
         //public event Action CanvasClicked;
         public static int WinHeight { get { return winHeight; } }
         public static int WinWidth { get { return winWidth; } }
+		public bool ConsoleVisible { get { return developerConsole.Visible; } }
+		public bool CheatEnabled { get { return isEnableCheat; } }
+
         private static Engine instance;
         public static Engine Instance
         {
@@ -58,9 +70,15 @@ namespace Wardeclarer.Core
             {
                 ((INotifyMessageWhenShutdown)script).ShutdownShowMessage += Render_ShutdownShowMessage;
             }
-        }
+			developerConsole = new frmDeveloperConsole(this, script);
+		}
 
-        private void Render_ShutdownShowMessage(string message, string title)
+		public void EnableCheat()
+		{
+			isEnableCheat = true;
+		}
+
+		private void Render_ShutdownShowMessage(string message, string title)
         {
             mainForm.Hide();
             if (MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
@@ -129,6 +147,17 @@ namespace Wardeclarer.Core
 			{
 				lastEnterGameObject.Leave();
 			}
+		}
+
+		public void ShowConsole()
+		{
+			developerConsole.Show();
+			developerConsole.BringToFront();
+		}
+
+		public void HideConsole()
+		{
+			developerConsole.Hide();
 		}
 	}
 }

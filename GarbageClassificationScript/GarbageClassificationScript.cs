@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Wardeclarer;
 using Wardeclarer.Game;
 using Wardeclarer.UI;
 using Wardeclarer.Interface;
@@ -8,8 +9,11 @@ using GarbageClassificationScript.Properties;
 using System.Windows.Forms;
 using Wardeclarer.Core;
 using GarbageClassificationScript;
+using Wardeclarer.Script;
+using Wardeclarer.Console;
+using GarbageClassificationScript.Console;
 
-namespace Wardeclarer.Script
+namespace GarbageClassificationScript
 {
 	public class GarbageClassificationScript : WDCScript, INotifyMessageWhenShutdown
     {
@@ -18,12 +22,13 @@ namespace Wardeclarer.Script
         private int winHeight;
         private GDISpriteButton box1;
         private GDISpriteButton box2;
-        private GDISpriteButton box3;
+		private GDISpriteButton box3;
         private GDISpriteButton box4;
-        private GDIStaticText txtScoreLabel;
+
+		private GDIStaticText txtScoreLabel;
         private GDIStaticText txtScoreValue;
         private GDIStaticText txtGarbageCurrent;
-        private GDIStaticText txtGarbageName;
+        private GDIStaticText txtGarbageCurrentAnswer;
         private GDIStaticText text1;
         private GDIStaticText text2;
         private GDIStaticText text3;
@@ -70,13 +75,13 @@ namespace Wardeclarer.Script
             box3.Metrics = UIMetrics.Relative;
             box4.Metrics = UIMetrics.Relative;
 
-            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, Common.AlignMethod.FLOATING);
-            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, Common.AlignMethod.FLOATING);
+            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.FLOATING);
+            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.FLOATING);
             txtScoreLabel.Metrics = UIMetrics.Relative;
             txtScoreValue.Metrics = UIMetrics.Relative;
 
-            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, Common.AlignMethod.FLOATING);
-            txtGarbageName = new GDIStaticText("{!}Garbage Name", "Baskerville Old Face", 55, Brushes.White, new PointF(240, 90), false, Common.AlignMethod.FLOATING);
+            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.FLOATING);
+            txtGarbageCurrentAnswer = new GDIStaticText("答案:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.FLOATING);
 
 
             box1.MouseClicked += Box1_MouseClicked;
@@ -90,6 +95,9 @@ namespace Wardeclarer.Script
             engine.GameObjects.Add(box4);
             engine.GameObjects.Add(txtScoreLabel);
             engine.GameObjects.Add(txtScoreValue);
+
+            ConsoleCommandManager.Instance.AddConsoleCommand(new CheatShowAnswerConsoleCommand());
+            ConsoleCommandManager.Instance.AddConsoleCommand(new EnableCheatConsoleCommand());
         }
 
 		private void Box1_MouseClicked()
@@ -137,7 +145,7 @@ namespace Wardeclarer.Script
         private bool waitingForInput = false;
 		private int currentResult;
         private GameObject lastGameObject;
-
+		private bool showCurrentAnswer;
 
 		public void Update(Graphics g)
         {
@@ -161,6 +169,12 @@ namespace Wardeclarer.Script
                 txtGarbageCurrent.Text = "当前: " + currentGarbage.Name;
                 txtGarbageCurrent.Draw(g);
                 text3.Draw(g);
+
+                if (showCurrentAnswer)
+                {
+                    txtGarbageCurrentAnswer.Text = "答案: 选择第" + (((int)currentGarbage.Box) + 1).ToString() +"个";
+                    txtGarbageCurrentAnswer.Draw(g);
+                }
             }
             else if (currentResult != 0)
             {
@@ -197,6 +211,16 @@ namespace Wardeclarer.Script
                 txtScoreValue.Text = score.ToString();
             }
             counter++;
+        }
+
+        public void ShowCurrentAnswer()
+        {
+            showCurrentAnswer = true;
+        }
+
+        internal void HideCurrentAnswer()
+        {
+            showCurrentAnswer = false;
         }
 
         public void SetRenderPanel(frmRenderPanel renderPanel)

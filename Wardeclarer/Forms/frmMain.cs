@@ -24,7 +24,6 @@ namespace Wardeclarer
         private int mouseY;
         private Bitmap worldmap;
         private Engine engine;
-        private frmDeveloperConsole developerConsole;
 
         public Engine Engine
 		{
@@ -37,7 +36,6 @@ namespace Wardeclarer
             engine = new Engine();
             engine.Init(currentScript);
             engine.StartNewGame();
-            developerConsole = new frmDeveloperConsole();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -98,14 +96,13 @@ namespace Wardeclarer
 		{
             if (e.KeyCode == Keys.I)
             {
-                if (!developerConsole.Visible)
+                if (!engine.ConsoleVisible)
                 {
-                    developerConsole.Show();
-                    developerConsole.BringToFront();
+                    engine.ShowConsole();
                 }
 				else
 				{
-                    developerConsole.Hide();
+                    engine.HideConsole();
 				}
             }
 		}

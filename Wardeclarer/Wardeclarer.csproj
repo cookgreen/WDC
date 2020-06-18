@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AlignMethod.cs" />
+    <Compile Include="Console\ConsoleCommandManager.cs" />
+    <Compile Include="Console\IConsoleCommand.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Forms\frmDeveloperConsole.cs">
       <SubType>Form</SubType>
