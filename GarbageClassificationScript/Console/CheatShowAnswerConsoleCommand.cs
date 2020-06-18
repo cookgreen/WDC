@@ -18,7 +18,14 @@ namespace GarbageClassificationScript.Console
 		{
 			if (engine.CheatEnabled && currentScript is GarbageClassificationScript)
 			{
-				int mode = int.Parse((arg as string[])[1].ToString());
+				string[] arr = arg as string[];
+				if (arr.Count() == 1)
+				{
+					console.Print("Invalid Parameters");
+					return;
+				}
+
+				int mode = int.Parse(arr[1].ToString());
 				if (mode == 0)
 				{
 					(currentScript as GarbageClassificationScript).HideCurrentAnswer();
@@ -28,6 +35,10 @@ namespace GarbageClassificationScript.Console
 					(currentScript as GarbageClassificationScript).ShowCurrentAnswer();
 				}
 				console.Print("Done");
+			}
+			else
+			{
+				console.Print("You need to enable cheat mode first!");
 			}
 		}
 	}

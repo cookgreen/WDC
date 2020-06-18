@@ -16,7 +16,14 @@ namespace GarbageClassificationScript.Console
 
 		public void Execute(Engine engine, WDCScript script, frmDeveloperConsole consoleForm, object arg)
 		{
-			int mode = int.Parse((arg as string[])[1].ToString());
+			string[] arr = arg as string[];
+			if (arr.Count() == 1)
+			{
+				consoleForm.Print("Invalid Parameters");
+				return;
+			}
+
+			int mode = int.Parse(arr[1].ToString());
 			if (mode == 0)
 			{
 				engine.DisableCheat();
