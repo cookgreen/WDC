@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Configure;
 using Wardeclarer.Core;
 using Wardeclarer.Forms;
 using Wardeclarer.Interface;
@@ -29,12 +30,12 @@ namespace Wardeclarer
 		{
 			get { return engine; }
 		}
-        public frmRenderPanel(WDCScript currentScript)
+        public frmRenderPanel(GameConfig config)
         {
             InitializeComponent();
             isEditMode = false;
             engine = new Engine();
-            engine.Init(currentScript);
+            engine.Init(config);
             engine.StartNewGame();
         }
 

@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Configure;
 using Wardeclarer.Forms;
 using Wardeclarer.Game;
 using Wardeclarer.Interface;
+using Wardeclarer.Locate;
 using Wardeclarer.Script;
 
 namespace Wardeclarer.Core
@@ -53,9 +55,10 @@ namespace Wardeclarer.Core
 			lastEnterGameObject = null;
 		}
 
-        public void Init(WDCScript script)
+        public void Init(GameConfig config)
         {
-            this.script = script;
+            script = config.currentSelectedScript;
+			LocateTableManager.Instance.Init(config.currentSelectedLocate);
             script.BeforeRunScript();
         }
 

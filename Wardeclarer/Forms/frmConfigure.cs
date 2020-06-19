@@ -7,16 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wardeclarer.Configure;
+using Wardeclarer.Locate;
 using Wardeclarer.Script;
 
 namespace Wardeclarer.Forms
 {
-	public partial class frmScriptSelector : Form
+	public partial class frmConfigure : Form
 	{
-		public WDCScript SelectedScript { get; set; }
-		public frmScriptSelector()
+		public GameConfig Config { get; set; }
+
+		public frmConfigure()
 		{
 			InitializeComponent();
+			cmbLanguages.SelectedIndex = 0;
 		}
 
 		private void frmScriptSelector_Load(object sender, EventArgs e)
@@ -36,7 +40,11 @@ namespace Wardeclarer.Forms
 		{
 			if (listBox1.SelectedIndex != -1)
 			{
-				SelectedScript = ScriptManager.Instance.scripts[listBox1.SelectedItem.ToString()];
+				WDCScript selectedScript = ScriptManager.Instance.scripts[listBox1.SelectedItem.ToString()];
+
+				Config = new GameConfig();
+				Config.currentSelectedScript = selectedScript;
+				Config.currentSelectedLocate = LocateTableManager.Instance.ConvertDisplayStrToID(cmbLanguages.SelectedItem.ToString());
 
 				DialogResult = DialogResult.OK;
 				Hide();

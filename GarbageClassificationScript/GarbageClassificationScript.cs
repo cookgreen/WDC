@@ -12,6 +12,7 @@ using GarbageClassificationScript;
 using Wardeclarer.Script;
 using Wardeclarer.Console;
 using GarbageClassificationScript.Console;
+using Wardeclarer.Locate;
 
 namespace GarbageClassificationScript
 {
@@ -40,6 +41,13 @@ namespace GarbageClassificationScript
         public event Action<string, string> ShutdownShowMessage;
         private Random rand;
         private int delay;
+
+        private bool started = false;
+        private int counter = 0;
+        private bool waitingForInput = false;
+        private int currentResult;
+        private GameObject lastGameObject;
+        private bool showCurrentAnswer;
 
         public GarbageClassificationScript()
         {
@@ -139,13 +147,6 @@ namespace GarbageClassificationScript
             waitingForInput = false;
             CheckIsCorrect(3);
         }
-
-        private bool started = false;
-        private int counter = 0;
-        private bool waitingForInput = false;
-		private int currentResult;
-        private GameObject lastGameObject;
-		private bool showCurrentAnswer;
 
 		public void Update(Graphics g)
         {

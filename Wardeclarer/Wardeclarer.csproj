@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AlignMethod.cs" />
+    <Compile Include="Configure\GameConfig.cs" />
     <Compile Include="Console\ConsoleCommandManager.cs" />
     <Compile Include="Console\IConsoleCommand.cs" />
     <Compile Include="Core\Engine.cs" />
@@ -73,11 +74,11 @@
     <Compile Include="Forms\frmDeveloperConsole.Designer.cs">
       <DependentUpon>frmDeveloperConsole.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmScriptSelector.cs">
+    <Compile Include="Forms\frmConfigure.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmScriptSelector.Designer.cs">
-      <DependentUpon>frmScriptSelector.cs</DependentUpon>
+    <Compile Include="Forms\frmConfigure.Designer.cs">
+      <DependentUpon>frmConfigure.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmMain.cs">
       <SubType>Form</SubType>
@@ -88,6 +89,9 @@
     <Compile Include="Game\GameObject.cs" />
     <Compile Include="Game\SpriteMovement.cs" />
     <Compile Include="Interface\IShutdownMessage.cs" />
+    <Compile Include="Locate\LocateTable.cs" />
+    <Compile Include="Locate\LocateTableEntry.cs" />
+    <Compile Include="Locate\LocateTableManager.cs" />
     <Compile Include="Script\WDCScript.cs" />
     <Compile Include="Script\ScriptManager.cs" />
     <Compile Include="UI\GDISpriteButton.cs" />
@@ -103,8 +107,8 @@
     <EmbeddedResource Include="Forms\frmDeveloperConsole.resx">
       <DependentUpon>frmDeveloperConsole.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmScriptSelector.resx">
-      <DependentUpon>frmScriptSelector.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\frmConfigure.resx">
+      <DependentUpon>frmConfigure.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

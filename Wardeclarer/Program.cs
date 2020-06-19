@@ -20,8 +20,8 @@ namespace Wardeclarer
             Application.SetCompatibleTextRenderingDefault(false);
 
             ScriptManager.Instance.InitScripts();
-            frmScriptSelector scriptSelector = new frmScriptSelector();
-            if (scriptSelector.ShowDialog() == DialogResult.OK)
+            frmConfigure configureForm = new frmConfigure();
+            if (configureForm.ShowDialog() == DialogResult.OK)
             {
                 int counter = 0;
                 while (counter < 100)
@@ -29,7 +29,7 @@ namespace Wardeclarer
                     counter++;
                     System.Threading.Thread.Sleep(10);
                 }
-                frmRenderPanel mainWindow = new frmRenderPanel(scriptSelector.SelectedScript);
+                frmRenderPanel mainWindow = new frmRenderPanel(configureForm.Config);
                 Application.Run(mainWindow);
             }
         }
