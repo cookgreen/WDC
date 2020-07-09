@@ -17,12 +17,11 @@ namespace Wardeclarer.Forms
 	{
 		private Engine engine;
 		private WDCScript currentScript;
-		private List<IConsoleCommand> avaiableConsoleCommands;
+
 		public frmDeveloperConsole(Engine engine, WDCScript currentScript)
 		{
 			InitializeComponent();
 			Deactivate += FrmDeveloperConsole_Deactivate;
-			avaiableConsoleCommands = new List<IConsoleCommand>();
 			this.engine = engine;
 			this.currentScript = currentScript;
 		}

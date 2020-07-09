@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wardeclarer.Configure;
+using Wardeclarer.Console;
 using Wardeclarer.Forms;
 using Wardeclarer.Game;
 using Wardeclarer.Interface;
@@ -27,7 +28,7 @@ namespace Wardeclarer.Core
 
 		public void DisableCheat()
 		{
-			throw new NotImplementedException();
+			isEnableCheat = false;
 		}
 
 		public List<GameObject> GameObjects { get { return gameObjects; } }
@@ -74,6 +75,7 @@ namespace Wardeclarer.Core
                 ((INotifyMessageWhenShutdown)script).ShutdownShowMessage += Render_ShutdownShowMessage;
             }
 			developerConsole = new frmDeveloperConsole(this, script);
+			ConsoleCommandManager.Instance.AddConsoleCommand(new ListAvaliabeCommandsConsoleCommand());
 		}
 
 		public void EnableCheat()

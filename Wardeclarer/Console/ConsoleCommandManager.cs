@@ -9,6 +9,11 @@ namespace Wardeclarer.Console
 	public class ConsoleCommandManager
 	{
 		private Dictionary<string, IConsoleCommand> avaiableConsoleCommands;
+		public Dictionary<string, IConsoleCommand> AvaiableConsoleCommands
+		{
+			get { return avaiableConsoleCommands; }
+		}
+
 		private static ConsoleCommandManager instance;
 		public static ConsoleCommandManager Instance
 		{
