@@ -29,14 +29,14 @@
 		private void InitializeComponent()
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.label1 = new System.Windows.Forms.Label();
 			this.cmbLanguages = new System.Windows.Forms.ComboBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.listBox1 = new System.Windows.Forms.CheckedListBox();
 			this.groupBox1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -53,16 +53,6 @@
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Select a script:";
-			// 
-			// listBox1
-			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(3, 17);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(331, 286);
-			this.listBox1.TabIndex = 0;
 			// 
 			// btnCancel
 			// 
@@ -117,6 +107,18 @@
 			this.tabPage2.Text = "Game";
 			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
+			// cmbLanguages
+			// 
+			this.cmbLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbLanguages.FormattingEnabled = true;
+			this.cmbLanguages.Items.AddRange(new object[] {
+            "简体中文",
+            "English"});
+			this.cmbLanguages.Location = new System.Drawing.Point(71, 8);
+			this.cmbLanguages.Name = "cmbLanguages";
+			this.cmbLanguages.Size = new System.Drawing.Size(262, 20);
+			this.cmbLanguages.TabIndex = 1;
+			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -126,19 +128,16 @@
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Language:";
 			// 
-			// cmbLanguages
+			// listBox1
 			// 
-			this.cmbLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbLanguages.FormattingEnabled = true;
-			this.cmbLanguages.Items.AddRange(new object[] {
-			"简体中文",
-			"English"});
-			this.cmbLanguages.Location = new System.Drawing.Point(71, 8);
-			this.cmbLanguages.Name = "cmbLanguages";
-			this.cmbLanguages.Size = new System.Drawing.Size(262, 20);
-			this.cmbLanguages.TabIndex = 1;
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.Location = new System.Drawing.Point(6, 20);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(324, 276);
+			this.listBox1.TabIndex = 0;
+			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
 			// 
-			// frmScriptSelector
+			// frmConfigure
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -149,7 +148,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "frmScriptSelector";
+			this.Name = "frmConfigure";
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Configure";
@@ -166,7 +165,6 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.TabControl tabControl1;
@@ -174,5 +172,6 @@
 		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox cmbLanguages;
+		private System.Windows.Forms.CheckedListBox listBox1;
 	}
 }

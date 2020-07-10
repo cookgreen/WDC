@@ -55,5 +55,17 @@ namespace Wardeclarer.Forms
 		{
 			Close();
 		}
+
+		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			for (int i = 0; i < listBox1.Items.Count; i++)
+			{
+				listBox1.SetItemChecked(i, false);
+			}
+			if (listBox1.SelectedIndex != -1)
+			{
+				listBox1.SetItemChecked(listBox1.SelectedIndex, true);
+			}
+		}
 	}
 }
