@@ -87,6 +87,8 @@
     <Compile Include="Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game\AnimatedSprite.cs" />
+    <Compile Include="Game\AnimatedSpriteTimer.cs" />
     <Compile Include="Game\GameObject.cs" />
     <Compile Include="Game\SpriteMovement.cs" />
     <Compile Include="Interface\IShutdownMessage.cs" />
