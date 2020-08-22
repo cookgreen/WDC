@@ -67,7 +67,7 @@ namespace Wardeclarer.UI
             g.DrawString(text, font, brush, position);
         }
 
-		public override void Update(Graphics g)
+		public override void Render(Graphics g, Point resolution)
 		{
             Draw(g);
 		}

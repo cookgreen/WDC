@@ -52,7 +52,7 @@ namespace Wardeclarer.UI
             this.alignment = alignment;
         }
 
-		public override void Update(Graphics g)
+		public override void Render(Graphics g, Point resolution)
 		{
             Draw(g);
 		}

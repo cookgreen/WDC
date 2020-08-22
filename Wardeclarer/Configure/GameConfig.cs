@@ -9,7 +9,8 @@ namespace Wardeclarer.Configure
 {
 	public class GameConfig
 	{
-		public WDCScript currentSelectedScript { get; set; }
-		public string currentSelectedLocate { get; set; }
+		public WDCScript CurrentSelectedScript { get; set; }
+		public string CurrentSelectedLocate { get; set; }
+		public string Resolution { get; set; }
 	}
 }

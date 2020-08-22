@@ -18,6 +18,7 @@ namespace Wardeclarer
 {
     public partial class frmRenderPanel : Form
     {
+        private Point resolution;
         private bool isEditMode;
         private Timer timer = new Timer();
         //private WDCScript currentScript;
@@ -30,6 +31,8 @@ namespace Wardeclarer
 		{
 			get { return engine; }
 		}
+        
+
         public frmRenderPanel(GameConfig config)
         {
             InitializeComponent();
@@ -37,11 +40,13 @@ namespace Wardeclarer
             engine = new Engine();
             engine.Init(config);
             engine.StartNewGame();
+            resolution = engine.Resolution;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             canvas.Invalidate();
+            engine.Update();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -56,15 +61,17 @@ namespace Wardeclarer
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.Clear(Color.White);
-            g.DrawImage(worldmap, 0, 0, Width, Height);
+            g.Clear(Color.Black);
+            int renderX = (Screen.PrimaryScreen.Bounds.Width - resolution.X) / 2;
+            int renderY = 0;
+            int renderWidth = resolution.X;
+            g.DrawImage(worldmap, renderX, renderY, renderWidth, Height);
             if (isEditMode)
             {
                 Font font = new Font("Baskerville Old Face", 50);
                 e.Graphics.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
             }
-            //Execute run script
-            engine.Update(e.Graphics);
+            engine.Render(e.Graphics);
             g.Flush();
         }
 

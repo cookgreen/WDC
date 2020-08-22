@@ -14,7 +14,7 @@ namespace Wardeclarer.Script
 
 		void Init(Engine engine);
 
-		void Update(Graphics g);
+		void Render(Graphics g, Point resolution);
 
 		void SetRenderPanel(frmRenderPanel frmRenderPanel);
 	}

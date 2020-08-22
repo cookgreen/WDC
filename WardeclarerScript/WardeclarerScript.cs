@@ -146,7 +146,7 @@ namespace Wardeclarer.Script
         private int counter = 0;
         private int counter2 = 0;
         private int deadline = 100;
-        public void Update(Graphics g)
+        public void Render(Graphics g, Point resolution)
         {
             if (counter >= 0 && counter <= 35)
             {
@@ -169,11 +169,11 @@ namespace Wardeclarer.Script
             }
             else if (counter > counter2 + 20 && !reached)
             {
-                missile.Render(g);
+                missile.Render(g, resolution);
             }
             else if (counter > counter2 + 20 && deadline >= 0)
             {
-                cloud.Render(g);
+                cloud.Render(g, resolution);
                 deadline--;
             }
             else if(counter > counter2 + 20)

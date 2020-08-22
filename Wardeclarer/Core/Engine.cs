@@ -25,11 +25,18 @@ namespace Wardeclarer.Core
 		private bool isEnableCheat;
 		private List<GameObject> gameObjects;
 		private frmDeveloperConsole developerConsole;
+		private Point renderResolution;
+		private IRenderer renderer;
 
 		public void DisableCheat()
 		{
 			isEnableCheat = false;
 		}
+
+		public Point Resolution
+        {
+            get { return renderer.Resoultion; }
+        }
 
 		public List<GameObject> GameObjects { get { return gameObjects; } }
         //public event Action CanvasClicked;
@@ -58,9 +65,17 @@ namespace Wardeclarer.Core
 
         public void Init(GameConfig config)
         {
-            script = config.currentSelectedScript;
-			LocateTableManager.Instance.Init(config.currentSelectedLocate);
-            script.BeforeRunScript();
+            script = config.CurrentSelectedScript;
+			LocateTableManager.Instance.Init(config.CurrentSelectedLocate);
+
+			renderResolution = new Point();
+			string[] tokens = config.Resolution.Split('x');
+			renderResolution.X = int.Parse(tokens[0]);
+			renderResolution.Y = int.Parse(tokens[1]);
+
+			renderer = new GDIRenderer(renderResolution);
+
+			script.BeforeRunScript();
         }
 
         public void MainFormLoaded(frmRenderPanel mainForm)
@@ -111,14 +126,19 @@ namespace Wardeclarer.Core
 			gameObjects.Clear();
 		}
 
-		public void Update(Graphics g)
+		public void Render(Graphics g)
 		{
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
-				gameObjects[i].Update(g);
+				gameObjects[i].Render(g, renderer.Resoultion);
 			}
-            script.Update(g);
+            script.Render(g, renderer.Resoultion);
 		}
+
+		public void Update()
+        {
+
+        }
 
 		public void MouseClicked(int x, int y)
 		{

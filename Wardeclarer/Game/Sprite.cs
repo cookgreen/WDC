@@ -49,7 +49,7 @@ namespace Wardeclarer.Game
             this.movement = movement;
         }
 
-        public void Render(Graphics g)
+        public override void Render(Graphics g, Point resolution)
         {
             if (destPos.X != -1 && destPos.Y != -1)
             {

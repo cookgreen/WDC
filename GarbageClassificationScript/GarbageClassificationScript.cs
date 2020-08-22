@@ -148,7 +148,7 @@ namespace GarbageClassificationScript
             CheckIsCorrect(3);
         }
 
-		public void Update(Graphics g)
+		public void Render(Graphics g, Point resolution)
         {
             if (counter >= 0 && counter <= 35)
             {
@@ -199,7 +199,7 @@ namespace GarbageClassificationScript
             {
                 if (lastGameObject != null)
                 {
-                    lastGameObject.Update(g);
+                    lastGameObject.Render(g, resolution);
                 }
                 delay--;
             }

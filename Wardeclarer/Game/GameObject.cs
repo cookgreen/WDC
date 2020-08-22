@@ -15,7 +15,7 @@ namespace Wardeclarer.Game
 		Leave,
 	}
 
-	public class GameObject
+	public class GameObject : IRenderable
 	{
 		private string uniqueID;
 		protected LayerDetectedState state;
@@ -47,7 +47,7 @@ namespace Wardeclarer.Game
 			return x > area.X && x < area.X + area.Width && y > area.Y && y < area.Y + area.Height;
 		}
 
-		public virtual void Update(Graphics g)
+		public virtual void Render(Graphics g, Point resolution)
 		{
 			
 		}

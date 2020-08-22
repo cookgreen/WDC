@@ -51,14 +51,14 @@ namespace Wardeclarer.Game
 					  select frame).ToList();
 		}
 
-		public override void Update(Graphics g)
+		public override void Render(Graphics g, Point resolution)
 		{
 			int time = timer.CurrentTime;
 
 			var frameNeededRendered = frames.Where(o => o.Time == time).FirstOrDefault();
 			if (frameNeededRendered != null)
 			{
-				frameNeededRendered.Sprite.Render(g);
+				frameNeededRendered.Sprite.Render(g, resolution);
 			}
 
 			timer.Update();
