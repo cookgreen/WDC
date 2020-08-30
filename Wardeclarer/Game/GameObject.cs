@@ -38,16 +38,16 @@ namespace Wardeclarer.Game
 			state = LayerDetectedState.None;
 		}
 
-		public bool CheckEnterArea(int x, int y)
+		public bool CheckEnterArea(int x, int y, Engine engine)
 		{
 			if (area == null)
 			{
 				return false;
 			}
-			return x > area.X && x < area.X + area.Width && y > area.Y && y < area.Y + area.Height;
+			return x > engine.Renderer.RenderOffset + area.X && x < engine.Renderer.RenderOffset + area.X + area.Width && y > area.Y && y < area.Y + area.Height;
 		}
 
-		public virtual void Render(Graphics g, Point resolution)
+		public virtual void Render(Graphics g, IRenderer renderer)
 		{
 			
 		}

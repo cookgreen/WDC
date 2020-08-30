@@ -9,6 +9,6 @@ namespace Wardeclarer.Core
 {
     public interface IRenderable
     {
-        void Render(Graphics g, Point resolution);
+        void Render(Graphics g, IRenderer renderer);
     }
 }

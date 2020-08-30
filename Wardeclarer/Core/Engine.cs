@@ -58,6 +58,8 @@ namespace Wardeclarer.Core
             }
         }
 
+        public IRenderer Renderer { get { return renderer; } }
+
         public Engine()
 		{
 			lastEnterGameObject = null;
@@ -73,7 +75,8 @@ namespace Wardeclarer.Core
 			renderResolution.X = int.Parse(tokens[0]);
 			renderResolution.Y = int.Parse(tokens[1]);
 
-			renderer = new GDIRenderer(renderResolution);
+			renderer = new GDIRenderer();
+			renderer.ChangeResolution(renderResolution);
 
 			script.BeforeRunScript();
         }
@@ -130,9 +133,9 @@ namespace Wardeclarer.Core
 		{
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
-				gameObjects[i].Render(g, renderer.Resoultion);
+				gameObjects[i].Render(g, renderer);
 			}
-            script.Render(g, renderer.Resoultion);
+            script.Render(g, renderer);
 		}
 
 		public void Update()
@@ -144,7 +147,7 @@ namespace Wardeclarer.Core
 		{
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
-				if(gameObjects[i].CheckEnterArea(x, y))
+				if(gameObjects[i].CheckEnterArea(x, y, this))
 				{
 					gameObjects[i].Click();
 				}
@@ -156,7 +159,7 @@ namespace Wardeclarer.Core
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
 				var currentGameObject = gameObjects[i];
-				if (currentGameObject.CheckEnterArea(x, y))
+				if (currentGameObject.CheckEnterArea(x, y, this))
 				{
 					if (lastEnterGameObject != null &&
 						currentGameObject.UID != lastEnterGameObject.UID)

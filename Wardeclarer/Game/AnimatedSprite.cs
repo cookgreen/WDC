@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.Game
 {
@@ -51,14 +52,14 @@ namespace Wardeclarer.Game
 					  select frame).ToList();
 		}
 
-		public override void Render(Graphics g, Point resolution)
+		public override void Render(Graphics g, IRenderer renderer)
 		{
 			int time = timer.CurrentTime;
 
 			var frameNeededRendered = frames.Where(o => o.Time == time).FirstOrDefault();
 			if (frameNeededRendered != null)
 			{
-				frameNeededRendered.Sprite.Render(g, resolution);
+				frameNeededRendered.Sprite.Render(g, renderer);
 			}
 
 			timer.Update();

@@ -28,18 +28,18 @@ namespace Wardeclarer.UI
             top = new UIWidgetValue(metrics, position.Y, winHeight);
         }
 
-		public override void Render(Graphics g, Point resolution)
+		public override void Render(Graphics g, IRenderer renderer)
         {
             area = new RectangleF(left.ActualValue, top.ActualValue, sprite.Image.Width * sprite.Scale, sprite.Image.Height * sprite.Scale);
             if (state == LayerDetectedState.None || state == LayerDetectedState.Leave)
 			{
                 sprite.Position = new PointF(left.ActualValue, top.ActualValue);
-                sprite.Render(g, resolution);
+                sprite.Render(g, renderer);
 			}
 			else if (state == LayerDetectedState.Enter)
             {
                 hoverSprite.Position = new PointF(left.ActualValue, top.ActualValue);
-                hoverSprite.Render(g, resolution);
+                hoverSprite.Render(g, renderer);
 			}
 		}
 	}

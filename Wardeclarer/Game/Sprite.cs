@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wardeclarer.Core;
 
 namespace Wardeclarer.Game
 {
@@ -49,13 +50,13 @@ namespace Wardeclarer.Game
             this.movement = movement;
         }
 
-        public override void Render(Graphics g, Point resolution)
+        public override void Render(Graphics g, IRenderer renderer)
         {
             if (destPos.X != -1 && destPos.Y != -1)
             {
-                if (destPos.X != position.X && destPos.Y != position.Y)
+                if (destPos.X != renderer.RenderOffset + position.X && destPos.Y != position.Y)
                 {
-                    float distanceX = Math.Abs(destPos.X - position.X);
+                    float distanceX = Math.Abs(destPos.X - (renderer.RenderOffset + position.X));
                     float distanceY = Math.Abs(destPos.Y - position.Y);
                     
                     //Font font = new Font("Baskerville Old Face", 50);
@@ -89,7 +90,7 @@ namespace Wardeclarer.Game
                     DestReached?.Invoke();
                 }
             }
-            g.DrawImage(image, position.X, position.Y, image.Width * scale, image.Height * scale);
+            g.DrawImage(image, renderer.RenderOffset + position.X, position.Y, image.Width * scale, image.Height * scale);
         }
 
         public void MoveTo(PointF destPos)

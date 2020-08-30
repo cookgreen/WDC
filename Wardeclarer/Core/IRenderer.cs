@@ -10,6 +10,8 @@ namespace Wardeclarer.Core
     public interface IRenderer
     {
         Point Resoultion { get; }
+        void ChangeResolution(Point resolution);
+        int RenderOffset { get; }
         void Render(Graphics g);
     }
 }

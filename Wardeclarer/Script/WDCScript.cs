@@ -8,13 +8,13 @@ using Wardeclarer.Core;
 
 namespace Wardeclarer.Script
 {
-	public interface WDCScript
+	public interface WDCScript : IRenderable
 	{
 		void BeforeRunScript();
 
 		void Init(Engine engine);
 
-		void Render(Graphics g, Point resolution);
+		void Render(Graphics g, IRenderer renderer);
 
 		void SetRenderPanel(frmRenderPanel frmRenderPanel);
 	}
