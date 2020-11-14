@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wardeclarer", "Wardeclarer\Wardeclarer.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDC", "WDC\WDC.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardeclarerScript", "WardeclarerScript\WardeclarerScript.csproj", "{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}"
 EndProject

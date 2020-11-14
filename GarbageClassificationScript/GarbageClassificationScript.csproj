@@ -73,7 +73,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wardeclarer\Wardeclarer.csproj">
+    <ProjectReference Include="..\WDC\WDC.csproj">
       <Project>{a26cc6ec-9724-4040-b725-f9f1f63ba2a0}</Project>
       <Name>Wardeclarer</Name>
     </ProjectReference>
