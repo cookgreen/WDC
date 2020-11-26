@@ -1,4 +1,4 @@
-# Wardeclarer
+# W.D.C.
 <img src="https://media.moddb.com/images/members/4/3399/3398047/logo.4.png" width="85" />
 Scriptable 2D Game App
 
