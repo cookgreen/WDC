@@ -40,7 +40,7 @@ namespace WDC.Game
 
 		public bool CheckEnterArea(int x, int y, Engine engine)
 		{
-			if (isValidArea(area))
+			if (!isValidArea(area))
 			{
 				return false;
 			}

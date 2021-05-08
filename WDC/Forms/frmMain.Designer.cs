@@ -28,41 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRenderPanel));
-			this.canvas = new System.Windows.Forms.PictureBox();
-			((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// canvas
-			// 
-			this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.canvas.Image = ((System.Drawing.Image)(resources.GetObject("canvas.Image")));
-			this.canvas.Location = new System.Drawing.Point(0, 0);
-			this.canvas.Name = "canvas";
-			this.canvas.Size = new System.Drawing.Size(1024, 768);
-			this.canvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.canvas.TabIndex = 0;
-			this.canvas.TabStop = false;
-			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
-			this.canvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseClick);
-			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
-			// 
-			// frmRenderPanel
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1024, 768);
-			this.Controls.Add(this.canvas);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.KeyPreview = true;
-			this.Name = "frmRenderPanel";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Form1";
-			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.Load += new System.EventHandler(this.frmMain_Load);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmRenderPanel_KeyDown);
-			((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
-			this.ResumeLayout(false);
+            this.canvas = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // canvas
+            // 
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point(0, 0);
+            this.canvas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(1195, 920);
+            this.canvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.canvas.TabIndex = 0;
+            this.canvas.TabStop = false;
+            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+            this.canvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseClick);
+            this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
+            // 
+            // frmRenderPanel
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1195, 920);
+            this.Controls.Add(this.canvas);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "frmRenderPanel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmRenderPanel_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
+            this.ResumeLayout(false);
 
         }
 
