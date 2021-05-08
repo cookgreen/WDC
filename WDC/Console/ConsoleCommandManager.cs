@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wardeclarer.Console
+namespace WDC.Console
 {
 	public class ConsoleCommandManager
 	{

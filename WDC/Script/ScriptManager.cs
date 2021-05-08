@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Console;
+using WDC.Console;
 
-namespace Wardeclarer.Script
+namespace WDC.Script
 {
 	public class ScriptManager
 	{
@@ -33,6 +33,12 @@ namespace Wardeclarer.Script
 		public void InitScripts()
 		{
 			string currentScriptFullPath = Path.Combine(Environment.CurrentDirectory, "Scripts");
+
+			if (!Directory.Exists(currentScriptFullPath))
+			{
+				Directory.CreateDirectory(currentScriptFullPath);
+			}
+
 			DirectoryInfo di = new DirectoryInfo(currentScriptFullPath);
 			var files = di.EnumerateFiles();
 			foreach (var file in files)

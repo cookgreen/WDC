@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Wardeclarer.Configure;
-using Wardeclarer.Core;
-using Wardeclarer.Forms;
-using Wardeclarer.Interface;
-using Wardeclarer.Properties;
-using Wardeclarer.Script;
+using WDC.Configure;
+using WDC.Core;
+using WDC.Forms;
+using WDC.Interface;
+using WDC.Script;
 
-namespace Wardeclarer
+namespace WDC
 {
     public partial class frmRenderPanel : Form
     {

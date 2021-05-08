@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Core;
-using Wardeclarer.Game;
+using WDC.Core;
+using WDC.Game;
 
-namespace Wardeclarer.UI
+namespace WDC.UI
 {
 	public class GDISpriteButton : Widget
 	{

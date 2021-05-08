@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Core;
+using WDC.Core;
 
-namespace Wardeclarer.Game
+namespace WDC.Game
 {
 	public class AnimatedSpriteInfo
 	{

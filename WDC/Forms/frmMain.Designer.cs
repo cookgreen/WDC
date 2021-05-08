@@ -1,4 +1,4 @@
-﻿namespace Wardeclarer
+﻿namespace WDC
 {
     partial class frmRenderPanel
     {

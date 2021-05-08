@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Script;
+using WDC.Script;
 
-namespace Wardeclarer.Configure
+namespace WDC.Configure
 {
 	public class GameConfig
 	{

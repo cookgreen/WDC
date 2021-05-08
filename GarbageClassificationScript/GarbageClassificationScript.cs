@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Wardeclarer;
-using Wardeclarer.Game;
-using Wardeclarer.UI;
-using Wardeclarer.Interface;
+using WDC;
+using WDC.Game;
+using WDC.UI;
+using WDC.Interface;
 using GarbageClassificationScript.Properties;
 using System.Windows.Forms;
-using Wardeclarer.Core;
+using WDC.Core;
 using GarbageClassificationScript;
-using Wardeclarer.Script;
-using Wardeclarer.Console;
+using WDC.Script;
+using WDC.Console;
 using GarbageClassificationScript.Console;
-using Wardeclarer.Locate;
+using WDC.Locate;
 
 namespace GarbageClassificationScript
 {

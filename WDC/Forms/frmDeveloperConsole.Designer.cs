@@ -1,4 +1,4 @@
-﻿namespace Wardeclarer.Forms
+﻿namespace WDC.Forms
 {
 	partial class frmDeveloperConsole
 	{

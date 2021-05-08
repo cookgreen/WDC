@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Core;
-using Wardeclarer.Forms;
-using Wardeclarer.Script;
+using WDC.Core;
+using WDC.Forms;
+using WDC.Script;
 
-namespace Wardeclarer.Console
+namespace WDC.Console
 {
 	public class ListAvaliabeCommandsConsoleCommand : IConsoleCommand
 	{

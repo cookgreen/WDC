@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Wardeclarer.Forms;
-using Wardeclarer.Script;
+using WDC.Forms;
+using WDC.Script;
 
-namespace Wardeclarer
+namespace WDC
 {
     static class Program
     {

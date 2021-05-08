@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Wardeclarer.Core
+namespace WDC.Core
 {
     public class GDIRenderer : IRenderer
     {

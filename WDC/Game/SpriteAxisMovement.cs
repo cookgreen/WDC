@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wardeclarer.Game
+namespace WDC.Game
 {
     public class SpriteAxisMovement : SpriteMovement
     {

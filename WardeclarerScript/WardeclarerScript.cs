@@ -4,15 +4,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Game;
-using Wardeclarer.Properties;
-using Wardeclarer.UI;
-using Wardeclarer.Interface;
+using WDC.Game;
+using WDC.UI;
+using WDC.Interface;
 using WardeclarerScript.Properties;
 using System.Windows.Forms;
-using Wardeclarer.Core;
+using WDC.Core;
 
-namespace Wardeclarer.Script
+namespace WDC.Script
 {
     public class WardeclarerScript : WDCScript, INotifyMessageWhenShutdown
     {

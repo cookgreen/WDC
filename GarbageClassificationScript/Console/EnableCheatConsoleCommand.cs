@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Console;
-using Wardeclarer.Core;
-using Wardeclarer.Forms;
-using Wardeclarer.Script;
+using WDC.Console;
+using WDC.Core;
+using WDC.Forms;
+using WDC.Script;
 
 namespace GarbageClassificationScript.Console
 {

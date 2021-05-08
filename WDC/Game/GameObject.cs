@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wardeclarer.Core;
+using WDC.Core;
 
-namespace Wardeclarer.Game
+namespace WDC.Game
 {
 	public enum LayerDetectedState
 	{
@@ -40,14 +40,19 @@ namespace Wardeclarer.Game
 
 		public bool CheckEnterArea(int x, int y, Engine engine)
 		{
-			if (area == null)
+			if (isValidArea(area))
 			{
 				return false;
 			}
 			return x > engine.Renderer.RenderOffset + area.X && x < engine.Renderer.RenderOffset + area.X + area.Width && y > area.Y && y < area.Y + area.Height;
 		}
 
-		public virtual void Render(Graphics g, IRenderer renderer)
+        private bool isValidArea(RectangleF area)
+        {
+			return area.Width > 0 & area.Height > 0;
+        }
+
+        public virtual void Render(Graphics g, IRenderer renderer)
 		{
 			
 		}

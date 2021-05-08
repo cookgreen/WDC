@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Wardeclarer.Configure;
-using Wardeclarer.Console;
-using Wardeclarer.Forms;
-using Wardeclarer.Game;
-using Wardeclarer.Interface;
-using Wardeclarer.Locate;
-using Wardeclarer.Script;
+using WDC.Configure;
+using WDC.Console;
+using WDC.Forms;
+using WDC.Game;
+using WDC.Interface;
+using WDC.Locate;
+using WDC.Script;
 
-namespace Wardeclarer.Core
+namespace WDC.Core
 {
 	public class Engine
 	{

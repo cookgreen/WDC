@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Wardeclarer.Console;
-using Wardeclarer.Core;
-using Wardeclarer.Script;
+using WDC.Console;
+using WDC.Core;
+using WDC.Script;
 
-namespace Wardeclarer.Forms
+namespace WDC.Forms
 {
 	public partial class frmDeveloperConsole : Form
 	{

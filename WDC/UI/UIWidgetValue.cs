@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wardeclarer.UI
+namespace WDC.UI
 {
     public class UIWidgetValue
     {
