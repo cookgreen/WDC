@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC", "WDC\WDC.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC.Engine", "WDC.Engine\WDC.Engine.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardeclarerScript", "WardeclarerScript\WardeclarerScript.csproj", "{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardeclarerScript", "WDC.Scripts\WardeclarerScript\WardeclarerScript.csproj", "{A2C2D6F6-F542-4CEC-B9BB-645044AA3531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarbageClassificationScript", "GarbageClassificationScript\GarbageClassificationScript.csproj", "{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarbageClassificationScript", "WDC.Scripts\GarbageClassificationScript\GarbageClassificationScript.csproj", "{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC.Launcher", "WDC.Launcher\WDC.Launcher.csproj", "{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

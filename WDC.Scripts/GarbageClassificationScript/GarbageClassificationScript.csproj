@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WDC.Engine\WDC.Engine.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir $(SolutionDir)\bin\net5.0-windows\Scripts&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net5.0-windows\Scripts /V /Y" />
+  </Target>
+
+</Project>
