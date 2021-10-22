@@ -12,6 +12,7 @@ using WDC.Game;
 using WDC.Interface;
 using WDC.Locate;
 using WDC.Script;
+using WDC.UI;
 
 namespace WDC.Core
 {
@@ -148,7 +149,9 @@ namespace WDC.Core
 			{
 				gameObjects[i].Render(g, renderer);
 			}
+
             script.Render(g, renderer);
+			UIManager.Instance.Render(g, renderer);
 		}
 
 		public void Update()

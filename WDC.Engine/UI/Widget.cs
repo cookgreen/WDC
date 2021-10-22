@@ -9,8 +9,8 @@ using WDC.Game;
 
 namespace WDC.UI
 {
-	public class Widget : GameObject
-	{
+	public class Widget : UIObject
+    {
         protected int winHeight;
         protected int winWidth;
         protected UIWidgetValue width;
@@ -18,6 +18,12 @@ namespace WDC.UI
         protected UIWidgetValue left;
         protected UIWidgetValue top;
         protected UIMetrics metrics;
+
+        public int ColNo { get; set; }
+        public int RowNo { get; set; }
+        public int ColSpan { get; set; }
+        public int RowSpan { get; set; }
+        public int Padding { get; set; }
 
         public float Left
         {

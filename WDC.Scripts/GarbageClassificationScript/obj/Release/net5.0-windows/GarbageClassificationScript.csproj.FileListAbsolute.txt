@@ -12,7 +12,6 @@ C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.AssemblyInfoInputs.cache
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.AssemblyInfo.cs
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.csproj.CoreCompileInputs.cache
-C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.csproj.CopyComplete
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.dll
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\ref\GarbageClassificationScript.dll
 C:\Repos\WDC\WDC.Scripts\GarbageClassificationScript\obj\Release\net5.0-windows\GarbageClassificationScript.pdb

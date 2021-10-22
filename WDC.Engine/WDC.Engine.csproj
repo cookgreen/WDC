@@ -7,6 +7,7 @@
     <ApplicationIcon></ApplicationIcon>
     <StartupObject />
     <Win32Resource />
+    <RootNamespace>WDC</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

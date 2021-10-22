@@ -12,7 +12,6 @@ C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\Wardeclare
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.AssemblyInfoInputs.cache
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.AssemblyInfo.cs
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.csproj.CoreCompileInputs.cache
-C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.csproj.CopyComplete
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.dll
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\ref\WardeclarerScript.dll
 C:\Repos\WDC\WDC.Scripts\WardeclarerScript\obj\Release\net5.0-windows\WardeclarerScript.pdb
