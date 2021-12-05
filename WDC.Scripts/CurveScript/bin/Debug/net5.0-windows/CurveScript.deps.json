@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "CurveScript/1.0.0": {
+        "dependencies": {
+          "WDC.Engine": "1.0.0"
+        },
+        "runtime": {
+          "CurveScript.dll": {}
+        }
+      },
+      "WDC.Engine/1.0.0": {
+        "runtime": {
+          "WDC.Engine.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CurveScript/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WDC.Engine/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
