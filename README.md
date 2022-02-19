@@ -5,7 +5,7 @@ Scriptable 2D Game App
 ## Scripting
 If you want to create your own script, you can check this:  
 
-https://github.com/cookgreen/Wardeclarer/wiki
+https://github.com/cookgreen/WDC/wiki
 
 ## Hot Key
 Right Mouse Click - Enable Develop Mode which shows the current mouse position  
@@ -14,7 +14,7 @@ Key `i` - Developer Console
 ## Issue  
 Please any issue when run this game  
   
-https://github.com/cookgreen/Wardeclarer/issues
+https://github.com/cookgreen/WDC/issues
 
 ## License
 GPLv3
