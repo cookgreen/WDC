@@ -48,6 +48,11 @@ namespace GarbageClassificationScript
         private GameObject lastGameObject;
         private bool showCurrentAnswer;
 
+        public string Icon
+        {
+            get { return null; }
+        }
+
         public GarbageClassificationScript()
         {
             score = 100;

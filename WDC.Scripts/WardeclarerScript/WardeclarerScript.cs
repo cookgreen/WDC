@@ -52,6 +52,12 @@ namespace WDC.Script
         private bool reached;
         private Engine engine;
         public event Action<string, string> ShutdownShowMessage;
+
+        public string Icon
+        {
+            get { return null; }
+        }
+
         public WardeclarerScript()
         {
         }

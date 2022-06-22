@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,5 +23,15 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir $(SolutionDir)\bin\net5.0-windows\Scripts&#xD;&#xA;mkdir $(SolutionDir)\bin\net5.0-windows\Scripts\Icons\DefendCastleScript&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net5.0-windows\Scripts /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\icon.ico $(SolutionDir)\bin\net5.0-windows\Scripts\Icons\DefendCastleScript /V /Y" />
+  </Target>
 
 </Project>

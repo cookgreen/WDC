@@ -8,8 +8,8 @@ using System.Windows.Forms;
 
 namespace WDC.Forms
 {
-    public abstract class RenderForm : Form
+    public class RenderForm : Form
     {
-        public Image WorldMap { get; set; }
+        public virtual Image WorldMap { get; set; }
     }
 }

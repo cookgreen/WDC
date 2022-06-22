@@ -11,6 +11,8 @@ namespace WDC.Script
 {
 	public interface WDCScript : IRenderable
 	{
+		string Icon { get; }
+
 		void BeforeRunScript();
 
 		void Init(Engine engine);

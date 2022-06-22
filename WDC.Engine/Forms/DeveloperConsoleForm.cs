@@ -7,8 +7,8 @@ using System.Windows.Forms;
 
 namespace WDC.Forms
 {
-    public abstract class DeveloperConsoleForm : Form
+    public class DeveloperConsoleForm : Form
     {
-        public abstract void Print(string text);
+        public virtual void Print(string text) { }
     }
 }

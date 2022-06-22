@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29905.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC.Engine", "WDC.Engine\WDC.Engine.csproj", "{A26CC6EC-9724-4040-B725-F9F1F63BA2A0}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarbageClassificationScript
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC.Launcher", "WDC.Launcher\WDC.Launcher.csproj", "{A95AF84B-8CA9-4E3C-A31A-44F3BDFACC4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurveScript", "WDC.Scripts\CurveScript\CurveScript.csproj", "{E1321FC2-910E-407A-A639-8312B6B5FF52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefendCastleScript", "WDC.Scripts\DefendCastleScript\DefendCastleScript.csproj", "{E1321FC2-910E-407A-A639-8312B6B5FF52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

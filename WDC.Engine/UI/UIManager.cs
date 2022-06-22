@@ -46,7 +46,14 @@ namespace WDC.UI
 
         public static UIManager Instance
         {
-            get { return instance; }
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new UIManager();
+                }
+                return instance;
+            }
         }
         public UILayer CurrentLayer
         {
@@ -58,6 +65,7 @@ namespace WDC.UI
 
         public UIManager()
         {
+            instance = this;
             currentLayer = new UILayer();
             layerStack = new Stack<UILayer>();
             layerStack.Push(currentLayer);

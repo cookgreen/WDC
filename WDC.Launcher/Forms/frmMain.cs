@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,13 @@ namespace WDC
             engine = new Engine();
             engine.Init(config);
             engine.StartNewGame();
+
+            string iconFile = config.CurrentSelectedScript.Icon;
+            if (File.Exists(iconFile))
+            {
+                Icon = new Icon(iconFile);
+            }
+
             resolution = engine.Resolution;
         }
 
