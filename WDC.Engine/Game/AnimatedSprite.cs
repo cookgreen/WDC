@@ -8,15 +8,19 @@ using WDC.Core;
 
 namespace WDC.Game
 {
-	public class AnimatedSpriteInfo
+	public class AnimatedSpriteSequenceInfo
 	{
-		private Rectangle region;
+		private string animName;
 		private float time;
-		public Rectangle Region { get { return region; } }
+		private List<Rectangle> region;
+
+		public string AnimName { get { return animName; } }
+		public List<Rectangle> Region { get { return region; } }
 		public float Time { get { return time; } }
 
-		public AnimatedSpriteInfo(Rectangle region, float time)
+		public AnimatedSpriteSequenceInfo(string animName, List<Rectangle> region, float time)
 		{
+			this.animName = animName;
 			this.region = region;
 			this.time = time;
 		}
@@ -25,57 +29,66 @@ namespace WDC.Game
 
 	public class AnimatedSprite : GameObject
 	{
-		private List<AnimatedFrameSprite> frames;
+		private Dictionary<string, AnimatedSpriteSequence> sequences;
 		private AnimatedSpriteTimer timer;
+		private AnimatedSpriteSequence currentSequence;
+
 		public AnimatedSprite()
 		{
-			frames = new List<AnimatedFrameSprite>();
+			sequences = new Dictionary<string, AnimatedSpriteSequence>();
 		}
 
-		public AnimatedSprite(Bitmap allFramesBitmap, List<AnimatedSpriteInfo> animatedSpriteInfos, PointF position)
+		public AnimatedSprite(Bitmap allFramesBitmap, List<AnimatedSpriteSequenceInfo> animatedSpriteInfos, PointF position)
 		{
-			frames = new List<AnimatedFrameSprite>();
+			sequences = new Dictionary<string, AnimatedSpriteSequence>();
 			timer = new AnimatedSpriteTimer();
 
 			Graphics g = Graphics.FromImage(allFramesBitmap);
 			for (int i = 0; i < animatedSpriteInfos.Count; i++)
 			{
-				Bitmap bitmap = new Bitmap(animatedSpriteInfos[i].Region.Width, animatedSpriteInfos[i].Region.Height);
-				g.DrawImage(bitmap, animatedSpriteInfos[i].Region.X, animatedSpriteInfos[i].Region.Y);
-				Sprite sprite = new Sprite(bitmap, position);
-				AnimatedFrameSprite frameSprite = new AnimatedFrameSprite(animatedSpriteInfos[i].Time, sprite);
-				frames.Add(frameSprite);
+				List<Sprite> sprites = new List<Sprite>();
+
+				for (int j = 0; j < animatedSpriteInfos[i].Region.Count; j++)
+				{
+					Bitmap bitmap = new Bitmap(animatedSpriteInfos[i].Region[j].Width, animatedSpriteInfos[i].Region[j].Height);
+					g.DrawImage(bitmap, animatedSpriteInfos[i].Region[j].X, animatedSpriteInfos[i].Region[j].Y);
+
+					Sprite sprite = new Sprite(bitmap, position);
+					sprites.Add(sprite);
+				}
+
+				AnimatedSpriteSequence frameSequence = new AnimatedSpriteSequence(animatedSpriteInfos[i].Time, sprites);
+				sequences.Add(animatedSpriteInfos[i].AnimName, frameSequence);
 			}
 
-			frames = (from frame in frames
-					  orderby frame.Time
-					  select frame).ToList();
+			currentSequence = sequences.ElementAt(0).Value;
 		}
 
 		public override void Render(Graphics g, IRenderer renderer)
 		{
-			int time = timer.CurrentTime;
-
-			var frameNeededRendered = frames.Where(o => o.Time == time).FirstOrDefault();
-			if (frameNeededRendered != null)
-			{
-				frameNeededRendered.Sprite.Render(g, renderer);
-			}
+			currentSequence.Render(g, renderer);
 
 			timer.Update();
 		}
 	}
 
-	public class AnimatedFrameSprite
+	public class AnimatedSpriteSequence
 	{
 		private float time;
-		private Sprite sprite;
+		private List<Sprite> sprites;
+
 		public float Time { get { return time; } }
-		public Sprite Sprite { get { return sprite; } }
-		public AnimatedFrameSprite(float time, Sprite sprite)
+		public List<Sprite> Sprites { get { return sprites; } }
+		
+		public AnimatedSpriteSequence(float time, List<Sprite> sprites)
 		{
 			this.time = time;
-			this.sprite = sprite;
+			this.sprites = sprites;
 		}
+
+		public void Render(Graphics g, IRenderer renderer)
+        {
+			sprite.Render(g, renderer);
+        }
 	}
 }

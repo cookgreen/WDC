@@ -1,0 +1,26 @@
+﻿<AnimatedSpriteInfoList>
+	<AnimatedSpriteInfo Name="Spearman">
+		<AnimatedSpriteSequences>
+			<AnimatedSpriteSequence Name ="Walk" Start="0" Length="10">
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height0    ="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+			</AnimatedSpriteSequence>
+			<AnimatedSpriteSequence Name ="Attack" Start="0" Length="10">
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+				<AnimatedSpriteSequenceRegion Width ="512" Height="512" OffsetX="0" OffsetY="0" />
+			</AnimatedSpriteSequence>
+		</AnimatedSpriteSequences>
+	</AnimatedSpriteInfo>
+</AnimatedSpriteInfoList>
