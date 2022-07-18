@@ -41,6 +41,7 @@ namespace WDC
 
             engine = new Engine();
             engine.Init(config);
+            config.CurrentSelectedScript.BeforeRunScript();
             engine.StartNewGame();
 
             string iconFile = config.CurrentSelectedScript.Icon;
