@@ -52,45 +52,53 @@ namespace WDC.Game
 
         public override void Render(Graphics g, IRenderer renderer)
         {
-            if (destPos.X != -1 && destPos.Y != -1)
+            if (movement != null)
             {
-                if (destPos.X != renderer.RenderOffset + position.X && destPos.Y != position.Y)
-                {
-                    float distanceX = Math.Abs(destPos.X - (renderer.RenderOffset + position.X));
-                    float distanceY = Math.Abs(destPos.Y - position.Y);
-                    
-                    //Font font = new Font("Baskerville Old Face", 50);
-                    //g.DrawString(string.Format("Distance X: {0}, Distance Y: {1}", distanceX, distanceY), font, Brushes.White, 0, 0);
+                position = movement.GetNext();
 
-                    if (movement_type == 0)
-                    {
-                        if (distanceX <= collideCheckTolerance)
-                        {
-                            DestReached?.Invoke();
-                        }
-                        else
-                        {
-                            position = movement.GetNext();
-                        }
-                    }
-                    else if (movement_type == 1)
-                    {
-                        if (distanceY <= collideCheckTolerance)
-                        {
-                            DestReached?.Invoke();
-                        }
-                        else
-                        {
-                            position = movement.GetNext();
-                        }
-                    }
-                }
-                else
+                if (movement.DestPosition.X != -1 && 
+                    movement.DestPosition.Y != -1)
                 {
-                    DestReached?.Invoke();
+                    if (movement.DestPosition.X != position.X && 
+                        movement.DestPosition.Y != position.Y)
+                    {
+                        float distanceX = Math.Abs(destPos.X - position.X);
+                        float distanceY = Math.Abs(destPos.Y - position.Y);
+
+                        //Font font = new Font("Baskerville Old Face", 50);
+                        //g.DrawString(string.Format("Distance X: {0}, Distance Y: {1}", distanceX, distanceY), font, Brushes.White, 0, 0);
+
+                        if (movement_type == 0)
+                        {
+                            if (distanceX <= collideCheckTolerance)
+                            {
+                                DestReached?.Invoke();
+                            }
+                            else
+                            {
+                                position = movement.GetNext();
+                            }
+                        }
+                        else if (movement_type == 1)
+                        {
+                            if (distanceY <= collideCheckTolerance)
+                            {
+                                DestReached?.Invoke();
+                            }
+                            else
+                            {
+                                position = movement.GetNext();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        DestReached?.Invoke();
+                    }
                 }
             }
-            g.DrawImage(image, renderer.RenderOffset + position.X, position.Y, image.Width * scale, image.Height * scale);
+
+            g.DrawImage(image, position.X, position.Y, image.Width * scale, image.Height * scale);
         }
 
         public void MoveTo(PointF destPos)

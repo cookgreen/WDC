@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WDC.Core;
 
 namespace WDC.Game
 {
@@ -32,6 +33,11 @@ namespace WDC.Game
         public float GetActorPropertyFloat(string propertyName)
         {
             return float.Parse(actorProperies[propertyName]);
+        }
+
+        public void Render(Graphics g, IRenderer renderer)
+        {
+            gameObject.Render(g, renderer);
         }
     }
 }

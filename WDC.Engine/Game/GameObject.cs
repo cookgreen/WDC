@@ -26,7 +26,7 @@ namespace WDC.Game
 		{
 			get { return uniqueID; }
 		}
-		public PointF Position
+		public virtual PointF Position
 		{
 			get { return position; }
 			set { position = value; }

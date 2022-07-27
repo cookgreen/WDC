@@ -13,13 +13,31 @@ namespace WDC.Game
         private int direction;
         private PointF startPos;
         private float speed;
-        public SpriteAxisMovement(int type, int direction, PointF startPos, float speed)
+
+        public SpriteAxisMovement(
+            int type, int direction,
+            PointF startPos,
+            float speed)
         {
             this.type = type;//0-X; 1-Y
             this.direction = direction;//0-Positive; 1-Negative
             this.startPos = startPos;
             this.speed = speed;
         }
+
+        public SpriteAxisMovement(
+            int type, int direction, 
+            PointF startPos, 
+            PointF destPos, 
+            float speed)
+        {
+            this.type = type;//0-X; 1-Y
+            this.direction = direction;//0-Positive; 1-Negative
+            this.startPos = startPos;
+            destPosition = destPos;
+            this.speed = speed;
+        }
+
         public override PointF GetNext()
         {
             switch(type)

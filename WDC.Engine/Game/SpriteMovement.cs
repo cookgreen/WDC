@@ -9,6 +9,17 @@ namespace WDC.Game
 {
 	public class SpriteMovement
     {
+        protected PointF destPosition;
+        public PointF DestPosition 
+        {
+            get { return destPosition; }
+        }
+
+        public SpriteMovement()
+        {
+            destPosition = new PointF(-1, -1);
+        }
+
         public virtual PointF GetNext()
         {
             return new PointF();

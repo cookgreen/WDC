@@ -21,21 +21,27 @@ namespace WDC.Game
 			sequences = new Dictionary<string, AnimatedSpriteSequence>();
 			timer = new AnimatedSpriteTimer();
 
-			Graphics g = Graphics.FromImage(allFramesBitmap);
 			for (int i = 0; i < animatedSpriteInfos.AnimatedSpriteSequences.Count; i++)
 			{
 				List<Sprite> sprites = new List<Sprite>();
 
 				for (int j = 0; j < animatedSpriteInfos.AnimatedSpriteSequences[i].Regions.Count; j++)
 				{
-					Bitmap bitmap = new Bitmap(
-						animatedSpriteInfos.AnimatedSpriteSequences[i].Regions[j].Width, 
-						animatedSpriteInfos.AnimatedSpriteSequences[i].Regions[j].Height);
-					g.DrawImage(bitmap, 
-						animatedSpriteInfos.AnimatedSpriteSequences[i].Regions[j].OffsetX, 
-						animatedSpriteInfos.AnimatedSpriteSequences[i].Regions[j].OffsetY);
+					var region = animatedSpriteInfos.AnimatedSpriteSequences[i].Regions[j];
 
-					Sprite sprite = new Sprite(bitmap, position);
+					Bitmap newImage = new Bitmap(region.Width, region.Height);
+
+					using (Graphics g = Graphics.FromImage(newImage))
+					{
+						g.DrawImage(
+							allFramesBitmap, 
+							new Rectangle(0, 0, region.Width, region.Height), 
+							new RectangleF(region.OffsetX, region.OffsetY, region.Width, region.Height), 
+							GraphicsUnit.Pixel
+						);
+					}
+
+					Sprite sprite = new Sprite(newImage, position);
 					sprites.Add(sprite);
 				}
 
@@ -49,9 +55,23 @@ namespace WDC.Game
 		public void SetSteering(SpriteMovement movement)
         {
 			this.movement = movement;
-        }
+			currentSequence.SetSteering(movement);
 
-		public override void Render(Graphics g, IRenderer renderer)
+		}
+
+        public override PointF Position
+        {
+            get { return position; }
+            set
+            {
+				foreach(var seq in sequences)
+                {
+					seq.Value.Position = value;
+                }
+            }
+		}
+
+        public override void Render(Graphics g, IRenderer renderer)
 		{
 			currentSequence.Render(g, renderer);
 
@@ -68,11 +88,17 @@ namespace WDC.Game
 		private PointF position;
 		private bool hasBeenSet;
 
-		private int initDelayTime = 100;
-		private int curDelayTime = 0;
+		private float initDelayTime = 0.1f;
+		private float curDelayTime = 0;
 
 		public float Time { get { return time; } }
 		public List<Sprite> Sprites { get { return sprites; } }
+
+		public PointF Position
+		{
+            get { return currentSprite.Position; }
+            set { currentSprite.Position = value; }
+        }
 
 		public AnimatedSpriteSequence(float time, List<Sprite> sprites)
 		{
@@ -93,37 +119,19 @@ namespace WDC.Game
 
 		public void Render(Graphics g, IRenderer renderer)
         {
-			//Animation Control System
-
+			//Animation Control Systems
 			currentSprite = sprites[curInternalTime];
-
-			if (!hasBeenSet)
-			{
-				currentSprite.Position = sprites[curInternalTime - 1].Position;
-				hasBeenSet = true;
-			}
 
 			currentSprite.Render(g, renderer);
 
-			if (curDelayTime == initDelayTime)
+			if (curInternalTime == sprites.Count - 1)
 			{
-				if (curInternalTime == sprites.Count - 1)
-				{
-					curInternalTime = 0;
-					hasBeenSet = false;
-				}
-				else
-				{
-					curInternalTime++;
-					hasBeenSet = false;
-				}
-
-				curDelayTime = 0;
+				curInternalTime = 0;
 			}
-            else
-            {
-				curDelayTime++;
-            }
+			else
+			{
+				curInternalTime++;
+			}
 		}
 	}
 }

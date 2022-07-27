@@ -59,5 +59,15 @@ namespace DefendCastleScript.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap CastleBackGround {
+            get {
+                object obj = ResourceManager.GetObject("CastleBackGround", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
