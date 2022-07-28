@@ -21,8 +21,7 @@ namespace WDC.Game
 		public AnimatedSprite(
 			Bitmap allFramesBitmap, 
 			AnimatedSpriteInfo animatedSpriteInfos, 
-			PointF position,
-			float scale = 1)
+			PointF position)
 		{
 			this.position = position;
 
@@ -53,7 +52,7 @@ namespace WDC.Game
 						);
 					}
 
-					Sprite sprite = new Sprite(newImage, position, 10, scale);
+					Sprite sprite = new Sprite(newImage, position);
 					sprites.Add(sprite);
 				}
 

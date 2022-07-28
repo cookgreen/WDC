@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WDC;
 using System.Media;
+using WDC.Expression;
 
 namespace DefendCastleScript
 {
@@ -41,7 +42,7 @@ namespace DefendCastleScript
         {
             { 1, new Dictionary<string, string>
                 {
-                    {"enemyType", "Spearman|10" }
+                    {"enemyType", "Spearman|5" }
                 }
             },
             { 2, new Dictionary<string, string>
@@ -116,24 +117,26 @@ namespace DefendCastleScript
         private AnimatedSprite enemyKnight;
         private AnimatedSprite enemyCrossbowman;
 
+        private ExpressionParser expressionParser;
+
         private Dictionary<string, string> enemySpearmanDic = new Dictionary<string, string>()
             {
-                { "HP", "120"},
-                { "Armour", "10"},
-                { "Speed", "30"},
+                { "HP", "VALUE{120}"},
+                { "Armour", "VALUE{10}"},
+                { "Speed", "RANDOM{5-10}"},
             };
         private Dictionary<string, string> enemyKnightDic = new Dictionary<string, string>()
             {
-                { "HP", "240"},
-                { "Armour", "30"},
-                { "Speed", "15"},
+                { "HP", "VALUE{240}"},
+                { "Armour", "VALUE{30}"},
+                { "Speed", "RANDOM{10-15}"},
             };
         private Dictionary<string, string> enemyCrossbowmanDic = new Dictionary<string, string>()
             {
-                { "HP", "180"},
-                { "Armour", "17"},
-                { "Speed", "18"},
-                { "Damage", "25"},
+                { "HP", "VALUE{180}"},
+                { "Armour", "VALUE{17}"},
+                { "Speed", "RANDOM{10-15}"},
+                { "Damage", "RANDOM{10-15}"},
             };
 
         private string scriptDataDir;
@@ -165,6 +168,8 @@ namespace DefendCastleScript
 
             soundPlayer = new SoundPlayer();
             environmentPlayer = new SoundPlayer();
+
+            expressionParser = new ExpressionParser();
 
             this.engine = engine;
             winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
@@ -262,7 +267,7 @@ namespace DefendCastleScript
                 lbGameOver.Draw(g);
             }
 
-            if(curCounterdown == 0)
+            if(!levelStarted && curCounterdown == 0)
             {
                 curDelay = 0;
                 activeCounterdown = false;
@@ -339,9 +344,10 @@ namespace DefendCastleScript
                             int randX = random.Next(10, 30);
                             int randY = random.Next(600, 700);
                             enemySpawnPoint = new PointF(randX, randY);
+
                             gameObject = new AnimatedSprite(new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemySpearmanDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemySpearmanDic["Speed"]));
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, actor.GetActorPropertyExpressionValueFloat("Speed"));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }
@@ -351,7 +357,7 @@ namespace DefendCastleScript
                         {
                             gameObject = new AnimatedSprite(new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemyKnightDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemyKnightDic["Speed"]));
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, actor.GetActorPropertyExpressionValueFloat("Speed"));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }
@@ -361,7 +367,7 @@ namespace DefendCastleScript
                         {
                             gameObject = new AnimatedSprite(new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemyCrossbowmanDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemyCrossbowmanDic["Speed"]));
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, actor.GetActorPropertyExpressionValueFloat("Speed"));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }

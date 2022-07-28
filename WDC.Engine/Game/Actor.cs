@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WDC.Core;
+using WDC.Expression;
 
 namespace WDC.Game
 {
@@ -12,6 +13,7 @@ namespace WDC.Game
     {
         private GameObject gameObject;
         private Dictionary<string, string> actorProperies;
+        private ExpressionParser expressionParser;
 
         public Actor(GameObject gameObject, Dictionary<string, string> actorProperies)
         {
@@ -25,14 +27,16 @@ namespace WDC.Game
             set { gameObject.Position = value; }
         }
 
-        public int GetActorPropertyInt(string propertyName)
+        public int GetActorPropertyExpressionValueInt(string propertyName)
         {
-            return int.Parse(actorProperies[propertyName]);
+            string expression = actorProperies[propertyName];
+            return int.Parse(expressionParser.Parse(expression).ToString());
         }
 
-        public float GetActorPropertyFloat(string propertyName)
+        public float GetActorPropertyExpressionValueFloat(string propertyName)
         {
-            return float.Parse(actorProperies[propertyName]);
+            string expression = actorProperies[propertyName];
+            return float.Parse(expressionParser.Parse(expression).ToString());
         }
 
         public void Render(Graphics g, IRenderer renderer)
