@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WDC.AI;
 using WDC.Core;
 using WDC.Expression;
 
@@ -14,12 +15,19 @@ namespace WDC.Game
         private GameObject gameObject;
         private Dictionary<string, string> actorProperies;
         private ExpressionParser expressionParser;
+        private StateMachine stateMachine;
 
         public Actor(GameObject gameObject, Dictionary<string, string> actorProperies)
         {
             this.gameObject = gameObject;
             this.actorProperies = actorProperies;
             expressionParser = new ExpressionParser();
+        }
+
+        public void InitAI(List<AIState> states)
+        {
+            stateMachine = new StateMachine(this);
+            stateMachine.Init(states);
         }
 
         public PointF Position

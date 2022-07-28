@@ -234,10 +234,10 @@ namespace DefendCastleScript
             var defenderArcher3 = new Actor(archer3Sprite, defenderArcherDic);
             var defenderArcher4 = new Actor(archer4Sprite, defenderArcherDic);
 
-            //defenderArchers.Add(defenderArcher1);
-            //defenderArchers.Add(defenderArcher2);
-            //defenderArchers.Add(defenderArcher3);
-            //defenderArchers.Add(defenderArcher4);
+            defenderArchers.Add(defenderArcher1);
+            defenderArchers.Add(defenderArcher2);
+            defenderArchers.Add(defenderArcher3);
+            defenderArchers.Add(defenderArcher4);
 
             iconFile = Path.Combine(scriptIconDataDir, "icon.ico");
         }
