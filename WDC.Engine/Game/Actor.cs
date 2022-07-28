@@ -19,6 +19,7 @@ namespace WDC.Game
         {
             this.gameObject = gameObject;
             this.actorProperies = actorProperies;
+            expressionParser = new ExpressionParser();
         }
 
         public PointF Position
