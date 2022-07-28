@@ -54,8 +54,10 @@ namespace WDC.UI
                     case AlignMethod.RIGHT:
                         position = new PointF(winWidth - fontSize.Width, position.Y);
                         break;
-                    case AlignMethod.FLOATING:
+                    case AlignMethod.PERCENT:
                         position = new PointF(left.ActualValue, top.ActualValue);
+                        break;
+                    case AlignMethod.MANUAL:
                         break;
                 }
                 if(neededAdjustWithFont)

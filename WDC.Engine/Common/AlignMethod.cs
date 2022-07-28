@@ -12,6 +12,7 @@ namespace WDC
         LEFT,
         RIGHT,
         BOTTOM,
-        FLOATING
+        PERCENT,
+        MANUAL,
     }
 }

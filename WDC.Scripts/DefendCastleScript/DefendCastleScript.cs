@@ -229,10 +229,10 @@ namespace DefendCastleScript
             var defenderArcher3 = new Actor(archer3Sprite, defenderArcherDic);
             var defenderArcher4 = new Actor(archer4Sprite, defenderArcherDic);
 
-            defenderArchers.Add(defenderArcher1);
-            defenderArchers.Add(defenderArcher2);
-            defenderArchers.Add(defenderArcher3);
-            defenderArchers.Add(defenderArcher4);
+            //defenderArchers.Add(defenderArcher1);
+            //defenderArchers.Add(defenderArcher2);
+            //defenderArchers.Add(defenderArcher3);
+            //defenderArchers.Add(defenderArcher4);
 
             iconFile = Path.Combine(scriptIconDataDir, "icon.ico");
         }
@@ -257,8 +257,7 @@ namespace DefendCastleScript
                 levelStarted = false;
                 activeCounterdown = true;
             }
-            else if (defenderArchers.Count == 0 ||
-                     castleGateHP == 0) //All defenders are dead or Castle gate has been broken, the game over
+            else if (castleGateHP == 0) //All defenders are dead or Castle gate has been broken, the game over
             {
                 lbGameOver.Draw(g);
             }
@@ -337,9 +336,12 @@ namespace DefendCastleScript
                     case "Spearman":
                         for (int j = 0; j < enemyNumber; j++)
                         {
+                            int randX = random.Next(10, 30);
+                            int randY = random.Next(600, 700);
+                            enemySpawnPoint = new PointF(randX, randY);
                             gameObject = new AnimatedSprite(new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemySpearmanDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemySpearmanDic["Speed"]));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }
@@ -349,7 +351,7 @@ namespace DefendCastleScript
                         {
                             gameObject = new AnimatedSprite(new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemyKnightDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemyKnightDic["Speed"]));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }
@@ -359,19 +361,12 @@ namespace DefendCastleScript
                         {
                             gameObject = new AnimatedSprite(new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
                             actor = createActor(gameObject, enemyCrossbowmanDic);
-                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, float.Parse(enemyCrossbowmanDic["Speed"]));
                             gameObject.SetSteering(movement);
                             enemies.Add(actor);
                         }
                         break;
                 }
-                gameObject.SequenceFinished += (name) =>
-                {
-                    if (name == "Die")
-                    {
-                        enemies.Remove(actor);
-                    }
-                };
             }
 
             //Play Level Start Sound

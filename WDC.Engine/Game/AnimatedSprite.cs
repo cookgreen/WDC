@@ -18,8 +18,14 @@ namespace WDC.Game
 
 		public Action<string> SequenceFinished;
 
-		public AnimatedSprite(Bitmap allFramesBitmap, AnimatedSpriteInfo animatedSpriteInfos, PointF position)
+		public AnimatedSprite(
+			Bitmap allFramesBitmap, 
+			AnimatedSpriteInfo animatedSpriteInfos, 
+			PointF position,
+			float scale = 1)
 		{
+			this.position = position;
+
 			sequences = new Dictionary<string, AnimatedSpriteSequence>();
 			timer = new AnimatedSpriteTimer();
 
@@ -36,14 +42,18 @@ namespace WDC.Game
 					using (Graphics g = Graphics.FromImage(newImage))
 					{
 						g.DrawImage(
-							allFramesBitmap, 
-							new Rectangle(0, 0, region.Width, region.Height), 
-							new RectangleF(region.OffsetX, region.OffsetY, region.Width, region.Height), 
+							allFramesBitmap,
+							new Rectangle(0, 0, region.Width, region.Height),
+							new RectangleF(
+								region.OffsetX,
+								region.OffsetY,
+								region.Width,
+								region.Height),
 							GraphicsUnit.Pixel
 						);
 					}
 
-					Sprite sprite = new Sprite(newImage, position);
+					Sprite sprite = new Sprite(newImage, position, 10, scale);
 					sprites.Add(sprite);
 				}
 
@@ -152,7 +162,6 @@ namespace WDC.Game
 			if (curInternalTime == sprites.Count - 1)
 			{
 				curInternalTime = 0;
-				SequenceFinished?.Invoke(name);
 			}
 			else
 			{

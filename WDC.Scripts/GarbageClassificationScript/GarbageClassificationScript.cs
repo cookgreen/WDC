@@ -89,13 +89,13 @@ namespace GarbageClassificationScript
             box3.Metrics = UIMetrics.Relative;
             box4.Metrics = UIMetrics.Relative;
 
-            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.FLOATING);
-            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.FLOATING);
+            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
+            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
             txtScoreLabel.Metrics = UIMetrics.Relative;
             txtScoreValue.Metrics = UIMetrics.Relative;
 
-            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.FLOATING);
-            txtGarbageCurrentAnswer = new GDIStaticText("答案:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.FLOATING);
+            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
+            txtGarbageCurrentAnswer = new GDIStaticText("答案:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
 
 
             box1.MouseClicked += Box1_MouseClicked;

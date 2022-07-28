@@ -42,6 +42,10 @@ namespace WDC.Game
                 case AlignMethod.BOTTOM:
                     this.position = new PointF(position.X - (image.Width * scale) / 2, position.Y - (image.Height * scale) / 3 * 2);
                     break;
+                case AlignMethod.PERCENT:
+                    break;
+                case AlignMethod.MANUAL:
+                    break;
             }
         }
 
@@ -74,20 +78,12 @@ namespace WDC.Game
                             {
                                 DestReached?.Invoke();
                             }
-                            else
-                            {
-                                position = movement.GetNext();
-                            }
                         }
                         else if (movement_type == 1)
                         {
                             if (distanceY <= collideCheckTolerance)
                             {
                                 DestReached?.Invoke();
-                            }
-                            else
-                            {
-                                position = movement.GetNext();
                             }
                         }
                     }
