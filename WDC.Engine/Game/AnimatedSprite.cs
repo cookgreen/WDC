@@ -16,6 +16,8 @@ namespace WDC.Game
 		private AnimatedSpriteSequence currentSequence;
 		private SpriteMovement movement;
 
+		public Action<string> SequenceFinished;
+
 		public AnimatedSprite(Bitmap allFramesBitmap, AnimatedSpriteInfo animatedSpriteInfos, PointF position)
 		{
 			sequences = new Dictionary<string, AnimatedSpriteSequence>();
@@ -45,11 +47,27 @@ namespace WDC.Game
 					sprites.Add(sprite);
 				}
 
-				AnimatedSpriteSequence frameSequence = new AnimatedSpriteSequence(animatedSpriteInfos.AnimatedSpriteSequences[i].Length, sprites);
+				AnimatedSpriteSequence frameSequence = new AnimatedSpriteSequence(
+					animatedSpriteInfos.AnimatedSpriteSequences[i].Name,
+					animatedSpriteInfos.AnimatedSpriteSequences[i].Length, 
+					sprites);
 				sequences.Add(animatedSpriteInfos.AnimatedSpriteSequences[i].Name, frameSequence);
 			}
 
 			currentSequence = sequences.ElementAt(0).Value;
+			currentSequence.SequenceFinished += (name) =>
+			{
+				SequenceFinished?.Invoke(name);
+			};
+		}
+
+		public void ChangeSequence(string seqName)
+        {
+			currentSequence = sequences[seqName];
+			currentSequence.SequenceFinished += (name) =>
+			{
+				SequenceFinished?.Invoke(name);
+			};
 		}
 
 		public void SetSteering(SpriteMovement movement)
@@ -81,27 +99,34 @@ namespace WDC.Game
 
 	public class AnimatedSpriteSequence
 	{
-		private int curInternalTime = 0;
+		private string name;
 		private float time;
 		private List<Sprite> sprites;
+
 		private Sprite currentSprite;
 		private PointF position;
 		private bool hasBeenSet;
-
+		private int curInternalTime = 0;
 		private float initDelayTime = 0.1f;
 		private float curDelayTime = 0;
 
+		public string Name { get { return name; } }
 		public float Time { get { return time; } }
 		public List<Sprite> Sprites { get { return sprites; } }
-
 		public PointF Position
 		{
             get { return currentSprite.Position; }
             set { currentSprite.Position = value; }
         }
 
-		public AnimatedSpriteSequence(float time, List<Sprite> sprites)
+		public event Action<string> SequenceFinished;
+
+		public AnimatedSpriteSequence(
+			string name, 
+			float time, 
+			List<Sprite> sprites)
 		{
+			this.name = name;
 			this.time = time;
 			this.sprites = sprites;
 			currentSprite = sprites[0];
@@ -127,6 +152,7 @@ namespace WDC.Game
 			if (curInternalTime == sprites.Count - 1)
 			{
 				curInternalTime = 0;
+				SequenceFinished?.Invoke(name);
 			}
 			else
 			{

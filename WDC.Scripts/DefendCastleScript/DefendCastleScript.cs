@@ -12,6 +12,7 @@ using WDC.Xml;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WDC;
+using System.Media;
 
 namespace DefendCastleScript
 {
@@ -28,9 +29,14 @@ namespace DefendCastleScript
         [DllImport("gdi32.dll", EntryPoint = "GetDeviceCaps", SetLastError = true)]
         public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 
+        private SoundPlayer soundPlayer;
+        private SoundPlayer environmentPlayer;
+
+        private string scriptSoundDataDir;
         private Random random;
         private int currentLevel = 1;
         private bool levelStarted = false;
+        private bool activeCounterdown = true;
         private Dictionary<int, Dictionary<string, string>> levelData = new Dictionary<int, Dictionary<string, string>>
         {
             { 1, new Dictionary<string, string>
@@ -85,19 +91,26 @@ namespace DefendCastleScript
             },
         };
         private float time = 0;
+        
+        private GDIStaticText lbCounterdownNotice;
+        private GDIStaticText lbLevelTitle;
+        private GDIStaticText lbGameOver;
 
         private List<Actor> enemies = new List<Actor>();
-
-        private GDIStaticText lbLevelTitle;
-
         private List<Actor> defenderArchers = new List<Actor>();
-
         private string spearmanSpriteSheetBitmapFile;
         private string knightSpriteSheetBitmapFile;
         private string crossbowmanSpriteSheetBitmapFile;
         private AnimatedSpriteInfo spearmanSpriteInfo;
         private AnimatedSpriteInfo knightSpriteInfo;
         private AnimatedSpriteInfo crossbowmanSpriteInfo;
+        private float castleGateHP = 500;
+
+        private int initCounterdown = 10;
+        private int curCounterdown = 10;
+
+        private int initDelay = 50;
+        private int curDelay = 0;
 
         private AnimatedSprite enemySpearman;
         private AnimatedSprite enemyKnight;
@@ -150,6 +163,9 @@ namespace DefendCastleScript
         {
             random = new Random();
 
+            soundPlayer = new SoundPlayer();
+            environmentPlayer = new SoundPlayer();
+
             this.engine = engine;
             winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
             engine.ChangeBackground(Resources.CastleBackGround);
@@ -167,13 +183,17 @@ namespace DefendCastleScript
             castleGatePos = new PointF(castleGatePos.X * ratio, castleGatePos.Y * ratio);
 
             float titleSize = 80 * ratio;
-            
-            lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "黑体", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
 
-            scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data//DefendCastleScript//");
+
+            lbCounterdownNotice = new GDIStaticText("Counterdown: " + curCounterdown.ToString(), "黑体", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "黑体", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbGameOver = new GDIStaticText("GAME OVER", "黑体", (int)titleSize, Brushes.Red, new PointF(0, 0), false, AlignMethod.CENTER);
+
+            scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data\\DefendCastleScript\\");
             string scriptSpriteDataDir = Path.Combine(scriptDataDir, "Sprites");
             string scriptSettingsDataDir = Path.Combine(scriptDataDir, "Settings");
             string scriptIconDataDir = Path.Combine(scriptDataDir, "Icon");
+            scriptSoundDataDir = Path.Combine(scriptDataDir, "Sound");
 
             AnimatedSpriteInfoList animatedSpriteInfoList = AnimatedSpriteInfoList.Parse(Path.Combine(scriptSettingsDataDir, "anim.xml"));
 
@@ -219,11 +239,49 @@ namespace DefendCastleScript
 
         public void Render(Graphics g, IRenderer renderer)
         {
-            lbLevelTitle.Draw(g);
+            if (!levelStarted && activeCounterdown)
+            {
+                lbCounterdownNotice.Draw(g);
+            }
+            else if (levelStarted)
+            {
+                lbLevelTitle.Draw(g);
+            }
+            else if (enemies.Count == 0)
+            {
+                stopPlaySound(environmentPlayer);
+                playSound(soundPlayer, "level_victory.wav");
+                currentLevel++;
+                lbLevelTitle.Text = "LEVEL: " + currentLevel.ToString();
+                curCounterdown = initCounterdown;
+                levelStarted = false;
+                activeCounterdown = true;
+            }
+            else if (defenderArchers.Count == 0 ||
+                     castleGateHP == 0) //All defenders are dead or Castle gate has been broken, the game over
+            {
+                lbGameOver.Draw(g);
+            }
 
-            update(g, renderer);
+            if(curCounterdown == 0)
+            {
+                curDelay = 0;
+                activeCounterdown = false;
+                startNewLevel();
+                playSoundLoop(environmentPlayer, "environment.wav");
+            }
 
-            time++;
+            if (curDelay == initDelay && activeCounterdown)
+            {
+                curCounterdown--;
+                curDelay = 0;
+
+                lbCounterdownNotice.Text = "Counterdown: " + curCounterdown.ToString();
+            }
+            else
+            {
+                curDelay++;
+            }
 
             foreach(var defender in defenderArchers)
             {
@@ -233,6 +291,8 @@ namespace DefendCastleScript
             {
                 enemy.Render(g, renderer);
             }
+
+            time++;
         }
 
         private Actor createActor(GameObject gameObject, Dictionary<string, string> dic)
@@ -240,67 +300,84 @@ namespace DefendCastleScript
             return new Actor(gameObject, dic);
         }
 
-        private void update(Graphics g, IRenderer renderer)
+        private void playSound(SoundPlayer soundPlayer, string soundFile)
         {
-            if (!levelStarted)
+            string soundFullPath = Path.Combine(scriptSoundDataDir, soundFile);
+            soundPlayer.SoundLocation = soundFullPath;
+            soundPlayer.Play();
+        }
+
+        private void playSoundLoop(SoundPlayer soundPlayer, string soundFile)
+        {
+            string soundFullPath = Path.Combine(scriptSoundDataDir, soundFile);
+            soundPlayer.SoundLocation = soundFullPath;
+            soundPlayer.PlayLooping();
+        }
+
+        private void stopPlaySound(SoundPlayer soundPlayer)
+        {
+            soundPlayer.Stop();
+        }
+
+        private void startNewLevel()
+        {
+            enemies.Clear();
+            var enemyData = levelData[currentLevel].ElementAt(0).Value;
+            string[] enemyArr = enemyData.Split(',');
+            for (int i = 0; i < enemyArr.Length; i++)
             {
-                enemies.Clear();
-                var enemyData = levelData[currentLevel].ElementAt(0).Value;
-                string[] enemyArr = enemyData.Split(',');
-                for (int i = 0; i < enemyArr.Length; i++)
+                string enemyAr = enemyArr[i];
+                string[] enemyDic = enemyAr.Split('|');
+                string enemyType = enemyDic[0];
+                int enemyNumber = int.Parse(enemyDic[1]);
+                AnimatedSprite gameObject = null;
+                Actor actor = null;
+                switch (enemyType)
                 {
-                    string enemyAr = enemyArr[i];
-                    string[] enemyDic = enemyAr.Split('|');
-                    string enemyType = enemyDic[0];
-                    int enemyNumber = int.Parse(enemyDic[1]);
-                    AnimatedSprite gameObject; 
-                    switch (enemyType)
+                    case "Spearman":
+                        for (int j = 0; j < enemyNumber; j++)
+                        {
+                            gameObject = new AnimatedSprite(new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
+                            actor = createActor(gameObject, enemySpearmanDic);
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            gameObject.SetSteering(movement);
+                            enemies.Add(actor);
+                        }
+                        break;
+                    case "Knight":
+                        for (int j = 0; j < enemyNumber; j++)
+                        {
+                            gameObject = new AnimatedSprite(new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
+                            actor = createActor(gameObject, enemyKnightDic);
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            gameObject.SetSteering(movement);
+                            enemies.Add(actor);
+                        }
+                        break;
+                    case "Crossbowman":
+                        for (int j = 0; j < enemyNumber; j++)
+                        {
+                            gameObject = new AnimatedSprite(new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
+                            actor = createActor(gameObject, enemyCrossbowmanDic);
+                            var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
+                            gameObject.SetSteering(movement);
+                            enemies.Add(actor);
+                        }
+                        break;
+                }
+                gameObject.SequenceFinished += (name) =>
+                {
+                    if (name == "Die")
                     {
-                        case "Spearman":
-                            for (int j = 0; j < enemyNumber; j++)
-                            {
-                                gameObject = new AnimatedSprite(new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
-                                var actor = createActor(gameObject, enemySpearmanDic);
-                                var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
-                                gameObject.SetSteering(movement);
-                                enemies.Add(actor);
-                            }
-                            break;
-                        case "Knight":
-                            for (int j = 0; j < enemyNumber; j++)
-                            {
-                                gameObject = new AnimatedSprite(new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
-                                var actor = createActor(gameObject, enemyKnightDic);
-                                var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
-                                gameObject.SetSteering(movement);
-                                enemies.Add(actor);
-                            }
-                            break;
-                        case "Crossbowman":
-                            for (int j = 0; j < enemyNumber; j++)
-                            {
-                                gameObject = new AnimatedSprite(new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
-                                var actor = createActor(gameObject, enemyCrossbowmanDic);
-                                var movement = new SpriteAxisMovement(0, 0, actor.Position, castleGatePos, (float)random.NextDouble());
-                                gameObject.SetSteering(movement);
-                                enemies.Add(actor);
-                            }
-                            break;
+                        enemies.Remove(actor);
                     }
-                }
-
-                levelStarted = true;
+                };
             }
-            else
-            {
-                if (enemies.Count == 0)
-                {
-                    //Play Victory Sound
 
-                    currentLevel++;
-                    levelStarted = false;
-                }
-            }
+            //Play Level Start Sound
+            playSound(soundPlayer, "level_start.wav");
+
+            levelStarted = true;
         }
     }
 }
