@@ -58,11 +58,11 @@ namespace GarbageClassificationScript
             score = 100;
             garbages = new List<GarbageData>()
             {
-                new GarbageData(){ Name="猪骨头", Description = "吃剩的猪骨头", Box = GarbageBox.Box1 },
-                new GarbageData(){ Name="苹果核", Description = "吃剩的苹果核", Box = GarbageBox.Box1 },
-                new GarbageData(){ Name="废旧电池", Description = "用完的电池", Box = GarbageBox.Box4 },
-                new GarbageData(){ Name="餐巾纸", Description = "使用过的餐巾纸", Box = GarbageBox.Box3 },
-                new GarbageData(){ Name="塑料瓶", Description = "用完的塑料瓶", Box = GarbageBox.Box2 },
+                new GarbageData(){ Name="Pig Bones", Description = "Pig Bones", Box = GarbageBox.Box1 },
+                new GarbageData(){ Name="Rotten Apple", Description = "Rotten Apple", Box = GarbageBox.Box1 },
+                new GarbageData(){ Name="Used Battery", Description = "Used Battery", Box = GarbageBox.Box4 },
+                new GarbageData(){ Name="Napkins", Description = "Napkins", Box = GarbageBox.Box3 },
+                new GarbageData(){ Name="Plastic Bottle", Description = "Plastic Bottle", Box = GarbageBox.Box2 },
             };
             rand = new Random(10);
         }
@@ -74,11 +74,11 @@ namespace GarbageClassificationScript
             winHeight = Engine.WinHeight;
             winWidth = Engine.WinWidth;
 
-            text1 = new GDIStaticText("准备", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), true);
+            text1 = new GDIStaticText("Ready", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), true);
             text2 = new GDIStaticText("Go!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
-            text3 = new GDIStaticText("请选择!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
-            text4 = new GDIStaticText("答错了!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), true);
-            text5 = new GDIStaticText("回答正确!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), true);
+            text3 = new GDIStaticText("Please Choose!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
+            text4 = new GDIStaticText("Wrong!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), true);
+            text5 = new GDIStaticText("Correct!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), true);
 
             box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(0.15f, 0.6f));
             box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(0.35f, 0.6f));
@@ -89,13 +89,13 @@ namespace GarbageClassificationScript
             box3.Metrics = UIMetrics.Relative;
             box4.Metrics = UIMetrics.Relative;
 
-            txtScoreLabel = new GDIStaticText("分数:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
+            txtScoreLabel = new GDIStaticText("Score:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
             txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
             txtScoreLabel.Metrics = UIMetrics.Relative;
             txtScoreValue.Metrics = UIMetrics.Relative;
 
-            txtGarbageCurrent = new GDIStaticText("当前:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
-            txtGarbageCurrentAnswer = new GDIStaticText("答案:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
+            txtGarbageCurrent = new GDIStaticText("Current:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
+            txtGarbageCurrentAnswer = new GDIStaticText("Answer:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
 
 
             box1.MouseClicked += Box1_MouseClicked;
@@ -169,17 +169,17 @@ namespace GarbageClassificationScript
             }
             else if (score <= 0)
             {
-                ShutdownShowMessage?.Invoke("游戏结束!", "wardeclarer.exe");
+                ShutdownShowMessage?.Invoke("Game Over!", "wardeclarer.exe");
             }
             else if (waitingForInput)
             {
-                txtGarbageCurrent.Text = "当前: " + currentGarbage.Name;
+                txtGarbageCurrent.Text = "Current: " + currentGarbage.Name;
                 txtGarbageCurrent.Draw(g);
                 text3.Draw(g);
 
                 if (showCurrentAnswer)
                 {
-                    txtGarbageCurrentAnswer.Text = "答案: 选择第" + (((int)currentGarbage.Box) + 1).ToString() +"个";
+                    txtGarbageCurrentAnswer.Text = "Answer: Select " + (((int)currentGarbage.Box) + 1).ToString() +"";
                     txtGarbageCurrentAnswer.Draw(g);
                 }
             }
