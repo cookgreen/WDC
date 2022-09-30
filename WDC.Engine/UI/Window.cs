@@ -26,10 +26,12 @@ namespace WDC.UI
         {
         }
 
-        public Window(Sizer sizer, string caption)
+        public Window(Sizer sizer, string caption, int height, int width, int left, int top)
         {
             this.sizer = sizer;
             this.caption = caption;
+            winHeight = height;
+            winWidth = width;
         }
 
         public override void Render(Graphics g, IRenderer renderer)
