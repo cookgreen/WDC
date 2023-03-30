@@ -8,15 +8,4 @@ using WDC.Core;
 
 namespace WDC.UI
 {
-    public class DeveloperConsoleWindow : Window
-    {
-        public DeveloperConsoleWindow(Sizer sizer) : base(sizer, "Game Console")
-        {
-        }
-
-        public override void Render(Graphics g, IRenderer renderer)
-        {
-            base.Render(g, renderer);
-        }
-    }
 }
