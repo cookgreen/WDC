@@ -9,7 +9,7 @@ using WDC.Game;
 
 namespace WDC.UI
 {
-	public class GDISpriteButton : Widget
+    public class GDISpriteButton : Widget
 	{
 		private Sprite sprite;
 		private Sprite hoverSprite;

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDC.Launcher", "WDC.Launche
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefendCastleScript", "WDC.Scripts\DefendCastleScript\DefendCastleScript.csproj", "{E1321FC2-910E-407A-A639-8312B6B5FF52}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WDCScripts", "WDCScripts", "{A7096D82-89E8-4AA7-8505-FB5A3212AAFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A2C2D6F6-F542-4CEC-B9BB-645044AA3531} = {A7096D82-89E8-4AA7-8505-FB5A3212AAFE}
+		{3E9BCDAB-83D8-4FD0-81DC-FC7F0F140BED} = {A7096D82-89E8-4AA7-8505-FB5A3212AAFE}
+		{E1321FC2-910E-407A-A639-8312B6B5FF52} = {A7096D82-89E8-4AA7-8505-FB5A3212AAFE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF2DC172-BED7-436C-A6B9-5A93F8F33C6F}

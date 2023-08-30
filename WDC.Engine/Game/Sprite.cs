@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WDC.Core;
+using WDC.UI;
 
 namespace WDC.Game
 {
@@ -69,7 +70,8 @@ namespace WDC.Game
                         float distanceX = Math.Abs(destPos.X - position.X);
                         float distanceY = Math.Abs(destPos.Y - position.Y);
 
-                        //Font font = new Font("Baskerville Old Face", 50);
+                        //Debug
+                        //Font font = new Font("Aria", 50);
                         //g.DrawString(string.Format("Distance X: {0}, Distance Y: {1}", distanceX, distanceY), font, Brushes.White, 0, 0);
 
                         if (movement_type == 0)

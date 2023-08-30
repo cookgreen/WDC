@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using WDC;
 using WDC.Game;
 using WDC.UI;
 using WDC.Interface;
@@ -16,7 +15,7 @@ using WDC.Locate;
 
 namespace GarbageClassificationScript
 {
-	public class GarbageClassificationScript : WDCScript, INotifyMessageWhenShutdown
+    public class GarbageClassificationScript : WDCScript, INotifyMessageWhenShutdown
     {
         private int winWidth;
         private int winHeight;

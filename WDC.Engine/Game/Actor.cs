@@ -36,21 +36,26 @@ namespace WDC.Game
             set { gameObject.Position = value; }
         }
 
-        public int GetActorPropertyExpressionValueInt(string propertyName)
-        {
-            string expression = actorProperies[propertyName];
-            return int.Parse(expressionParser.Parse(expression).ToString());
-        }
-
-        public float GetActorPropertyExpressionValueFloat(string propertyName)
+		public float GetActorProperty(string propertyName)
         {
             string expression = actorProperies[propertyName];
             return float.Parse(expressionParser.Parse(expression).ToString());
-        }
+		}
 
-        public void Render(Graphics g, IRenderer renderer)
+		public void SetActorProperty(string propertyName, float newValue)
+		{
+			actorProperies[propertyName] = newValue.ToString();
+		}
+
+		public void Render(Graphics g, IRenderer renderer)
         {
             gameObject.Render(g, renderer);
-        }
-    }
+		}
+
+		public int GetActorPropertyInt(string propertyName)
+		{
+			string expression = actorProperies[propertyName];
+			return int.Parse(expressionParser.Parse(expression).ToString());
+		}
+	}
 }

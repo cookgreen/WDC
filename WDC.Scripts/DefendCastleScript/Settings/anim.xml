@@ -1,7 +1,7 @@
 ﻿<AnimatedSpriteInfoList>
 	<AnimatedSpriteInfo Name="Spearman">
 		<AnimatedSpriteSequences>
-			<AnimatedSpriteSequence Name ="Walk" Start="0" Length="8">
+			<AnimatedSpriteSequence Name ="Walk" Start="0" Length="8" Loop="true">
 				<AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="0" />
 				<AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="0" />
 				<AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="0" />
@@ -11,7 +11,7 @@
 				<AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="756" OffsetY="0" />
 				<AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="882" OffsetY="0" />
 			</AnimatedSpriteSequence>
-			<AnimatedSpriteSequence Name ="Die" Start="0" Length="10">
+			<AnimatedSpriteSequence Name ="Die" Start="0" Length="10" Loop="false">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="126" />
@@ -23,7 +23,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1008" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1134" OffsetY="126" />
 			</AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="8">
+      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="8" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="252" />
@@ -37,7 +37,7 @@
 	</AnimatedSpriteInfo>
   <AnimatedSpriteInfo Name="Crossbowman">
     <AnimatedSpriteSequences>
-      <AnimatedSpriteSequence Name ="Walk" Start="0" Length="10">
+      <AnimatedSpriteSequence Name ="Walk" Start="0" Length="10" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="0" />
@@ -49,7 +49,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1008" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1134" OffsetY="126" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Die" Start="0" Length="11">
+      <AnimatedSpriteSequence Name ="Die" Start="0" Length="11" Loop="false">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="126" />
@@ -62,7 +62,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1134" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1260" OffsetY="126" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="7">
+      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="7" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="252" />
@@ -75,7 +75,7 @@
   </AnimatedSpriteInfo>
   <AnimatedSpriteInfo Name="Knight">
     <AnimatedSpriteSequences>
-      <AnimatedSpriteSequence Name ="Walk" Start="0" Length="9">
+      <AnimatedSpriteSequence Name ="Walk" Start="0" Length="9" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="0" />
@@ -86,7 +86,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="882" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1008" OffsetY="0" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Die" Start="0" Length="10">
+      <AnimatedSpriteSequence Name ="Die" Start="0" Length="10" Loop="false">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="126" />
@@ -98,7 +98,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1008" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="1134" OffsetY="126" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="8">
+      <AnimatedSpriteSequence Name ="Attack" Start="0" Length="8" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="252" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="252" />
@@ -112,10 +112,10 @@
   </AnimatedSpriteInfo>
   <AnimatedSpriteInfo Name="Archer">
     <AnimatedSpriteSequences>
-      <AnimatedSpriteSequence Name ="Idle" Start="0" Length="1">
+      <AnimatedSpriteSequence Name ="Idle" Start="0" Length="1" Loop="true">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="0" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Die" Start="0" Length="8">
+      <AnimatedSpriteSequence Name ="Die" Start="0" Length="8" Loop="false">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="0" />
@@ -125,7 +125,7 @@
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="756" OffsetY="0" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="882" OffsetY="0" />
       </AnimatedSpriteSequence>
-      <AnimatedSpriteSequence Name ="Shoot" Start="0" Length="6">
+      <AnimatedSpriteSequence Name ="Shoot" Start="0" Length="6" Loop="false">
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="0" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="126" OffsetY="126" />
         <AnimatedSpriteSequenceRegion Width ="126" Height="126" OffsetX="252" OffsetY="126" />

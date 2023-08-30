@@ -55,7 +55,10 @@ namespace WDC.Xml
         [XmlAttribute]
         public int Length { get; set; }
 
-        [XmlElement("AnimatedSpriteSequenceRegion")]
+		[XmlAttribute]
+		public bool Loop { get; set; }
+
+		[XmlElement("AnimatedSpriteSequenceRegion")]
         public List<AnimatedSpriteSequenceRegion> Regions { get; set; }
 
         public AnimatedSpriteSequence()
