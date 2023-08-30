@@ -194,9 +194,9 @@ namespace DefendCastleScript
             float titleSize = 80 * ratio;
 
 
-            lbCounterdownNotice = new GDIStaticText("Ready: " + curCounterdown.ToString(), "黑体", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
-            lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "黑体", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
-            lbGameOver = new GDIStaticText("GAME OVER", "黑体", (int)titleSize, Brushes.Red, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbCounterdownNotice = new GDIStaticText("Ready: " + curCounterdown.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbGameOver = new GDIStaticText("GAME OVER", "Arial", (int)titleSize, Brushes.Red, new PointF(0, 0), false, AlignMethod.CENTER);
 
             scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data\\DefendCastleScript\\");
             string scriptSpriteDataDir = Path.Combine(scriptDataDir, "Sprites");
@@ -223,11 +223,11 @@ namespace DefendCastleScript
 
             var defenderArcherDic = new Dictionary<string, string>()
             {
-                { "HP", "220"},
-                { "Armour", "20"},
-                { "Speed", "0"},
-                { "Damage", "40"},
-                { "PromotionHPRate", "0.5"},
+                { "HP", "VALUE{220}"},
+                { "Armour", "VALUE{20}"},
+                { "Speed", "VALUE{0}"},
+                { "Damage", "VALUE{40}"},
+                { "PromotionHPRate", "VALUE{0.5}"},
             };
             var defenderArcher1 = new Actor(archer1Sprite, defenderArcherDic);
             var defenderArcher2 = new Actor(archer2Sprite, defenderArcherDic);
@@ -371,7 +371,6 @@ namespace DefendCastleScript
                 actor.Position, destPos, 
                 actor.GetActorProperty("Speed"), 5);
 			gameObject.SetSteering(movement);
-			gameObject.MoveTo(destPos);
 			gameObject.DestReached += GameObjectDestReached;
 			return actor;
 		}
@@ -413,5 +412,46 @@ namespace DefendCastleScript
 
             levelStarted = true;
         }
-    }
+
+		public void MouseClicked(int x, int y)
+		{
+            if (defenderArchers.Where(o => !o.IsAlive).Count() == defenderArchers.Count)
+                return;
+
+			foreach (var defender in defenderArchers)
+			{
+				if (!defender.IsAlive)
+					continue;
+
+				var centerPos = defender.CenterPosition;
+                var angle = Math.Atan((centerPos.Y - y) / (centerPos.X - x));
+                var spriteArrow = new Sprite("arrow", null, defender.Position);
+                var spriteArrowMovement = new SpriteParabolaMovement(angle, 15, 5);
+                spriteArrow.SetSteering(spriteArrowMovement);
+                var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Speed", "15" } });
+                engine.GameObjects.Add(spriteArrow);
+			}
+		}
+
+		public void MouseMoved(int x, int y)
+		{
+			if (defenderArchers.Where(o => !o.IsAlive).Count() == defenderArchers.Count)
+				return;
+
+			foreach (var defender in defenderArchers)
+            {
+                if (!defender.IsAlive)
+                    continue;
+
+                var centerPos = defender.CenterPosition;
+                var angle = Math.Atan((centerPos.Y - y) / (centerPos.X - x));
+
+                if (angle > 0) { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 2); }
+                
+                else if (angle < 0) { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 1); }
+                
+                else { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 3); }
+			}
+		}
+	}
 }

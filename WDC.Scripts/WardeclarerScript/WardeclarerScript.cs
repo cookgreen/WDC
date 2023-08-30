@@ -32,6 +32,8 @@ namespace WDC.Script
         private bool clicked;
         private bool reached;
         private Engine engine;
+        private SpriteMovement spriteMovement;
+
         public event Action<string, string> ShutdownShowMessage;
 
         public string Icon
@@ -75,11 +77,13 @@ namespace WDC.Script
             missileShootTolerance = (int)(missileShootTolerance * ratio);
 
             missile = new Sprite("missile", Resources.missile, missileShootStartPosition, AlignMethod.CENTER, 0.8f);
-            missile.SetSteering(new SpriteAxisMovement(
-                SpriteAxisMovementType.MovementByXAxis, 
-                SpriteAxisMovementDirection.Left, 
-                missileShootStartPosition, 10, 5));
-            missile.DestReached += Sprite_DestReached;
+			spriteMovement = new SpriteAxisMovement(
+				SpriteAxisMovementType.MovementByXAxis,
+				SpriteAxisMovementDirection.Left,
+				missileShootStartPosition,
+				missileShootEndPosition, 10, 5);
+			missile.SetSteering(spriteMovement);
+			missile.DestReached += Sprite_DestReached;
 
 			optUSA.MouseClicked += Option1_MouseClicked;
 			optGermany.MouseClicked += Option2_MouseClicked;
@@ -90,9 +94,12 @@ namespace WDC.Script
         {
             counter2 = counter;
             clicked = true;
+            
             missileShootEndPosition = missileShootEndPositionUSA;
-            missile.MoveTo(missileShootEndPosition);
+            missile.Movement.SetDestPosition(missileShootEndPosition);
+			
             cloud = new Sprite("explosive_cloud", Resources.nuclear_boom, missileShootEndPosition, AlignMethod.BOTTOM, 0.6f);
+            
             engine.GameObjects.Remove(optUSA);
             engine.GameObjects.Remove(optGermany);
         }
@@ -101,9 +108,12 @@ namespace WDC.Script
         {
             counter2 = counter;
             clicked = true;
+            
             missileShootEndPosition = missileShootEndPositionGermany;
-            missile.MoveTo(missileShootEndPosition);
+			missile.Movement.SetDestPosition(missileShootEndPosition);
+			
             cloud = new Sprite("explosive_cloud", Resources.nuclear_boom, missileShootEndPosition, AlignMethod.BOTTOM, 0.6f);
+            
             engine.GameObjects.Remove(optUSA);
             engine.GameObjects.Remove(optGermany);
         }
@@ -158,5 +168,13 @@ namespace WDC.Script
         {
             MessageBox.Show("We are warning you that this is not a game\r\n\r\nAre you sure continue?", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-    }
+
+		public void MouseClicked(int x, int y)
+		{
+		}
+
+		public void MouseMoved(int x, int y)
+		{
+		}
+	}
 }

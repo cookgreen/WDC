@@ -13,19 +13,14 @@ namespace WDC.Game
     {
         private Image image;
         private float scale;
-        private PointF destPos;
         private SpriteMovement movement;
-        public event Action DestReached;
-        public Image Image
-        {
-            get { return image; }
-        }
 
-        public float Scale
-        {
-            get { return scale; }
-        }
-        public Sprite(
+        public Image Image { get { return image; } }
+        public float Scale { get { return scale; } }
+        public SpriteMovement Movement { get { return movement; } }
+		public event Action DestReached;
+
+		public Sprite(
             string typeName, 
             Image image, 
             PointF position, 
@@ -38,7 +33,6 @@ namespace WDC.Game
             this.image = image;
             this.position = position;
             this.scale = scale;
-            destPos = new PointF(-1, -1);
             switch (alignment)
             {
                 case AlignMethod.CENTER:
@@ -82,11 +76,6 @@ namespace WDC.Game
             {
                 g.DrawRectangle(new Pen(new SolidBrush(Color.White)), position.X, position.Y, image.Width * scale, image.Height * scale);
             }
-        }
-
-        public void MoveTo(PointF destPos)
-        {
-            this.destPos = destPos;
         }
     }
 }

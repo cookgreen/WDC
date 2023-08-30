@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WDC.Launcher": {
+      "commandName": "Project",
+      "commandLineArgs": "-script DefendCastle"
+    }
+  }
+}

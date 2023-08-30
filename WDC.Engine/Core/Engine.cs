@@ -184,6 +184,7 @@ namespace WDC.Core
 					gameObjects[i].Click();
 				}
 			}
+			script.MouseClicked(x, y);
 		}
 
 		public void MouseMoved(int x, int y)
@@ -207,6 +208,8 @@ namespace WDC.Core
 			{
 				lastEnterGameObject.Leave();
 			}
+
+			script.MouseMoved(x, y);
 		}
 
 		public void ShowConsole()

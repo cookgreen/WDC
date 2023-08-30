@@ -250,5 +250,13 @@ namespace GarbageClassificationScript
                 score -= 5;
             }
         }
-    }
+
+		public void MouseClicked(int x, int y)
+		{
+		}
+
+		public void MouseMoved(int x, int y)
+		{
+		}
+	}
 }

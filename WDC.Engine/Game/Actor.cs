@@ -7,15 +7,26 @@ using System.Threading.Tasks;
 using WDC.AI;
 using WDC.Core;
 using WDC.Expression;
+using WDC.Physics;
 
 namespace WDC.Game
 {
-    public class Actor
+    public class Actor : ICollidable
     {
         private GameObject gameObject;
         private Dictionary<string, string> actorProperies;
         private ExpressionParser expressionParser;
         private StateMachine stateMachine;
+        private bool isAlive;
+
+        public GameObject GameObject
+        { 
+            get { return gameObject; } 
+        }
+        public bool IsAlive
+        {
+            get { return isAlive; }
+        }
 
         public Actor(GameObject gameObject, Dictionary<string, string> actorProperies)
         {
@@ -34,7 +45,22 @@ namespace WDC.Game
         {
             get { return gameObject.Position; }
             set { gameObject.Position = value; }
-        }
+		}
+
+		public PointF CenterPosition
+		{
+			get 
+            { 
+                var gdiPos  = gameObject.Position;
+                return new PointF(gdiPos.X + gameObject.Size.Width / 2, gdiPos.Y + gameObject.Size.Height); 
+            }
+			set 
+            {
+                var centerPos = value;
+                var pos = new PointF(centerPos.X - gameObject.Size.Width/2, centerPos.Y- gameObject.Size.Height/2);
+                gameObject.Position = pos;
+            }
+		}
 
 		public float GetActorProperty(string propertyName)
         {
@@ -50,12 +76,15 @@ namespace WDC.Game
 		public void Render(Graphics g, IRenderer renderer)
         {
             gameObject.Render(g, renderer);
-		}
 
-		public int GetActorPropertyInt(string propertyName)
-		{
-			string expression = actorProperies[propertyName];
-			return int.Parse(expressionParser.Parse(expression).ToString());
+            if (GetActorProperty("HP") == 0)
+            {
+                isAlive = false;
+            }
+            else
+            {
+                isAlive = true;
+            }
 		}
 	}
 }

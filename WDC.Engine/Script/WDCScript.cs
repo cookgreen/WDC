@@ -16,5 +16,9 @@ namespace WDC.Script
 		void BeforeRunScript();
 
 		void Init(Engine engine);
+
+		void MouseClicked(int x, int y);
+
+		void MouseMoved(int x, int y);
 	}
 }

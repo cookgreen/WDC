@@ -106,15 +106,23 @@ namespace WDC.Game
 			currentSequence = newAnimSequence;
 		}
 
+		public void ChangeToSpecificFrame(string seqName, int index)
+		{
+			var newAnimSequence = sequences[seqName];
+			newAnimSequence.Position = currentSequence.Position;
+			currentSequence = newAnimSequence;
+			newAnimSequence.ChangeToSpecificFrame(index);
+		}
+
+		public void Resume()
+		{
+			currentSequence.Resume();
+		}
+
 		public void SetSteering(SpriteMovement movement)
         {
 			this.movement = movement;
 			currentSequence.SetSteering(movement);
-		}
-
-		public void MoveTo(PointF destPos)
-		{
-			currentSequence.MoveTo(destPos);
 		}
 
         public override void Render(Graphics g, IRenderer renderer)
@@ -134,7 +142,6 @@ namespace WDC.Game
 		private bool loop;
 
 		private PointF position;
-		private bool hasBeenSet;
 		private float initDelayTime = 0.1f;
 		private float curDelayTime = 0;
 
@@ -171,10 +178,12 @@ namespace WDC.Game
 				sprite.DestReached += SpriteCheckDestReached;
 			}
 			position = currentSprite.Position;
+			
 			this.loop = loop;
+
 			timer = new AnimatedSpriteTimer(5);
 			timer.Tick += Timer_Tick;
-			hasBeenSet = false;
+			timer.Start();
 		}
 
 		private void Timer_Tick()
@@ -187,13 +196,6 @@ namespace WDC.Game
 			else
 			{
 				curRenderSpriteIndex++;//Move to next sprite image
-			}
-		}
-		public void MoveTo(PointF destPos)
-		{
-			foreach (var s in sprites)
-			{
-				s.MoveTo(destPos);
 			}
 		}
 
@@ -217,6 +219,17 @@ namespace WDC.Game
 		private void SpriteCheckDestReached()
 		{
 			DestReached?.Invoke();
+		}
+
+		public void ChangeToSpecificFrame(int index)
+		{
+			curRenderSpriteIndex = index;
+			timer.Deactive();
+		}
+
+		public void Resume()
+		{
+			timer.Start();
 		}
 	}
 }

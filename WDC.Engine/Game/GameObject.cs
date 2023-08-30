@@ -21,6 +21,7 @@ namespace WDC.Game
 		protected string typeName;
 		protected LayerDetectedState state;
 		protected PointF position;
+		protected SizeF size;
 		protected RectangleF area;
 		public event Action MouseClicked;
 		public string UID
@@ -32,6 +33,13 @@ namespace WDC.Game
 			get { return position; }
 			set { position = value; }
 		}
+
+		public virtual SizeF Size
+		{
+			get { return size; }
+			set { size = value; }
+		}
+
 
 		public GameObject(string typeName)
 		{

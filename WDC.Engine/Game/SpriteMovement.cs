@@ -42,5 +42,11 @@ namespace WDC.Game
         {
             DestReached?.Invoke();
 		}
-    }
+
+        public virtual void SetDestPosition(PointF destPosition)
+        {
+            this.destPosition = destPosition;
+        }
+
+	}
 }

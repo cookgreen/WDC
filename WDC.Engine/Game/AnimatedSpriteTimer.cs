@@ -11,6 +11,8 @@ namespace WDC.Game
 		private int time;
 		private int initDelayTime;
 		private int currentDelayTime;
+		private bool isActive;
+
 		public int CurrentTime { get { return time; } }
 
 		public event Action Tick;
@@ -20,6 +22,12 @@ namespace WDC.Game
 			time = 0;
 			this.initDelayTime = initDelayTime;
 			currentDelayTime = initDelayTime;
+			isActive = false;
+		}
+
+		public void Start()
+		{
+			isActive = true;
 		}
 
 		public void Reset()
@@ -30,6 +38,11 @@ namespace WDC.Game
 
 		public void Update()
 		{
+			if(!isActive)
+			{
+				return;
+			}
+
 			if(time == initDelayTime)
 			{
 				Tick?.Invoke();
@@ -39,6 +52,11 @@ namespace WDC.Game
 			{
 				time++;
 			}
+		}
+
+		public void Deactive()
+		{
+			isActive = false;
 		}
 	}
 }
