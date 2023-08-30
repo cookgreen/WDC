@@ -9,16 +9,19 @@ namespace WDC.Game
 {
 	public class SpriteMovement
     {
-        protected PointF destPosition;
+        protected int collideCheckTolerance;
+		protected PointF destPosition;
         public PointF DestPosition 
         {
             get { return destPosition; }
-        }
+		}
+		public virtual event Action DestReached;
 
-        public SpriteMovement()
+		public SpriteMovement(int collideCheckTolerance)
         {
             destPosition = new PointF(-1, -1);
-        }
+            this.collideCheckTolerance = collideCheckTolerance;
+		}
 
         public virtual PointF GetNext()
         {
@@ -34,5 +37,10 @@ namespace WDC.Game
         {
             return new PointF();
         }
+
+        public virtual void CheckDestReached()
+        {
+            DestReached?.Invoke();
+		}
     }
 }

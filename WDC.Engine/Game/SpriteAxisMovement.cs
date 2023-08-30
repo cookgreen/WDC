@@ -7,33 +7,53 @@ using System.Threading.Tasks;
 
 namespace WDC.Game
 {
-    public class SpriteAxisMovement : SpriteMovement
+    public enum SpriteAxisMovementType
     {
-        private int type;
-        private int direction;
-        private PointF startPos;
+        MovementByXAxis,
+		MovementByYAxis
+	}
+
+	public enum SpriteAxisMovementDirection
+	{
+		Left,
+		Right,
+        Up,
+        Down
+	}
+
+	public class SpriteAxisMovement : SpriteMovement
+    {
+        private SpriteAxisMovementType type;
+        private SpriteAxisMovementDirection direction;
+        private PointF position;
         private float speed;
 
-        public SpriteAxisMovement(
-            int type, int direction,
+		public override event Action DestReached;
+
+		public SpriteAxisMovement(
+			SpriteAxisMovementType type,
+			SpriteAxisMovementDirection direction,
             PointF startPos,
-            float speed)
+            float speed,
+            int collideCheckTolerance) : base(collideCheckTolerance)
         {
-            this.type = type;//0-X; 1-Y
-            this.direction = direction;//0-Positive; 1-Negative
-            this.startPos = startPos;
+            this.type = type;
+            this.direction = direction;
             this.speed = speed;
-        }
+			position = startPos;
+		}
 
         public SpriteAxisMovement(
-            int type, int direction, 
+			SpriteAxisMovementType type, 
+            SpriteAxisMovementDirection direction, 
             PointF startPos, 
             PointF destPos, 
-            float speed)
-        {
-            this.type = type;//0-X; 1-Y
-            this.direction = direction;//0-Positive; 1-Negative
-            this.startPos = startPos;
+            float speed,
+			int collideCheckTolerance) : base(collideCheckTolerance)
+		{
+            this.type = type;
+            this.direction = direction;
+            this.position = startPos;
             destPosition = destPos;
             this.speed = speed;
         }
@@ -42,35 +62,74 @@ namespace WDC.Game
         {
             switch(type)
             {
-                case 0:
+                case SpriteAxisMovementType.MovementByXAxis:
                     return GextNextX();
-                case 1:
+                case SpriteAxisMovementType.MovementByYAxis:
                     return GextNextY();
                 default:
-                    return startPos;
+                    return position;
             }
         }
 
         protected override PointF GextNextX()
         {
             int mulValue = 1;
-            if (direction == 1)
+            if (direction == SpriteAxisMovementDirection.Left ||
+                direction == SpriteAxisMovementDirection.Up)
             {
                 mulValue = -1;
             }
-            startPos.X = startPos.X + speed * mulValue;
-            return startPos;
+            position = new PointF(position.X + speed * mulValue, position.Y);
+            return position;
         }
 
         protected override PointF GextNextY()
         {
             int mulValue = 1;
-            if (direction == 1)
+            if (direction == SpriteAxisMovementDirection.Left ||
+				direction == SpriteAxisMovementDirection.Up)
             {
                 mulValue = -1;
-            }
-            startPos.Y = startPos.Y + speed * mulValue;
-            return startPos;
+			}
+			position = new PointF(position.X, position.Y + speed * mulValue);
+            return position;
         }
-    }
+
+		public override void CheckDestReached()
+		{
+			if (destPosition.X != -1 &&
+				destPosition.Y != -1)
+			{
+				if (destPosition.X != position.X &&
+					destPosition.Y != position.Y)
+				{
+					float distanceX = Math.Abs(destPosition.X - position.X);
+					float distanceY = Math.Abs(destPosition.Y - position.Y);
+
+                    //Debug
+                    //Font font = new Font("Arial", 50);
+                    //g.DrawString(string.Format("Distance X: {0}, Distance Y: {1}", distanceX, distanceY), font, Brushes.White, 0, 0);
+
+                    if (type == SpriteAxisMovementType.MovementByXAxis)
+                    {
+                        if (distanceX <= collideCheckTolerance)
+                        {
+                            DestReached?.Invoke();
+                        }
+                    }
+                    else if (type == SpriteAxisMovementType.MovementByYAxis)
+                    {
+                        if (distanceY <= collideCheckTolerance)
+                        {
+                            DestReached?.Invoke();
+                        }
+                    }
+				}
+				else
+				{
+					DestReached?.Invoke();
+				}
+			}
+		}
+	}
 }

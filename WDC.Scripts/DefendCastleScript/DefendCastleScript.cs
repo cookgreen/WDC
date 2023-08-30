@@ -151,9 +151,9 @@ namespace DefendCastleScript
         private PointF archer4Pos = new PointF(1075, 225);
 
         private PointF enemySpawnPoint = new PointF(10, 690);
-        private PointF castleGate1Pos = new PointF(1003, 650);
-		private PointF castleGate2Pos = new PointF(1088, 725);
-		private PointF castleGate3Pos = new PointF(1228, 837);
+        private PointF castleGate1Pos = new PointF(900, 650);
+		private PointF castleGate2Pos = new PointF(1000, 725);
+		private PointF castleGate3Pos = new PointF(1150, 837);
 
 		public string Icon
         {
@@ -336,15 +336,15 @@ namespace DefendCastleScript
             switch(randGateNo)
             {
                 case 1:
-                    randY = random.Next(643, 663);
+                    randY = random.Next(543, 563);
                     destPos = castleGate1Pos;
 					break;
                 case 2:
-					randY = random.Next(713, 735);
+					randY = random.Next(613, 633);
 					destPos = castleGate2Pos;
 					break;
                 case 3:
-					randY = random.Next(827, 830);
+					randY = random.Next(725, 745);
 					destPos = castleGate3Pos;
 					break;
             }
@@ -353,28 +353,36 @@ namespace DefendCastleScript
             switch (enemyType)
 			{
 				case "Spearman":
-					gameObject = new AnimatedSprite("spearman", new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("spearman", new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
 					actor = createActor(gameObject, enemySpearmanDic);
 					break;
 				case "Knight":
-					gameObject = new AnimatedSprite("knight", new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("knight", new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
 					actor = createActor(gameObject, enemyKnightDic);
 					break;
 				case "Crossbowman":
-					gameObject = new AnimatedSprite("crossbowman", new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("crossbowman", new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
 					actor = createActor(gameObject, enemyCrossbowmanDic);
 					break;
 			}
-			var movement = new SpriteAxisMovement(0, 0, actor.Position, destPos, actor.GetActorProperty("Speed"));
+			var movement = new SpriteAxisMovement(
+                SpriteAxisMovementType.MovementByXAxis, 
+                SpriteAxisMovementDirection.Right, 
+                actor.Position, destPos, 
+                actor.GetActorProperty("Speed"), 5);
 			gameObject.SetSteering(movement);
 			gameObject.MoveTo(destPos);
-			gameObject.DestReached += GameObject_DestReached;
+			gameObject.DestReached += GameObjectDestReached;
 			return actor;
 		}
 
-		private void GameObject_DestReached()
+		private void GameObjectDestReached(AnimatedSprite gameObject)
 		{
-
+            if (gameObject.CurrentSequence.Name == "Walk")
+            {
+                gameObject.ChangeSequence("Attack");
+                gameObject.SetSteering(null);
+            }
 		}
 
 		private void spawnEnemy(string enemyType, int enemyNumber)

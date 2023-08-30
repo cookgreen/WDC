@@ -99,6 +99,14 @@ namespace WDC
             if (e.Button == MouseButtons.Right)
             {
                 isEditMode = !isEditMode;
+                if (isEditMode)
+                {
+                    engine.EnterDebugMode();
+                }
+                else
+                {
+                    engine.LeaveDebugMode();
+                }
             }
             else
             {

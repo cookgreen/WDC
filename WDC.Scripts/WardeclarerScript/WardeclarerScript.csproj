@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir $(SolutionDir)\bin\net5.0-windows\Scripts&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net5.0-windows\Scripts /V /Y" />
+    <Exec Command="mkdir $(SolutionDir)\bin\net7.0-windows\Scripts&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net7.0-windows\Scripts /V /Y" />
   </Target>
 
 </Project>

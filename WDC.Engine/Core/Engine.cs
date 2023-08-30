@@ -26,13 +26,14 @@ namespace WDC.Core
 		private List<GameObject> gameObjects;
 		private Point renderResolution;
 		private IRenderer renderer;
+		private bool isDebug;
+
+		public bool IsDebug
+		{ 
+			get { return isDebug; } 
+		}
 
 		private FormManager formManager = new FormManager();
-
-		public void DisableCheat()
-		{
-			isEnableCheat = false;
-		}
 
 		public Point Resolution
         {
@@ -47,17 +48,6 @@ namespace WDC.Core
 		public bool CheatEnabled { get { return isEnableCheat; } }
 
         private static Engine instance;
-
-        public void RegisterMainForm(RenderForm frmRenderPanel)
-        {
-			formManager.RenderPanel = frmRenderPanel;
-		}
-
-		public void RegisterConsoleForm(DeveloperConsoleForm frmRenderPanel)
-		{
-			formManager.DeveloperConsole = frmRenderPanel;
-		}
-
 		public static Engine Instance
         {
             get
@@ -75,6 +65,7 @@ namespace WDC.Core
         public Engine()
 		{
 			lastEnterGameObject = null;
+			instance = this;
 		}
 
         public void Init(GameConfig config)
@@ -113,6 +104,31 @@ namespace WDC.Core
         public void EnableCheat()
 		{
 			isEnableCheat = true;
+		}
+
+		public void DisableCheat()
+		{
+			isEnableCheat = false;
+		}
+
+		public void EnterDebugMode()
+		{
+			isDebug = true;
+		}
+
+		public void LeaveDebugMode()
+		{
+			isDebug = false;
+		}
+
+		public void RegisterMainForm(RenderForm frmRenderPanel)
+		{
+			formManager.RenderPanel = frmRenderPanel;
+		}
+
+		public void RegisterConsoleForm(DeveloperConsoleForm frmRenderPanel)
+		{
+			formManager.DeveloperConsole = frmRenderPanel;
 		}
 
 		private void Render_ShutdownShowMessage(string message, string title)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WDC.Core;
+using WDC.UI;
 using WDC.Xml;
 
 namespace WDC.Game
@@ -16,7 +17,7 @@ namespace WDC.Game
 		private SpriteMovement movement;
 
 		public event Action<string> SequenceFinished;
-		public event Action DestReached;
+		public event Action<AnimatedSprite> DestReached;
 
 		public AnimatedSpriteSequence CurrentSequence
 		{
@@ -38,7 +39,9 @@ namespace WDC.Game
 			string typeName,
 			Bitmap allFramesBitmap, 
 			AnimatedSpriteInfo animatedSpriteInfos, 
-			PointF position) : base(typeName)
+			PointF position,
+			AlignMethod align = AlignMethod.CENTER,
+			float scale = 1f) : base(typeName)
 		{
 			this.position = position;
 
@@ -67,7 +70,7 @@ namespace WDC.Game
 						);
 					}
 
-					Sprite sprite = new Sprite(typeName, newImage, position);
+					Sprite sprite = new Sprite(typeName, newImage, position, align, scale);
 					sprites.Add(sprite);
 				}
 
@@ -77,6 +80,10 @@ namespace WDC.Game
 					animatedSpriteInfos.AnimatedSpriteSequences[i].Loop,
 					sprites);
 				frameSequence.DestReached += FrameSequence_DestReached;
+				frameSequence.SequenceFinished += (name) =>
+				{
+					SequenceFinished?.Invoke(name);
+				};
 				sequences.Add(animatedSpriteInfos.AnimatedSpriteSequences[i].Name, frameSequence);
 			}
 
@@ -89,16 +96,14 @@ namespace WDC.Game
 
 		private void FrameSequence_DestReached()
 		{
-			DestReached?.Invoke();
+			DestReached?.Invoke(this);
 		}
 
 		public void ChangeSequence(string seqName)
         {
-			currentSequence = sequences[seqName];
-			currentSequence.SequenceFinished += (name) =>
-			{
-				SequenceFinished?.Invoke(name);
-			};
+			var newAnimSequence = sequences[seqName];
+			newAnimSequence.Position = currentSequence.Position;
+			currentSequence = newAnimSequence;
 		}
 
 		public void SetSteering(SpriteMovement movement)
@@ -139,7 +144,13 @@ namespace WDC.Game
 		public PointF Position
 		{
             get { return currentSprite.Position; }
-            set { currentSprite.Position = value; }
+            set 
+			{ 
+				foreach(Sprite sprite in sprites)
+				{
+					sprite.Position = value;
+				}
+			}
         }
 
 		public event Action DestReached;
@@ -155,6 +166,10 @@ namespace WDC.Game
 			this.time = time;
 			this.sprites = sprites;
 			currentSprite = sprites[0];
+			foreach(Sprite sprite in sprites)
+			{
+				sprite.DestReached += SpriteCheckDestReached;
+			}
 			position = currentSprite.Position;
 			this.loop = loop;
 			timer = new AnimatedSpriteTimer(5);
@@ -197,11 +212,9 @@ namespace WDC.Game
 			//Animation Control Systems
 			currentSprite = sprites[curRenderSpriteIndex];
 			currentSprite.Render(g, renderer);
-
-			currentSprite.DestReached += CurrentSprite_DestReached;
 		}
 
-		private void CurrentSprite_DestReached()
+		private void SpriteCheckDestReached()
 		{
 			DestReached?.Invoke();
 		}
