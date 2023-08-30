@@ -5,7 +5,10 @@ Scriptable 2D Game App
 ## Scripting
 If you want to create your own script, you can check this:  
 
-https://github.com/cookgreen/WDC/wiki
+https://github.com/cookgreen/WDC/wiki  
+
+## Environment  
+.NET 7.0 (Windows)  
 
 ## Hot Key
 Right Mouse Click - Enable Develop Mode which shows the current mouse position  

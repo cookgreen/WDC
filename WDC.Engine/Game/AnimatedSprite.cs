@@ -15,7 +15,9 @@ namespace WDC.Game
 		private AnimatedSpriteSequence currentSequence;
 		private SpriteMovement movement;
 
-		public Action<string> SequenceFinished;
+		public event Action<string> SequenceFinished;
+		public event Action DestReached;
+
 		public AnimatedSpriteSequence CurrentSequence
 		{
 			get { return currentSequence; }
@@ -33,9 +35,10 @@ namespace WDC.Game
 		}
 
 		public AnimatedSprite(
+			string typeName,
 			Bitmap allFramesBitmap, 
 			AnimatedSpriteInfo animatedSpriteInfos, 
-			PointF position)
+			PointF position) : base(typeName)
 		{
 			this.position = position;
 
@@ -64,7 +67,7 @@ namespace WDC.Game
 						);
 					}
 
-					Sprite sprite = new Sprite(newImage, position);
+					Sprite sprite = new Sprite(typeName, newImage, position);
 					sprites.Add(sprite);
 				}
 
@@ -73,6 +76,7 @@ namespace WDC.Game
 					animatedSpriteInfos.AnimatedSpriteSequences[i].Length,
 					animatedSpriteInfos.AnimatedSpriteSequences[i].Loop,
 					sprites);
+				frameSequence.DestReached += FrameSequence_DestReached;
 				sequences.Add(animatedSpriteInfos.AnimatedSpriteSequences[i].Name, frameSequence);
 			}
 
@@ -81,6 +85,11 @@ namespace WDC.Game
 			{
 				SequenceFinished?.Invoke(name);
 			};
+		}
+
+		private void FrameSequence_DestReached()
+		{
+			DestReached?.Invoke();
 		}
 
 		public void ChangeSequence(string seqName)
@@ -133,6 +142,7 @@ namespace WDC.Game
             set { currentSprite.Position = value; }
         }
 
+		public event Action DestReached;
 		public event Action<string> SequenceFinished;
 
 		public AnimatedSpriteSequence(
@@ -187,6 +197,13 @@ namespace WDC.Game
 			//Animation Control Systems
 			currentSprite = sprites[curRenderSpriteIndex];
 			currentSprite.Render(g, renderer);
+
+			currentSprite.DestReached += CurrentSprite_DestReached;
+		}
+
+		private void CurrentSprite_DestReached()
+		{
+			DestReached?.Invoke();
 		}
 	}
 }

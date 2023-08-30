@@ -27,8 +27,12 @@ namespace WDC.Game
         {
             get { return scale; }
         }
-        public Sprite(Image image, PointF position, int collideCheckTolerance = 15, float scale = 1, AlignMethod alignment = AlignMethod.CENTER, int movement_type = 0)
+        public Sprite(string typeName, Image image, PointF position, 
+            int collideCheckTolerance = 15, float scale = 1, 
+            AlignMethod alignment = AlignMethod.CENTER, int movement_type = 0)
+            : base(typeName)
         {
+            this.typeName = typeName;
             this.image = image;
             this.position = position;
             this.scale = scale;

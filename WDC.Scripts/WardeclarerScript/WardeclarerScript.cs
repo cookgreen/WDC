@@ -112,7 +112,7 @@ namespace WDC.Script
                 missileShootTolerance = missileShootToleranceOriginal;
             }
 
-            missile = new Sprite(Resources.missile, missileShootStartPosition, missileShootTolerance, 0.8f);
+            missile = new Sprite("missile", Resources.missile, missileShootStartPosition, missileShootTolerance, 0.8f);
             missile.SetSteering(new SpriteAxisMovement(0, 1, missileShootStartPosition, 10));
             missile.DestReached += Sprite_DestReached;
 
@@ -127,7 +127,7 @@ namespace WDC.Script
             clicked = true;
             missileShootEndPosition = missileShootEndPositionUSA;
             missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
+            cloud = new Sprite("explosive_cloud", Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
             engine.GameObjects.Remove(option1);
             engine.GameObjects.Remove(option2);
         }
@@ -138,7 +138,7 @@ namespace WDC.Script
             clicked = true;
             missileShootEndPosition = missileShootEndPositionGermany;
             missile.MoveTo(missileShootEndPosition);
-            cloud = new Sprite(Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
+            cloud = new Sprite("explosive_cloud", Resources.nuclear_boom, missileShootEndPosition, 0, 0.6f, AlignMethod.BOTTOM);
             engine.GameObjects.Remove(option1);
             engine.GameObjects.Remove(option2);
         }

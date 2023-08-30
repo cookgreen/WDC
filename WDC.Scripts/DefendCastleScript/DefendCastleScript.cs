@@ -216,10 +216,10 @@ namespace DefendCastleScript
             crossbowmanSpriteInfo = animatedSpriteInfoList.AnimatedSprites.Where(o => o.Name == "Crossbowman").FirstOrDefault();
             AnimatedSpriteInfo archerSpriteInfo = animatedSpriteInfoList.AnimatedSprites.Where(o => o.Name == "Archer").FirstOrDefault();
             
-            AnimatedSprite archer1Sprite = new AnimatedSprite(new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer1Pos);
-            AnimatedSprite archer2Sprite = new AnimatedSprite(new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer2Pos);
-            AnimatedSprite archer3Sprite = new AnimatedSprite(new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer3Pos);
-            AnimatedSprite archer4Sprite = new AnimatedSprite(new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer4Pos);
+            AnimatedSprite archer1Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer1Pos);
+            AnimatedSprite archer2Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer2Pos);
+            AnimatedSprite archer3Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer3Pos);
+            AnimatedSprite archer4Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer4Pos);
 
             var defenderArcherDic = new Dictionary<string, string>()
             {
@@ -353,25 +353,31 @@ namespace DefendCastleScript
             switch (enemyType)
 			{
 				case "Spearman":
-					gameObject = new AnimatedSprite(new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("spearman", new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint);
 					actor = createActor(gameObject, enemySpearmanDic);
 					break;
 				case "Knight":
-					gameObject = new AnimatedSprite(new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("knight", new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint);
 					actor = createActor(gameObject, enemyKnightDic);
 					break;
 				case "Crossbowman":
-					gameObject = new AnimatedSprite(new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
+					gameObject = new AnimatedSprite("crossbowman", new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint);
 					actor = createActor(gameObject, enemyCrossbowmanDic);
 					break;
 			}
 			var movement = new SpriteAxisMovement(0, 0, actor.Position, destPos, actor.GetActorProperty("Speed"));
 			gameObject.SetSteering(movement);
 			gameObject.MoveTo(destPos);
+			gameObject.DestReached += GameObject_DestReached;
 			return actor;
 		}
 
-        private void spawnEnemy(string enemyType, int enemyNumber)
+		private void GameObject_DestReached()
+		{
+
+		}
+
+		private void spawnEnemy(string enemyType, int enemyNumber)
         {
 			for (int j = 0; j < enemyNumber; j++)
 			{

@@ -18,8 +18,8 @@ namespace WDC.UI
         {
             winHeight = Engine.WinHeight;
             winWidth = Engine.WinWidth;
-            sprite = new Sprite(image, position, tolenrece, scale, align);
-			hoverSprite = new Sprite(hoverImage, position, tolenrece, scale, align);
+            sprite = new Sprite("ui_button", image, position, tolenrece, scale, align);
+			hoverSprite = new Sprite("ui_button_hover", hoverImage, position, tolenrece, scale, align);
 
 			this.position = position;
 			area = new RectangleF(position.X - (image.Width * scale / 2), position.Y - (image.Height * scale / 2), image.Width * scale, image.Height * scale);

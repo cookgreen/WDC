@@ -9,5 +9,7 @@ namespace WDC.UI
 {
     public class UIObject : GameObject
     {
+        public UIObject() : base("ui_widget")
+        { }
     }
 }

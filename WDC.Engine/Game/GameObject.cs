@@ -18,6 +18,7 @@ namespace WDC.Game
 	public class GameObject : IRenderable
 	{
 		private string uniqueID;
+		protected string typeName;
 		protected LayerDetectedState state;
 		protected PointF position;
 		protected RectangleF area;
@@ -32,8 +33,9 @@ namespace WDC.Game
 			set { position = value; }
 		}
 
-		public GameObject()
+		public GameObject(string typeName)
 		{
+			this.typeName = typeName;
 			uniqueID = Guid.NewGuid().ToString();
 			state = LayerDetectedState.None;
 		}
