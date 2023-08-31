@@ -16,8 +16,8 @@ namespace WDC.UI
 
 		public GDISpriteButton(Bitmap image, Bitmap hoverImage, PointF position, float scale = 1, AlignMethod align = AlignMethod.CENTER)
         {
-            winHeight = Engine.WinHeight;
-            winWidth = Engine.WinWidth;
+            winHeight = Engine.Instance.WinHeight;
+            winWidth = Engine.Instance.WinWidth;
             sprite = new Sprite("ui_button", image, position, align, scale);
 			hoverSprite = new Sprite("ui_button_hover", hoverImage, position, align, scale);
 

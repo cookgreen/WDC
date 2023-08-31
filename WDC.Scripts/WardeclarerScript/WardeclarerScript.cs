@@ -49,7 +49,7 @@ namespace WDC.Script
         {
             engine.ChangeBackground(Resources.worldmap);
 
-            winHeight = Engine.WinHeight;
+            winHeight = Engine.Instance.WinHeight;
             clicked = false;
             reached = false;
             

@@ -25,8 +25,8 @@ namespace WDC.UI
 
         public GDIStaticText(string text, string fontName, int fontSize, Brush brush, PointF position, bool neededAdjustWithFont, AlignMethod alignment = AlignMethod.CENTER)
         {
-            winHeight = Engine.WinHeight;
-            winWidth = Engine.WinWidth;
+            winHeight = Engine.Instance.WinHeight;
+            winWidth = Engine.Instance.WinWidth;
             font = new Font(fontName, fontSize);
             this.text = text;
             this.brush = brush;

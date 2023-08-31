@@ -38,8 +38,8 @@ namespace WDC.UI
 
         public GDISelectableOption(string text, string fontName, int fontSize, Brush brush, PointF position, ref List<GDISelectableOption> options, bool needAdjustWithFont = false, AlignMethod alignment = AlignMethod.CENTER, UIMetrics metrics = UIMetrics.Absolute)
         {
-            winHeight = Engine.WinHeight;
-            winWidth = Engine.WinWidth;
+            winHeight = Engine.Instance.WinHeight;
+            winWidth = Engine.Instance.WinWidth;
             font = new Font(fontName, fontSize);
             this.brush = brush;
             this.position = position;

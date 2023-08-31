@@ -43,8 +43,8 @@ namespace WDC.Core
 
 		public List<GameObject> GameObjects { get { return gameObjects; } }
         //public event Action CanvasClicked;
-        public static int WinHeight { get { return winHeight; } }
-        public static int WinWidth { get { return winWidth; } }
+        public int WinHeight { get { return winHeight; } }
+        public int WinWidth { get { return winWidth; } }
 		public bool ConsoleVisible { get { return formManager.DeveloperConsole.Visible; } }
 		public bool CheatEnabled { get { return isEnableCheat; } }
 

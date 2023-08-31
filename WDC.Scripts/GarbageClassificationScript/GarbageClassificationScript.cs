@@ -68,16 +68,16 @@ namespace GarbageClassificationScript
 
         public void Init(Engine engine)
         {
-            engine.ChangeBackground(Resources.worldmap);
+            engine.ChangeBackground(Resources.background);
 
-            winHeight = Engine.WinHeight;
-            winWidth = Engine.WinWidth;
+            winHeight = Engine.Instance.WinHeight;
+            winWidth = Engine.Instance.WinWidth;
 
-            text1 = new GDIStaticText("Ready", "Baskerville Old Face", 50, Brushes.White, new PointF(0, winHeight), true);
-            text2 = new GDIStaticText("Go!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
-            text3 = new GDIStaticText("Please Choose!", "Baskerville Old Face", 40, Brushes.White, new PointF(0, winHeight), true);
-            text4 = new GDIStaticText("Wrong!", "Baskerville Old Face", 40, Brushes.Red, new PointF(0, winHeight), true);
-            text5 = new GDIStaticText("Correct!", "Baskerville Old Face", 40, Brushes.Green, new PointF(0, winHeight), true);
+            text1 = new GDIStaticText("Ready", "Arial", 50, Brushes.White, new PointF(0, winHeight), true);
+            text2 = new GDIStaticText("Go!", "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
+            text3 = new GDIStaticText("Please Choose!", "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
+            text4 = new GDIStaticText("Wrong!", "Arial", 40, Brushes.Red, new PointF(0, winHeight), true);
+            text5 = new GDIStaticText("Correct!", "Arial", 40, Brushes.Green, new PointF(0, winHeight), true);
 
             box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(0.15f, 0.6f));
             box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(0.35f, 0.6f));
@@ -88,13 +88,13 @@ namespace GarbageClassificationScript
             box3.Metrics = UIMetrics.Relative;
             box4.Metrics = UIMetrics.Relative;
 
-            txtScoreLabel = new GDIStaticText("Score:", "Baskerville Old Face", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
-            txtScoreValue = new GDIStaticText("--", "Baskerville Old Face", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
+            txtScoreLabel = new GDIStaticText("Score:", "Arial", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
+            txtScoreValue = new GDIStaticText("--", "Arial", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
             txtScoreLabel.Metrics = UIMetrics.Relative;
             txtScoreValue.Metrics = UIMetrics.Relative;
 
-            txtGarbageCurrent = new GDIStaticText("Current:", "Baskerville Old Face", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
-            txtGarbageCurrentAnswer = new GDIStaticText("Answer:", "Baskerville Old Face", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
+            txtGarbageCurrent = new GDIStaticText("Current:", "Arial", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
+            txtGarbageCurrentAnswer = new GDIStaticText("Answer:", "Arial", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
 
 
             box1.MouseClicked += Box1_MouseClicked;
