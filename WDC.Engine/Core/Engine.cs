@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Devices;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -46,6 +47,8 @@ namespace WDC.Core
         public static int WinWidth { get { return winWidth; } }
 		public bool ConsoleVisible { get { return formManager.DeveloperConsole.Visible; } }
 		public bool CheatEnabled { get { return isEnableCheat; } }
+
+		public event Action<int, int> MouseUpEvent;
 
         private static Engine instance;
 		public static Engine Instance
@@ -161,6 +164,11 @@ namespace WDC.Core
 
 		public void Render(Graphics g)
 		{
+			//if (IsDebug)
+			//{
+			//	Font font = new Font("Baskerville Old Face", 50);
+			//	g.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
+			//}
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
 				gameObjects[i].Render(g, renderer);
@@ -210,6 +218,11 @@ namespace WDC.Core
 			}
 
 			script.MouseMoved(x, y);
+		}
+
+		public void MouseUp(int x, int y)
+		{
+			MouseUpEvent?.Invoke(x, y);
 		}
 
 		public void ShowConsole()

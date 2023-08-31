@@ -13,7 +13,7 @@ namespace WDC.Game
 		MovementByYAxis
 	}
 
-	public enum SpriteAxisMovementDirection
+	public enum SpriteMovementDirection
 	{
 		Left,
 		Right,
@@ -24,7 +24,7 @@ namespace WDC.Game
 	public class SpriteAxisMovement : SpriteMovement
     {
         private SpriteAxisMovementType type;
-        private SpriteAxisMovementDirection direction;
+        private SpriteMovementDirection direction;
         private PointF position;
         private float speed;
 
@@ -32,7 +32,7 @@ namespace WDC.Game
 
 		public SpriteAxisMovement(
 			SpriteAxisMovementType type,
-			SpriteAxisMovementDirection direction,
+			SpriteMovementDirection direction,
             PointF startPos,
             float speed,
             int collideCheckTolerance) : base(collideCheckTolerance)
@@ -45,7 +45,7 @@ namespace WDC.Game
 
         public SpriteAxisMovement(
 			SpriteAxisMovementType type, 
-            SpriteAxisMovementDirection direction, 
+            SpriteMovementDirection direction, 
             PointF startPos, 
             PointF destPos, 
             float speed,
@@ -74,8 +74,8 @@ namespace WDC.Game
         protected override PointF GextNextX()
         {
             int mulValue = 1;
-            if (direction == SpriteAxisMovementDirection.Left ||
-                direction == SpriteAxisMovementDirection.Up)
+            if (direction == SpriteMovementDirection.Left ||
+                direction == SpriteMovementDirection.Up)
             {
                 mulValue = -1;
             }
@@ -86,8 +86,8 @@ namespace WDC.Game
         protected override PointF GextNextY()
         {
             int mulValue = 1;
-            if (direction == SpriteAxisMovementDirection.Left ||
-				direction == SpriteAxisMovementDirection.Up)
+            if (direction == SpriteMovementDirection.Left ||
+				direction == SpriteMovementDirection.Up)
             {
                 mulValue = -1;
 			}

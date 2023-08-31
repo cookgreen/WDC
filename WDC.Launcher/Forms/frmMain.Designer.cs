@@ -28,43 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRenderPanel));
-            this.canvas = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // canvas
-            // 
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(0, 0);
-            this.canvas.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(1536, 1082);
-            this.canvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.canvas.TabIndex = 0;
-            this.canvas.TabStop = false;
-            this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
-            this.canvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseClick);
-            this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
-            // 
-            // frmRenderPanel
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1536, 1082);
-            this.Controls.Add(this.canvas);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.Name = "frmRenderPanel";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main Window";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.frmMain_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmRenderPanel_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
-            this.ResumeLayout(false);
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRenderPanel));
+			this.canvas = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
+			this.SuspendLayout();
+			// 
+			// canvas
+			// 
+			this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.canvas.Location = new System.Drawing.Point(0, 0);
+			this.canvas.Margin = new System.Windows.Forms.Padding(5);
+			this.canvas.Name = "canvas";
+			this.canvas.Size = new System.Drawing.Size(1536, 1082);
+			this.canvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.canvas.TabIndex = 0;
+			this.canvas.TabStop = false;
+			this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
+			this.canvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseClick);
+			this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
+			this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
+			// 
+			// frmRenderPanel
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(1536, 1082);
+			this.Controls.Add(this.canvas);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
+			this.Margin = new System.Windows.Forms.Padding(5);
+			this.Name = "frmRenderPanel";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "Main Window";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+			this.Load += new System.EventHandler(this.frmMain_Load);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmRenderPanel_KeyDown);
+			((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
+			this.ResumeLayout(false);
 
         }
 

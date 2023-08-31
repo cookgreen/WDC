@@ -79,7 +79,7 @@ namespace WDC.Script
             missile = new Sprite("missile", Resources.missile, missileShootStartPosition, AlignMethod.CENTER, 0.8f);
 			spriteMovement = new SpriteAxisMovement(
 				SpriteAxisMovementType.MovementByXAxis,
-				SpriteAxisMovementDirection.Left,
+				SpriteMovementDirection.Left,
 				missileShootStartPosition,
 				missileShootEndPosition, 10, 5);
 			missile.SetSteering(spriteMovement);

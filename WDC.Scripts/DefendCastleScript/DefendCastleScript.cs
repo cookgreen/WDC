@@ -23,7 +23,8 @@ namespace DefendCastleScript
         PHYSICALWIDTH = 110,
         SCALINGFACTORX = 114,
         DESKTOPVERTRES = 117,
-    }
+		DESKTOPHORZRES = 118,
+	}
 
     public class DefendCastleScript : WDCScript
     {
@@ -38,6 +39,9 @@ namespace DefendCastleScript
         private int currentLevel = 1;
         private bool levelStarted = false;
         private bool activeCounterdown = true;
+        private int power = 1;
+        private bool powerEnabled = false;
+
         private Dictionary<int, Dictionary<string, string>> levelData = new Dictionary<int, Dictionary<string, string>>
         {
             { 1, new Dictionary<string, string>
@@ -96,12 +100,16 @@ namespace DefendCastleScript
         private GDIStaticText lbCounterdownNotice;
         private GDIStaticText lbLevelTitle;
         private GDIStaticText lbGameOver;
+		private GDIStaticText lbPower;
 
-        private List<Actor> enemies = new List<Actor>();
+		private List<Actor> enemies = new List<Actor>();
         private List<Actor> defenderArchers = new List<Actor>();
+
         private string spearmanSpriteSheetBitmapFile;
         private string knightSpriteSheetBitmapFile;
         private string crossbowmanSpriteSheetBitmapFile;
+        private string arrowSpriteBitmapFile;
+
         private AnimatedSpriteInfo spearmanSpriteInfo;
         private AnimatedSpriteInfo knightSpriteInfo;
         private AnimatedSpriteInfo crossbowmanSpriteInfo;
@@ -112,10 +120,6 @@ namespace DefendCastleScript
 
         private int initDelay = 50;
         private int curDelay = 0;
-
-        private AnimatedSprite enemySpearman;
-        private AnimatedSprite enemyKnight;
-        private AnimatedSprite enemyCrossbowman;
 
         private ExpressionParser expressionParser;
 
@@ -141,6 +145,7 @@ namespace DefendCastleScript
 
         private string scriptDataDir;
         private string iconFile;
+        private int winWidth;
         private int winHeight;
         private Engine engine;
 
@@ -174,7 +179,9 @@ namespace DefendCastleScript
             expressionParser = new ExpressionParser();
 
             this.engine = engine;
-            winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
+
+			winWidth = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPHORZRES);
+			winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
             engine.ChangeBackground(Resources.CastleBackGround);
             defenderArchers = new List<Actor>();
 
@@ -197,6 +204,7 @@ namespace DefendCastleScript
             lbCounterdownNotice = new GDIStaticText("Ready: " + curCounterdown.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
             lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
             lbGameOver = new GDIStaticText("GAME OVER", "Arial", (int)titleSize, Brushes.Red, new PointF(0, 0), false, AlignMethod.CENTER);
+            lbPower = new GDIStaticText("Power: " + power.ToString(), "Arial", 15, Brushes.Black, new PointF(0, 0), false, AlignMethod.BOTTOM);
 
             scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data\\DefendCastleScript\\");
             string scriptSpriteDataDir = Path.Combine(scriptDataDir, "Sprites");
@@ -209,7 +217,9 @@ namespace DefendCastleScript
             spearmanSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "SpearmanSprite.png");
             knightSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "KnightSprite.png");
             crossbowmanSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "CrossbowmanSprite.png");
-            string archerSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "ArcherSprite.png");
+            arrowSpriteBitmapFile = Path.Combine(scriptSpriteDataDir, "arrow.png");
+
+			string archerSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "ArcherSprite.png");
 
             spearmanSpriteInfo = animatedSpriteInfoList.AnimatedSprites.Where(o => o.Name == "Spearman").FirstOrDefault();
             knightSpriteInfo = animatedSpriteInfoList.AnimatedSprites.Where(o => o.Name == "Knight").FirstOrDefault();
@@ -240,10 +250,20 @@ namespace DefendCastleScript
             defenderArchers.Add(defenderArcher4);
 
             iconFile = Path.Combine(scriptIconDataDir, "icon.ico");
+
+			engine.MouseUpEvent += MouseUp;
         }
 
-        public void Render(Graphics g, IRenderer renderer)
-        {
+		public void Render(Graphics g, IRenderer renderer)
+		{
+            lbPower.Text = "Power: " + power.ToString();
+			lbPower.Draw(g);
+
+            if(powerEnabled)
+            {
+                power++;
+            }
+
             if (!levelStarted && activeCounterdown)
             {
                 lbCounterdownNotice.Draw(g);
@@ -367,7 +387,7 @@ namespace DefendCastleScript
 			}
 			var movement = new SpriteAxisMovement(
                 SpriteAxisMovementType.MovementByXAxis, 
-                SpriteAxisMovementDirection.Right, 
+                SpriteMovementDirection.Right, 
                 actor.Position, destPos, 
                 actor.GetActorProperty("Speed"), 5);
 			gameObject.SetSteering(movement);
@@ -418,19 +438,36 @@ namespace DefendCastleScript
             if (defenderArchers.Where(o => !o.IsAlive).Count() == defenderArchers.Count)
                 return;
 
-			foreach (var defender in defenderArchers)
-			{
-				if (!defender.IsAlive)
-					continue;
+            powerEnabled = true;
+		}
 
-				var centerPos = defender.CenterPosition;
-                var angle = Math.Atan((centerPos.Y - y) / (centerPos.X - x));
-                var spriteArrow = new Sprite("arrow", null, defender.Position);
-                var spriteArrowMovement = new SpriteParabolaMovement(angle, 15, 5);
-                spriteArrow.SetSteering(spriteArrowMovement);
-                var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Speed", "15" } });
-                engine.GameObjects.Add(spriteArrow);
-			}
+		private void MouseUp(int x, int y)
+		{
+            if (powerEnabled)
+            {
+                powerEnabled = false;
+                power = 1;
+
+				playSound(soundPlayer, "bow_shoot.wav");
+
+				foreach (var defender in defenderArchers)
+                {
+                    if (!defender.IsAlive)
+                        continue;
+
+                    var centerPos = defender.CenterPosition;
+                    var angle = Math.Atan((y - centerPos.Y) / (x - centerPos.X));
+                    var spriteArrow = new Sprite("arrow", new Bitmap(arrowSpriteBitmapFile), defender.Position);
+
+                    var spriteArrowMovement = new SpriteParabolaMovement(
+                        SpriteMovementDirection.Left,
+                        angle * -20, 100, -9.8f, centerPos);
+                    spriteArrow.SetSteering(spriteArrowMovement);
+
+                    var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Speed", "15" } });
+                    engine.GameObjects.Add(spriteArrow);
+                }
+            }
 		}
 
 		public void MouseMoved(int x, int y)
@@ -447,9 +484,7 @@ namespace DefendCastleScript
                 var angle = Math.Atan((centerPos.Y - y) / (centerPos.X - x));
 
                 if (angle > 0) { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 2); }
-                
                 else if (angle < 0) { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 1); }
-                
                 else { ((AnimatedSprite)defender.GameObject).ChangeToSpecificFrame("Shoot", 3); }
 			}
 		}
