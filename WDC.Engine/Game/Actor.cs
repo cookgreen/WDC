@@ -19,6 +19,8 @@ namespace WDC.Game
         private StateMachine stateMachine;
         private bool isAlive;
 
+        public event Action ActorIsDead;
+
         public GameObject GameObject
         { 
             get { return gameObject; } 
@@ -33,6 +35,7 @@ namespace WDC.Game
             this.gameObject = gameObject;
             this.actorProperies = actorProperies;
             expressionParser = new ExpressionParser();
+            isAlive = true;
         }
 
         public void InitAI(List<AIState> states)
@@ -57,7 +60,7 @@ namespace WDC.Game
 			set 
             {
                 var centerPos = value;
-                var pos = new PointF(centerPos.X - gameObject.Size.Width/2, centerPos.Y- gameObject.Size.Height/2);
+                var pos = new PointF(centerPos.X - gameObject.Size.Width / 2, centerPos.Y - gameObject.Size.Height / 2);
                 gameObject.Position = pos;
             }
 		}
@@ -68,19 +71,25 @@ namespace WDC.Game
             return float.Parse(expressionParser.Parse(expression).ToString());
 		}
 
-		public void SetActorProperty(string propertyName, float newValue)
+		public void SetActorPropertyFixedValue(string propertyName, float newValue)
 		{
-			actorProperies[propertyName] = newValue.ToString();
+            actorProperies[propertyName] = "VALUE{" + newValue.ToString() + "}";
+		}
+
+		public void SetActorPropertyRangeValue(string propertyName, float newValue1, float newValue2)
+		{
+            actorProperies[propertyName] = "RANDOM{" + newValue1.ToString() + "-" + newValue2.ToString() + "}";
 		}
 
 		public void Render(Graphics g, IRenderer renderer)
         {
             gameObject.Render(g, renderer);
 
-            if (GetActorProperty("HP") == 0)
+            if (GetActorProperty("HP") <= 0)
             {
                 isAlive = false;
-            }
+                ActorIsDead?.Invoke();
+			}
             else
             {
                 isAlive = true;

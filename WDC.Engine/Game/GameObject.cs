@@ -40,11 +40,16 @@ namespace WDC.Game
 			set { size = value; }
 		}
 
+		public RectangleF Rectangle
+		{
+			get { return new RectangleF(position, size); }
+		}
+
 
 		public GameObject(string typeName)
 		{
 			this.typeName = typeName;
-			uniqueID = Guid.NewGuid().ToString();
+			uniqueID = string.Format("{0}-{1}", typeName, Guid.NewGuid().ToString());
 			state = LayerDetectedState.None;
 		}
 

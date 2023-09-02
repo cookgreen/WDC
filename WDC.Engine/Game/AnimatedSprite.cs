@@ -25,12 +25,24 @@ namespace WDC.Game
 		}
 		public override PointF Position
 		{
-			get { return position; }
+			get { return currentSequence.Position; }
 			set
 			{
 				foreach (var seq in sequences)
 				{
 					seq.Value.Position = value;
+				}
+			}
+		}
+
+		public override SizeF Size
+		{
+			get { return currentSequence.Size; }
+			set
+			{
+				foreach(var seq in sequences)
+				{
+					seq.Value.Size = value;
 				}
 			}
 		}
@@ -158,7 +170,18 @@ namespace WDC.Game
 					sprite.Position = value;
 				}
 			}
-        }
+		}
+		public SizeF Size
+		{
+			get { return currentSprite.Size; }
+			set
+			{
+				foreach (Sprite sprite in sprites)
+				{
+					sprite.Size = value;
+				}
+			}
+		}
 
 		public event Action DestReached;
 		public event Action<string> SequenceFinished;

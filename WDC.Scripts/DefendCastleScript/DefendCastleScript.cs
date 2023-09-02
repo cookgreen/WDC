@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Media;
 using WDC.Expression;
 using System.Numerics;
+using WDC.Physics;
 
 namespace DefendCastleScript
 {
@@ -26,10 +27,20 @@ namespace DefendCastleScript
 		DESKTOPHORZRES = 118,
 	}
 
+    public enum LevelStatus
+	{
+		Ready,
+		Initizating,
+        Running,
+        Stopped
+    }
+
     public class DefendCastleScript : WDCScript
     {
         [DllImport("gdi32.dll", EntryPoint = "GetDeviceCaps", SetLastError = true)]
         public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+
+        private LevelStatus levelStatus;
 
         private SoundPlayer soundPlayer;
         private SoundPlayer environmentPlayer;
@@ -123,26 +134,6 @@ namespace DefendCastleScript
 
         private ExpressionParser expressionParser;
 
-        private Dictionary<string, string> enemySpearmanDic = new Dictionary<string, string>()
-            {
-                { "HP", "VALUE{120}"},
-                { "Armour", "VALUE{10}"},
-                { "Speed", "RANDOM{1-3}"},
-            };
-        private Dictionary<string, string> enemyKnightDic = new Dictionary<string, string>()
-            {
-                { "HP", "VALUE{240}"},
-                { "Armour", "VALUE{30}"},
-                { "Speed", "RANDOM{10-15}"},
-            };
-        private Dictionary<string, string> enemyCrossbowmanDic = new Dictionary<string, string>()
-            {
-                { "HP", "VALUE{180}"},
-                { "Armour", "VALUE{17}"},
-                { "Speed", "RANDOM{10-15}"},
-                { "Damage", "RANDOM{10-15}"},
-            };
-
         private string scriptDataDir;
         private string iconFile;
         private int winWidth;
@@ -171,6 +162,10 @@ namespace DefendCastleScript
 
         public void Init(Engine engine)
         {
+            levelStatus = LevelStatus.Ready;
+
+			CollideManager.Instance.CollideHappened += CollideHappened;
+			ActorHitPointManager.Instance.ActorIsDead += ActorIsDead;
             random = new Random();
 
             soundPlayer = new SoundPlayer();
@@ -236,7 +231,7 @@ namespace DefendCastleScript
                 { "HP", "VALUE{220}"},
                 { "Armour", "VALUE{20}"},
                 { "Speed", "VALUE{0}"},
-                { "Damage", "VALUE{40}"},
+                { "Damage", "VALUE{15}"},
                 { "PromotionHPRate", "VALUE{0.5}"},
             };
             var defenderArcher1 = new Actor(archer1Sprite, defenderArcherDic);
@@ -254,72 +249,232 @@ namespace DefendCastleScript
 			engine.MouseUpEvent += MouseUp;
         }
 
+		private void ActorIsDead(Actor deadActor, Actor _)
+		{
+            ((AnimatedSprite)deadActor.GameObject).ChangeSequence("Die");
+		}
+
+		private void CollideHappened(Actor actor1, Actor actor2)
+		{
+            if(actor1.GameObject.UID.StartsWith("arrow"))//we only check arrow hit 
+            {
+                float originalHP = actor2.GetActorProperty("HP");
+                float damage = actor1.GetActorProperty("Damage");
+                actor2.SetActorPropertyFixedValue("HP", originalHP - damage);
+                if(!actor2.IsAlive)
+                {
+                    ActorHitPointManager.Instance.KillActor(actor2, actor1);
+                }
+            }
+		}
+
+
+
 		public void Render(Graphics g, IRenderer renderer)
 		{
-            lbPower.Text = "Power: " + power.ToString();
-			lbPower.Draw(g);
+            if (levelStatus == LevelStatus.Initizating)
+			{
+				curDelay = 0;
+				startNewLevel();
+				//playSoundLoop(environmentPlayer, "environment.wav");
 
-            if(powerEnabled)
-            {
-                power++;
-            }
+				lbLevelTitle.Draw(g);
 
-            if (!levelStarted && activeCounterdown)
-            {
-                lbCounterdownNotice.Draw(g);
-            }
-            else if (levelStarted)
-            {
-                lbLevelTitle.Draw(g);
-            }
-            else if (enemies.Count == 0)
-            {
-                stopPlaySound(environmentPlayer);
-                playSound(soundPlayer, "level_victory.wav");
-                currentLevel++;
-                lbLevelTitle.Text = "LEVEL: " + currentLevel.ToString();
-                curCounterdown = initCounterdown;
-                levelStarted = false;
-                activeCounterdown = true;
-            }
-            else if (castleGateHP == 0) //All defenders are dead or Castle gate has been broken, the game over
-            {
-                lbGameOver.Draw(g);
-            }
+                levelStatus = LevelStatus.Running;
+			}
+            else if (levelStatus == LevelStatus.Ready)
+			{
+                if (curCounterdown == 0)
+                {
+                    levelStatus = LevelStatus.Initizating;
+                }
+                else
+				{
+					lbCounterdownNotice.Text = "Ready: " + curCounterdown.ToString();
+					lbCounterdownNotice.Draw(g);
 
-            if(!levelStarted && curCounterdown == 0)
-            {
-                curDelay = 0;
-                activeCounterdown = false;
-                startNewLevel();
-                //playSoundLoop(environmentPlayer, "environment.wav");
-            }
+                    if (curDelay == initDelay)
+                    {
+                        curCounterdown--;
+                        curDelay = 0;
+                    }
+                    else
+                    {
+                        curDelay++;
+                    }
+                }
+			}
+            else if(levelStatus == LevelStatus.Running)
+			{
+				if (defenderArchers.Where(o => o.IsAlive).Count() == 0)
+				{
+                    levelStatus = LevelStatus.Stopped;
+					//all defender died, game over
+					gameOver(g);
+				}
+				else
+				{
+					if (enemies.Where(o => o.IsAlive).Count() == 0)
+					{
+						//all enemies died, start next level
+						stopPlaySound(environmentPlayer);
+						playSound(soundPlayer, "level_victory.wav");
+						currentLevel++;
 
-            if (curDelay == initDelay && activeCounterdown)
-            {
-                curCounterdown--;
-                curDelay = 0;
+						lbLevelTitle.Text = "LEVEL: " + currentLevel.ToString();
+						curCounterdown = initCounterdown;
 
-                lbCounterdownNotice.Text = "Ready: " + curCounterdown.ToString();
-            }
-            else
-            {
-                curDelay++;
-            }
+						levelStatus = LevelStatus.Ready;
+					}
+				}
 
-            foreach(var defender in defenderArchers)
-            {
-                defender.Render(g, renderer);
-            }
-            foreach (var enemy in enemies)
-            {
-                enemy.Render(g, renderer);
-            }
+				foreach (var defender in defenderArchers)
+				{
+					defender.Render(g, renderer);
+				}
 
-            time++;
-        }
+				foreach (var enemy in enemies)
+				{
+					enemy.Render(g, renderer);
+				}
 
-        private Actor createActor(GameObject gameObject, Dictionary<string, string> dic)
+				time++;
+
+				CollideManager.Instance.Update();
+			}
+		}
+
+		private void startNewLevel()
+		{
+			clearEnemies();
+			enemies.Clear();
+			Engine.Instance.Actors.Clear();
+			CollideManager.Instance.ClearAll();
+
+			var enemyData = levelData[currentLevel].ElementAt(0).Value;
+			string[] enemyArr = enemyData.Split(',');
+			for (int i = 0; i < enemyArr.Length; i++)
+			{
+				string enemyAr = enemyArr[i];
+				string[] enemyDic = enemyAr.Split('|');
+				string enemyType = enemyDic[0];
+				int enemyNumber = int.Parse(enemyDic[1]);
+				spawnEnemy(enemyType, enemyNumber);
+			}
+
+			//Play Level Start Sound
+			playSound(soundPlayer, "level_start.wav");
+
+			levelStarted = true;
+		}
+
+		private void clearEnemies()
+		{
+			foreach (var enemy in enemies)
+			{
+				engine.Actors.Remove(enemy);
+				engine.GameObjects.Remove(enemy.GameObject);
+			}
+		}
+
+		private void gameOver(Graphics g)
+        {
+			lbGameOver.Draw(g);
+		}
+
+		private void spawnEnemy(string enemyType, int enemyNumber)
+		{
+			for (int j = 0; j < enemyNumber; j++)
+			{
+				Actor actor = spawnSingleEnemy(enemyType);
+				enemies.Add(actor);
+			}
+		}
+
+		private Actor spawnSingleEnemy(string enemyType)
+		{
+            AnimatedSprite gameObject = null;
+			Actor actor = null;
+
+			PointF destPos = new PointF();
+			int randX = random.Next(10, 50);
+			int randY = 0;
+
+			var randGateNo = random.Next(1, 4);
+			switch (randGateNo)
+			{
+				case 1:
+					randY = random.Next(543, 563);
+					destPos = castleGate1Pos;
+					break;
+				case 2:
+					randY = random.Next(613, 633);
+					destPos = castleGate2Pos;
+					break;
+				case 3:
+					randY = random.Next(725, 745);
+					destPos = castleGate3Pos;
+					break;
+			}
+			enemySpawnPoint = new PointF(randX, randY);
+
+			switch (enemyType)
+			{
+				case "Spearman":
+					Dictionary<string, string> enemySpearmanDic = new Dictionary<string, string>()
+			        {
+			        	{ "HP", "VALUE{120}"},
+			        	{ "Armour", "VALUE{10}"},
+			        	{ "Speed", "RANDOM{1-3}"},
+			        };
+					gameObject = new AnimatedSprite("spearman", 
+                        new Bitmap(spearmanSpriteSheetBitmapFile), 
+                        spearmanSpriteInfo, 
+                        enemySpawnPoint, 
+                        AlignMethod.MANUAL);
+					actor = createActor(gameObject, enemySpearmanDic);
+					break;
+				case "Knight":
+					Dictionary<string, string> enemyKnightDic = new Dictionary<string, string>()
+			        {
+			        	{ "HP", "VALUE{240}"},
+			        	{ "Armour", "VALUE{30}"},
+			        	{ "Speed", "RANDOM{0.5f-0.8f}"},
+			        };
+					gameObject = new AnimatedSprite("knight", 
+                        new Bitmap(knightSpriteSheetBitmapFile), 
+                        knightSpriteInfo, 
+                        enemySpawnPoint, 
+                        AlignMethod.MANUAL);
+					actor = createActor(gameObject, enemyKnightDic);
+					break;
+				case "Crossbowman":
+					Dictionary<string, string> enemyCrossbowmanDic = new Dictionary<string, string>()
+			        {
+			        	{ "HP", "VALUE{180}"},
+			        	{ "Armour", "VALUE{17}"},
+			        	{ "Speed", "RANDOM{2-4}"},
+			        	{ "Damage", "RANDOM{10-15}"},
+			        };
+					gameObject = new AnimatedSprite("crossbowman", 
+                        new Bitmap(crossbowmanSpriteSheetBitmapFile), 
+                        crossbowmanSpriteInfo, 
+                        enemySpawnPoint, 
+                        AlignMethod.MANUAL);
+					actor = createActor(gameObject, enemyCrossbowmanDic);
+					break;
+			}
+			var movement = new SpriteAxisMovement(
+				SpriteAxisMovementType.MovementByXAxis,
+				SpriteMovementDirection.Right,
+				actor.Position, destPos,
+				actor.GetActorProperty("Speed"), 5);
+			gameObject.SetSteering(movement);
+			gameObject.DestReached += GameObjectDestReached;
+			return actor;
+		}
+
+		private Actor createActor(GameObject gameObject, Dictionary<string, string> dic)
         {
             return new Actor(gameObject, dic);
         }
@@ -341,58 +496,6 @@ namespace DefendCastleScript
         private void stopPlaySound(SoundPlayer soundPlayer)
         {
             soundPlayer.Stop();
-        }
-
-        private Actor spawnSingleEnemy(string enemyType)
-		{
-			AnimatedSprite gameObject = null;
-            Actor actor = null;
-
-            PointF destPos = new PointF();
-			int randX = random.Next(10, 50);
-            int randY = 0;
-
-			var randGateNo = random.Next(1, 4);
-            switch(randGateNo)
-            {
-                case 1:
-                    randY = random.Next(543, 563);
-                    destPos = castleGate1Pos;
-					break;
-                case 2:
-					randY = random.Next(613, 633);
-					destPos = castleGate2Pos;
-					break;
-                case 3:
-					randY = random.Next(725, 745);
-					destPos = castleGate3Pos;
-					break;
-            }
-			enemySpawnPoint = new PointF(randX, randY);
-			
-            switch (enemyType)
-			{
-				case "Spearman":
-					gameObject = new AnimatedSprite("spearman", new Bitmap(spearmanSpriteSheetBitmapFile), spearmanSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemySpearmanDic);
-					break;
-				case "Knight":
-					gameObject = new AnimatedSprite("knight", new Bitmap(knightSpriteSheetBitmapFile), knightSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemyKnightDic);
-					break;
-				case "Crossbowman":
-					gameObject = new AnimatedSprite("crossbowman", new Bitmap(crossbowmanSpriteSheetBitmapFile), crossbowmanSpriteInfo, enemySpawnPoint, AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemyCrossbowmanDic);
-					break;
-			}
-			var movement = new SpriteAxisMovement(
-                SpriteAxisMovementType.MovementByXAxis, 
-                SpriteMovementDirection.Right, 
-                actor.Position, destPos, 
-                actor.GetActorProperty("Speed"), 5);
-			gameObject.SetSteering(movement);
-			gameObject.DestReached += GameObjectDestReached;
-			return actor;
 		}
 
 		private void GameObjectDestReached(AnimatedSprite gameObject)
@@ -404,50 +507,14 @@ namespace DefendCastleScript
             }
 		}
 
-		private void spawnEnemy(string enemyType, int enemyNumber)
-        {
-			for (int j = 0; j < enemyNumber; j++)
-			{
-				Actor actor = spawnSingleEnemy(enemyType);
-				enemies.Add(actor);
-			}
-		}
-
-        private void startNewLevel()
-        {
-            enemies.Clear();
-            var enemyData = levelData[currentLevel].ElementAt(0).Value;
-            string[] enemyArr = enemyData.Split(',');
-            for (int i = 0; i < enemyArr.Length; i++)
-            {
-                string enemyAr = enemyArr[i];
-                string[] enemyDic = enemyAr.Split('|');
-                string enemyType = enemyDic[0];
-                int enemyNumber = int.Parse(enemyDic[1]);
-                spawnEnemy(enemyType, enemyNumber);
-            }
-
-            //Play Level Start Sound
-            playSound(soundPlayer, "level_start.wav");
-
-            levelStarted = true;
-        }
-
 		public void MouseClicked(int x, int y)
 		{
-            if (defenderArchers.Where(o => !o.IsAlive).Count() == defenderArchers.Count)
-                return;
-
-            powerEnabled = true;
 		}
 
 		private void MouseUp(int x, int y)
 		{
-            if (powerEnabled)
+            if (levelStatus == LevelStatus.Running)
             {
-                powerEnabled = false;
-                power = 1;
-
 				playSound(soundPlayer, "bow_shoot.wav");
 
 				foreach (var defender in defenderArchers)
@@ -464,9 +531,11 @@ namespace DefendCastleScript
                         angle * -20, 100, -9.8f, centerPos);
                     spriteArrow.SetSteering(spriteArrowMovement);
 
-                    var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Speed", "15" } });
+                    var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Damage", "VALUE{15}" } });
                     engine.GameObjects.Add(spriteArrow);
-                }
+
+					CollideManager.Instance.AddCollideCheckRange(actorArrow, enemies);
+				}
             }
 		}
 

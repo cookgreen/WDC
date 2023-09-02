@@ -24,6 +24,7 @@ namespace WDC.Core
         private WDCScript script;
 		private GameObject lastEnterGameObject;
 		private bool isEnableCheat;
+		private List<Actor> actors;
 		private List<GameObject> gameObjects;
 		private Point renderResolution;
 		private IRenderer renderer;
@@ -41,6 +42,7 @@ namespace WDC.Core
             get { return renderer.Resoultion; }
         }
 
+		public List<Actor> Actors { get { return actors; } }
 		public List<GameObject> GameObjects { get { return gameObjects; } }
         //public event Action CanvasClicked;
         public int WinHeight { get { return winHeight; } }
@@ -155,6 +157,7 @@ namespace WDC.Core
 		public void StartNewGame()
 		{
 			gameObjects = new List<GameObject>();
+			actors = new List<Actor>();
 		}
 
 		public void Exit()

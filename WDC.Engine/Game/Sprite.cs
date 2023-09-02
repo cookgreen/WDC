@@ -32,6 +32,7 @@ namespace WDC.Game
             this.typeName = typeName;
             this.image = image;
             this.position = position;
+            size = new SizeF(image.Width, image.Height);
             this.scale = scale;
             switch (alignment)
             {
