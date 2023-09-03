@@ -15,6 +15,7 @@ using System.Media;
 using WDC.Expression;
 using System.Numerics;
 using WDC.Physics;
+using DefendCastleScript.Xml;
 
 namespace DefendCastleScript
 {
@@ -41,6 +42,7 @@ namespace DefendCastleScript
         public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 
         private LevelStatus levelStatus;
+        private GameXml gameXml;
 
         private SoundPlayer soundPlayer;
         private SoundPlayer environmentPlayer;
@@ -207,7 +209,8 @@ namespace DefendCastleScript
             string scriptIconDataDir = Path.Combine(scriptDataDir, "Icon");
             scriptSoundDataDir = Path.Combine(scriptDataDir, "Sound");
 
-            AnimatedSpriteInfoList animatedSpriteInfoList = AnimatedSpriteInfoList.Parse(Path.Combine(scriptSettingsDataDir, "anim.xml"));
+			gameXml = GameXml.Parse(Path.Combine(scriptSettingsDataDir, "game.xml"));
+			AnimatedSpriteInfoList animatedSpriteInfoList = AnimatedSpriteInfoList.Parse(Path.Combine(scriptSettingsDataDir, gameXml.Art.file));
 
             spearmanSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "SpearmanSprite.png");
             knightSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "KnightSprite.png");
@@ -226,18 +229,10 @@ namespace DefendCastleScript
             AnimatedSprite archer3Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer3Pos);
             AnimatedSprite archer4Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer4Pos);
 
-            var defenderArcherDic = new Dictionary<string, string>()
-            {
-                { "HP", "VALUE{220}"},
-                { "Armour", "VALUE{20}"},
-                { "Speed", "VALUE{0}"},
-                { "Damage", "VALUE{15}"},
-                { "PromotionHPRate", "VALUE{0.5}"},
-            };
-            var defenderArcher1 = new Actor(archer1Sprite, defenderArcherDic);
-            var defenderArcher2 = new Actor(archer2Sprite, defenderArcherDic);
-            var defenderArcher3 = new Actor(archer3Sprite, defenderArcherDic);
-            var defenderArcher4 = new Actor(archer4Sprite, defenderArcherDic);
+            var defenderArcher1 = new Actor(null, archer1Sprite, gameXml["archer"].ToDic());
+            var defenderArcher2 = new Actor(null, archer2Sprite, gameXml["archer"].ToDic());
+            var defenderArcher3 = new Actor(null, archer3Sprite, gameXml["archer"].ToDic());
+            var defenderArcher4 = new Actor(null, archer4Sprite, gameXml["archer"].ToDic());
 
             defenderArchers.Add(defenderArcher1);
             defenderArchers.Add(defenderArcher2);
@@ -263,7 +258,7 @@ namespace DefendCastleScript
                 actor2.SetActorPropertyFixedValue("HP", originalHP - damage);
                 if(!actor2.IsAlive)
                 {
-                    ActorHitPointManager.Instance.KillActor(actor2, actor1);
+                    ActorHitPointManager.Instance.KillActor(actor2, actor1.Parent);
                 }
             }
 		}
@@ -421,47 +416,28 @@ namespace DefendCastleScript
 			switch (enemyType)
 			{
 				case "Spearman":
-					Dictionary<string, string> enemySpearmanDic = new Dictionary<string, string>()
-			        {
-			        	{ "HP", "VALUE{120}"},
-			        	{ "Armour", "VALUE{10}"},
-			        	{ "Speed", "RANDOM{1-3}"},
-			        };
 					gameObject = new AnimatedSprite("spearman", 
                         new Bitmap(spearmanSpriteSheetBitmapFile), 
                         spearmanSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemySpearmanDic);
+					actor = createActor(gameObject, gameXml["spearman"].ToDic());
 					break;
 				case "Knight":
-					Dictionary<string, string> enemyKnightDic = new Dictionary<string, string>()
-			        {
-			        	{ "HP", "VALUE{240}"},
-			        	{ "Armour", "VALUE{30}"},
-			        	{ "Speed", "RANDOM{0.5f-0.8f}"},
-			        };
 					gameObject = new AnimatedSprite("knight", 
                         new Bitmap(knightSpriteSheetBitmapFile), 
                         knightSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemyKnightDic);
+					actor = createActor(gameObject, gameXml["knight"].ToDic());
 					break;
 				case "Crossbowman":
-					Dictionary<string, string> enemyCrossbowmanDic = new Dictionary<string, string>()
-			        {
-			        	{ "HP", "VALUE{180}"},
-			        	{ "Armour", "VALUE{17}"},
-			        	{ "Speed", "RANDOM{2-4}"},
-			        	{ "Damage", "RANDOM{10-15}"},
-			        };
 					gameObject = new AnimatedSprite("crossbowman", 
                         new Bitmap(crossbowmanSpriteSheetBitmapFile), 
                         crossbowmanSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, enemyCrossbowmanDic);
+					actor = createActor(gameObject, gameXml["crossbowman"].ToDic());
 					break;
 			}
 			var movement = new SpriteAxisMovement(
@@ -476,10 +452,15 @@ namespace DefendCastleScript
 
 		private Actor createActor(GameObject gameObject, Dictionary<string, string> dic)
         {
-            return new Actor(gameObject, dic);
-        }
+            return new Actor(null, gameObject, dic);
+		}
 
-        private void playSound(SoundPlayer soundPlayer, string soundFile)
+		private Actor createActorWithParent(Actor parent, GameObject gameObject, Dictionary<string, string> dic)
+		{
+			return new Actor(parent, gameObject, dic);
+		}
+
+		private void playSound(SoundPlayer soundPlayer, string soundFile)
         {
             string soundFullPath = Path.Combine(scriptSoundDataDir, soundFile);
             soundPlayer.SoundLocation = soundFullPath;
@@ -531,7 +512,7 @@ namespace DefendCastleScript
                         angle * -20, 100, -9.8f, centerPos);
                     spriteArrow.SetSteering(spriteArrowMovement);
 
-                    var actorArrow = createActor(spriteArrow, new Dictionary<string, string>() { { "Damage", "VALUE{15}" } });
+                    var actorArrow = createActorWithParent(defender, spriteArrow, new Dictionary<string, string>());
                     engine.GameObjects.Add(spriteArrow);
 
 					CollideManager.Instance.AddCollideCheckRange(actorArrow, enemies);

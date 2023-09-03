@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Game>
+  <Art file="anim.xml" />
+  <DataSet>
+    <Data Name="Spearman">
+      <DataPair Name="HP">VALUE{120}</DataPair>
+      <DataPair Name="Armour">VALUE{20}</DataPair>
+      <DataPair Name="Speed">RANDOM{1-3}</DataPair>
+    </Data>
+    <Data Name="Knight">
+      <DataPair Name="HP">VALUE{160}</DataPair>
+      <DataPair Name="Armour">VALUE{40}</DataPair>
+      <DataPair Name="Speed">RANDOM{0.3f-0.5f}</DataPair>
+    </Data>
+    <Data Name="Crossbowman">
+      <DataPair Name="HP">VALUE{80}</DataPair>
+      <DataPair Name="Armour">VALUE{8}</DataPair>
+      <DataPair Name="Speed">RANDOM{0.5f-0.8f}</DataPair>
+    </Data>
+    <Data Name="Archer">
+      <DataPair Name="HP">VALUE{200}</DataPair>
+      <DataPair Name="Armour">VALUE{20}</DataPair>
+      <DataPair Name="Speed">VALUE{0}</DataPair>
+      <DataPair Name="Damage">VALUE{15}</DataPair>
+    </Data>
+  </DataSet>
+  <Levels>
+    <Level No="1">
+      <LevelData Name="Spearman" Value="5" />
+    </Level>
+    <Level No="2">
+      <LevelData Name="Spearman" Value="10" />
+    </Level>
+    <Level No="3">
+      <LevelData Name="Spearman" Value="8" />
+      <LevelData Name="Knight" Value="5" />
+    </Level>
+    <Level No="4">
+      <LevelData Name="Spearman" Value="10" />
+      <LevelData Name="Knight" Value="8" />
+    </Level>
+    <Level No="5">
+      <LevelData Name="Spearman" Value="8" />
+      <LevelData Name="Knight" Value="5" />
+      <LevelData Name="Crossbowman" Value="2" />
+    </Level>
+    <Level No="6">
+      <LevelData Name="Spearman" Value="10" />
+      <LevelData Name="Knight" Value="7" />
+      <LevelData Name="Crossbowman" Value="4" />
+    </Level>
+    <Level No="7">
+      <LevelData Name="Spearman" Value="12" />
+      <LevelData Name="Knight" Value="9" />
+      <LevelData Name="Crossbowman" Value="6" />
+    </Level>
+    <Level No="8">
+      <LevelData Name="Spearman" Value="12" />
+      <LevelData Name="Knight" Value="9" />
+      <LevelData Name="Crossbowman" Value="8" />
+    </Level>
+    <Level No="9">
+      <LevelData Name="Spearman" Value="14" />
+      <LevelData Name="Knight" Value="9" />
+      <LevelData Name="Crossbowman" Value="6" />
+    </Level>
+    <Level No="10">
+      <LevelData Name="Spearman" Value="16" />
+      <LevelData Name="Knight" Value="10" />
+      <LevelData Name="Crossbowman" Value="10" />
+    </Level>
+  </Levels>
+</Game>

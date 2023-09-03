@@ -13,6 +13,7 @@ namespace WDC.Game
 {
     public class Actor : ICollidable
     {
+        private Actor parentActor;
         private GameObject gameObject;
         private Dictionary<string, string> actorProperies;
         private ExpressionParser expressionParser;
@@ -21,7 +22,11 @@ namespace WDC.Game
 
         public event Action ActorIsDead;
 
-        public GameObject GameObject
+		public Actor Parent
+		{
+			get { return parentActor; }
+		}
+		public GameObject GameObject
         { 
             get { return gameObject; } 
         }
@@ -30,8 +35,12 @@ namespace WDC.Game
             get { return isAlive; }
         }
 
-        public Actor(GameObject gameObject, Dictionary<string, string> actorProperies)
+        public Actor(
+            Actor parentActor,
+            GameObject gameObject, 
+            Dictionary<string, string> actorProperies)
         {
+            this.parentActor = parentActor;
             this.gameObject = gameObject;
             this.actorProperies = actorProperies;
             expressionParser = new ExpressionParser();
@@ -67,8 +76,19 @@ namespace WDC.Game
 
 		public float GetActorProperty(string propertyName)
         {
-            string expression = actorProperies[propertyName];
-            return float.Parse(expressionParser.Parse(expression).ToString());
+            if (actorProperies.ContainsKey(propertyName))
+            {
+                string expression = actorProperies[propertyName];
+                return float.Parse(expressionParser.Parse(expression).ToString());
+            }
+            else if (parentActor != null)
+            {
+                return parentActor.GetActorProperty(propertyName);
+            }
+            else
+            {
+                throw new Exception("Error!");
+            }
 		}
 
 		public void SetActorPropertyFixedValue(string propertyName, float newValue)
