@@ -50,70 +50,11 @@ namespace DefendCastleScript
         private string scriptSoundDataDir;
         private Random random;
         private int currentLevel = 1;
-        private bool levelStarted = false;
-        private bool activeCounterdown = true;
-        private int power = 1;
-        private bool powerEnabled = false;
-
-        private Dictionary<int, Dictionary<string, string>> levelData = new Dictionary<int, Dictionary<string, string>>
-        {
-            { 1, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|5" }
-                }
-            },
-            { 2, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|15" }
-                }
-            },
-            { 3, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|10,Knight|5" }
-                }
-            },
-            { 4, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|15,Knight|10" }
-                }
-            },
-            { 5, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|20,Knight|10" }
-                }
-            },
-            { 6, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|5,Knight|5,Crossbowman|2" }
-                }
-            },
-            { 7, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|10,Knight|5,Crossbowman|3" }
-                }
-            },
-            { 8, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|5, Knight|10, Crossbowman|5" }
-                }
-            },
-            { 9, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|5,Knight|5,Crossbowman|10" }
-                }
-            },
-            { 10, new Dictionary<string, string>
-                {
-                    {"enemyType", "Spearman|15,Knight|10,Crossbowman|5" }
-                }
-            },
-        };
         private float time = 0;
         
         private GDIStaticText lbCounterdownNotice;
         private GDIStaticText lbLevelTitle;
         private GDIStaticText lbGameOver;
-		private GDIStaticText lbPower;
 
 		private List<Actor> enemies = new List<Actor>();
         private List<Actor> defenderArchers = new List<Actor>();
@@ -126,15 +67,12 @@ namespace DefendCastleScript
         private AnimatedSpriteInfo spearmanSpriteInfo;
         private AnimatedSpriteInfo knightSpriteInfo;
         private AnimatedSpriteInfo crossbowmanSpriteInfo;
-        private float castleGateHP = 500;
 
         private int initCounterdown = 10;
         private int curCounterdown = 10;
 
         private int initDelay = 50;
         private int curDelay = 0;
-
-        private ExpressionParser expressionParser;
 
         private string scriptDataDir;
         private string iconFile;
@@ -163,8 +101,10 @@ namespace DefendCastleScript
         }
 
         public void Init(Engine engine)
-        {
-            levelStatus = LevelStatus.Ready;
+		{
+			this.engine = engine;
+
+			levelStatus = LevelStatus.Ready;
 
 			CollideManager.Instance.CollideHappened += CollideHappened;
 			ActorHitPointManager.Instance.ActorIsDead += ActorIsDead;
@@ -172,10 +112,6 @@ namespace DefendCastleScript
 
             soundPlayer = new SoundPlayer();
             environmentPlayer = new SoundPlayer();
-
-            expressionParser = new ExpressionParser();
-
-            this.engine = engine;
 
 			winWidth = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPHORZRES);
 			winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
@@ -201,7 +137,6 @@ namespace DefendCastleScript
             lbCounterdownNotice = new GDIStaticText("Ready: " + curCounterdown.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
             lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
             lbGameOver = new GDIStaticText("GAME OVER", "Arial", (int)titleSize, Brushes.Red, new PointF(0, 0), false, AlignMethod.CENTER);
-            lbPower = new GDIStaticText("Power: " + power.ToString(), "Arial", 15, Brushes.Black, new PointF(0, 0), false, AlignMethod.BOTTOM);
 
             scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data\\DefendCastleScript\\");
             string scriptSpriteDataDir = Path.Combine(scriptDataDir, "Sprites");
@@ -229,10 +164,10 @@ namespace DefendCastleScript
             AnimatedSprite archer3Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer3Pos);
             AnimatedSprite archer4Sprite = new AnimatedSprite("archer", new Bitmap(archerSpriteSheetBitmapFile), archerSpriteInfo, archer4Pos);
 
-            var defenderArcher1 = new Actor(null, archer1Sprite, gameXml["archer"].ToDic());
-            var defenderArcher2 = new Actor(null, archer2Sprite, gameXml["archer"].ToDic());
-            var defenderArcher3 = new Actor(null, archer3Sprite, gameXml["archer"].ToDic());
-            var defenderArcher4 = new Actor(null, archer4Sprite, gameXml["archer"].ToDic());
+            var defenderArcher1 = new Actor(null, archer1Sprite, gameXml["Archer"].ToDic());
+            var defenderArcher2 = new Actor(null, archer2Sprite, gameXml["Archer"].ToDic());
+            var defenderArcher3 = new Actor(null, archer3Sprite, gameXml["Archer"].ToDic());
+            var defenderArcher4 = new Actor(null, archer4Sprite, gameXml["Archer"].ToDic());
 
             defenderArchers.Add(defenderArcher1);
             defenderArchers.Add(defenderArcher2);
@@ -346,21 +281,16 @@ namespace DefendCastleScript
 			Engine.Instance.Actors.Clear();
 			CollideManager.Instance.ClearAll();
 
-			var enemyData = levelData[currentLevel].ElementAt(0).Value;
-			string[] enemyArr = enemyData.Split(',');
-			for (int i = 0; i < enemyArr.Length; i++)
+            var levelData = gameXml[currentLevel].LevelData;
+			foreach(var level in levelData)
 			{
-				string enemyAr = enemyArr[i];
-				string[] enemyDic = enemyAr.Split('|');
-				string enemyType = enemyDic[0];
-				int enemyNumber = int.Parse(enemyDic[1]);
+                string enemyType = level.Name;
+				int enemyNumber = int.Parse(level.Value);
 				spawnEnemy(enemyType, enemyNumber);
 			}
 
 			//Play Level Start Sound
 			playSound(soundPlayer, "level_start.wav");
-
-			levelStarted = true;
 		}
 
 		private void clearEnemies()
@@ -421,7 +351,7 @@ namespace DefendCastleScript
                         spearmanSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, gameXml["spearman"].ToDic());
+					actor = createActor(gameObject, gameXml["Spearman"].ToDic());
 					break;
 				case "Knight":
 					gameObject = new AnimatedSprite("knight", 
@@ -429,7 +359,7 @@ namespace DefendCastleScript
                         knightSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, gameXml["knight"].ToDic());
+					actor = createActor(gameObject, gameXml["Knight"].ToDic());
 					break;
 				case "Crossbowman":
 					gameObject = new AnimatedSprite("crossbowman", 
@@ -437,7 +367,7 @@ namespace DefendCastleScript
                         crossbowmanSpriteInfo, 
                         enemySpawnPoint, 
                         AlignMethod.MANUAL);
-					actor = createActor(gameObject, gameXml["crossbowman"].ToDic());
+					actor = createActor(gameObject, gameXml["Crossbowman"].ToDic());
 					break;
 			}
 			var movement = new SpriteAxisMovement(
