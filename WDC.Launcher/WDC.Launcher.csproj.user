@@ -8,7 +8,7 @@
     <Compile Update="Forms\frmDeveloperConsole.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\frmMain.cs">
+    <Compile Update="Forms\frmGameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

@@ -13,7 +13,10 @@ namespace DefendCastleScript.Xml
 	public class GameXml
 	{
 		[XmlElement]
-		public GameXmlArt Art { get; set; }
+		public GameXmlFileSection BoostMap { get; set; }
+
+		[XmlElement]
+		public GameXmlFileSection Art { get; set; }
 
 		[XmlElement]
 		public GameXmlDataSet DataSet { get; set; }
@@ -38,7 +41,7 @@ namespace DefendCastleScript.Xml
 
 		public GameXml()
 		{
-			Art = new GameXmlArt();
+			Art = new GameXmlFileSection();
 			DataSet = new GameXmlDataSet();
 			Levels = new GameLevelList();
 		}
@@ -54,8 +57,8 @@ namespace DefendCastleScript.Xml
 		}
 	}
 
-	[XmlRoot("Art")]
-	public class GameXmlArt
+	[XmlRoot]
+	public class GameXmlFileSection
 	{
 		[XmlAttribute]
 		public string file { get; set; }

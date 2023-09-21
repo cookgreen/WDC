@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Game>
+  <BoostMap file="map_castle.xml" />
   <Art file="anim.xml" />
   <DataSet>
     <Data Name="Spearman">

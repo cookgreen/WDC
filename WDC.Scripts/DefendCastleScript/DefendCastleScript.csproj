@@ -10,28 +10,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Icons\icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir $(SolutionDir)\bin\net7.0-windows\Scripts&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Icons&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sprites&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Settings&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sound&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net7.0-windows\Scripts /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Icons\icon.ico $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Icons /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Sprites\*.png $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sprites /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Settings\* $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Settings/V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Sound\* $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sound/V /Y" />
+    <Exec Command="mkdir $(SolutionDir)\bin\net7.0-windows\Scripts&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Icons&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sprites&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Settings&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sound&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Maps&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net7.0-windows\Scripts /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Icons\icon.ico $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Icons /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Sprites\*.png $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sprites /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Settings\* $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Settings/V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Sound\* $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Sound/V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\DefendCastleScript\Images\* $(SolutionDir)\bin\net7.0-windows\Data\DefendCastleScript\Maps/V /Y" />
   </Target>
 
 </Project>

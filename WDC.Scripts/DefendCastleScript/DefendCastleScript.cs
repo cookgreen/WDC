@@ -1,5 +1,4 @@
-﻿using DefendCastleScript.Properties;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
@@ -113,12 +112,11 @@ namespace DefendCastleScript
             soundPlayer = new SoundPlayer();
             environmentPlayer = new SoundPlayer();
 
-			winWidth = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPHORZRES);
-			winHeight = GetDeviceCaps(Graphics.FromHwnd(IntPtr.Zero).GetHdc(), (int)DeviceCap.DESKTOPVERTRES);
-            engine.ChangeBackground(Resources.CastleBackGround);
+            winWidth = engine.WinWidth;
+            winHeight = engine.WinHeight;
             defenderArchers = new List<Actor>();
 
-            float ratio = (float)winHeight / (float)1080;
+            float ratio = (float)winHeight / (float)864;
 
             //use ratio to adjust all the positions
             archer1Pos = new PointF(archer1Pos.X * ratio, archer1Pos.Y * ratio);
@@ -132,7 +130,6 @@ namespace DefendCastleScript
             castleGate3Pos = new PointF(castleGate3Pos.X * ratio, castleGate3Pos.Y * ratio);
 
             float titleSize = 80 * ratio;
-
 
             lbCounterdownNotice = new GDIStaticText("Ready: " + curCounterdown.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
             lbLevelTitle = new GDIStaticText("LEVEL: " + currentLevel.ToString(), "Arial", (int)titleSize, Brushes.Black, new PointF(0, 0), false, AlignMethod.CENTER);
