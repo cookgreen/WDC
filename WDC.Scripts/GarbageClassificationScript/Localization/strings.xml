@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LocalizedStrings>
+  <LocalizedString id="str_pig_bones">
+    <LocalizedStringEntry lang="en">Pig Bones</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">猪骨头</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_rotten_apples">
+    <LocalizedStringEntry lang="en">Rotten Apples</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">腐烂的苹果</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_used_battery">
+    <LocalizedStringEntry lang="en">Used Battery</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">用过的旧电池</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_napkins">
+    <LocalizedStringEntry lang="en">Napkins</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">南瓜</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_plastic_bottle">
+    <LocalizedStringEntry lang="en">Plastic Bottle</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">塑料瓶</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_pig_bones_desc">
+    <LocalizedStringEntry lang="en">Pig Bones</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">猪骨头</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_rotten_apples_desc">
+    <LocalizedStringEntry lang="en">Rotten Apples</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">腐烂的苹果</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_used_battery_desc">
+    <LocalizedStringEntry lang="en">Used Battery</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">用过的旧电池</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_napkins_desc">
+    <LocalizedStringEntry lang="en">Napkins</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">南瓜</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_plastic_bottle_desc">
+    <LocalizedStringEntry lang="en">Plastic Bottle</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">塑料瓶</LocalizedStringEntry>
+  </LocalizedString>
+</LocalizedStrings>

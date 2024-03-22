@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="mkdir $(SolutionDir)\bin\net7.0-windows\Scripts&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net7.0-windows\Scripts /V /Y" />
+    <Exec Command="mkdir $(SolutionDir)\bin\net7.0-windows\Scripts&#xD;&#xA;mkdir $(SolutionDir)\bin\net7.0-windows\Data\GarbageClassificationScript\Localization&#xD;&#xA;xcopy $(TargetPath) $(SolutionDir)\bin\net7.0-windows\Scripts /V /Y&#xD;&#xA;xcopy $(SolutionDir)\WDC.Scripts\GarbageClassificationScript\Localization\strings.xml $(SolutionDir)\bin\net7.0-windows\Data\GarbageClassificationScript\Localization\ /V /Y" />
   </Target>
 
 </Project>

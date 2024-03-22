@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using WDC.Game;
-using WDC.UI;
-using WDC.Interface;
-using GarbageClassificationScript.Properties;
-using System.Windows.Forms;
-using WDC.Core;
-using GarbageClassificationScript;
-using WDC.Script;
 using WDC.Console;
+using WDC.Core;
+using WDC.Game;
+using WDC.Interface;
+using WDC.Script;
+using WDC.UI;
 using GarbageClassificationScript.Console;
-using WDC.Locate;
+using GarbageClassificationScript.Localization;
+using GarbageClassificationScript.Properties;
+using System.IO;
 
 namespace GarbageClassificationScript
 {
     public class GarbageClassificationScript : WDCScript, INotifyMessageWhenShutdown
     {
-        private int winWidth;
+        private localizedStringsLoader localizedStringsLoader;
+
+		private int winWidth;
         private int winHeight;
         private GDISpriteButton box1;
         private GDISpriteButton box2;
@@ -54,23 +55,28 @@ namespace GarbageClassificationScript
 
         public GarbageClassificationScript()
         {
-            score = 100;
-            garbages = new List<GarbageData>()
-            {
-                new GarbageData(){ Name="Pig Bones", Description = "Pig Bones", Box = GarbageBox.Box1 },
-                new GarbageData(){ Name="Rotten Apple", Description = "Rotten Apple", Box = GarbageBox.Box1 },
-                new GarbageData(){ Name="Used Battery", Description = "Used Battery", Box = GarbageBox.Box4 },
-                new GarbageData(){ Name="Napkins", Description = "Napkins", Box = GarbageBox.Box3 },
-                new GarbageData(){ Name="Plastic Bottle", Description = "Plastic Bottle", Box = GarbageBox.Box2 },
-            };
-            rand = new Random(10);
         }
 
         public void Init(Engine engine)
         {
             engine.ChangeBackground(Resources.background);
 
-            winHeight = Engine.Instance.WinHeight;
+			localizedStringsLoader = new localizedStringsLoader(
+				Path.Combine(Environment.CurrentDirectory,
+				"Data/GarbageClassificationScript/Localization/strings.xml"));
+
+			score = 100;
+			garbages = new List<GarbageData>()
+			{
+				new GarbageData(){ Name = localizedStringsLoader.FindText("str_pig_bones", engine.Locale), Description = localizedStringsLoader.FindText("str_pig_bones_desc", engine.Locale), Box = GarbageBox.Box1 },
+				new GarbageData(){ Name = localizedStringsLoader.FindText("str_rotten_apples", engine.Locale), Description = localizedStringsLoader.FindText("str_rotten_apples_desc", engine.Locale), Box = GarbageBox.Box1 },
+				new GarbageData(){ Name = localizedStringsLoader.FindText("str_used_battery", engine.Locale), Description = localizedStringsLoader.FindText("str_used_battery_desc", engine.Locale), Box = GarbageBox.Box4 },
+				new GarbageData(){ Name = localizedStringsLoader.FindText("str_napkins", engine.Locale), Description = localizedStringsLoader.FindText("str_napkins_desc", engine.Locale), Box = GarbageBox.Box3 },
+				new GarbageData(){ Name = localizedStringsLoader.FindText("str_plastic_bottle", engine.Locale), Description = localizedStringsLoader.FindText("str_plastic_bottle_desc", engine.Locale), Box = GarbageBox.Box2 },
+			};
+			rand = new Random(10);
+
+			winHeight = Engine.Instance.WinHeight;
             winWidth = Engine.Instance.WinWidth;
 
             text1 = new GDIStaticText("Ready", "Arial", 50, Brushes.White, new PointF(0, winHeight), true);

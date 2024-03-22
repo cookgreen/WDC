@@ -29,10 +29,16 @@ namespace WDC.Core
 		private Point renderResolution;
 		private IRenderer renderer;
 		private bool isDebug;
+		private string locale;
 
 		public bool IsDebug
 		{ 
 			get { return isDebug; } 
+		}
+
+		public string Locale
+		{
+			get { return locale; }
 		}
 
 		private FormManager formManager = new FormManager();
@@ -76,6 +82,7 @@ namespace WDC.Core
         public void Init(GameConfig config)
         {
             script = config.CurrentSelectedScript;
+			locale = config.CurrentSelectedLocate;
 			LocateTableManager.Instance.Init(config.CurrentSelectedLocate);
 
 			renderResolution = new Point();
