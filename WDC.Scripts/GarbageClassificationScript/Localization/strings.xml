@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LocalizedStrings>
+  <LocalizedString id="str_game_title">
+    <LocalizedStringEntry lang="en">Garbage Classification</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">垃圾分类小游戏</LocalizedStringEntry>
+  </LocalizedString>
   <LocalizedString id="str_pig_bones">
     <LocalizedStringEntry lang="en">Pig Bones</LocalizedStringEntry>
     <LocalizedStringEntry lang="cns">猪骨头</LocalizedStringEntry>
@@ -39,5 +43,45 @@
   <LocalizedString id="str_plastic_bottle_desc">
     <LocalizedStringEntry lang="en">Plastic Bottle</LocalizedStringEntry>
     <LocalizedStringEntry lang="cns">塑料瓶</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_ready">
+    <LocalizedStringEntry lang="en">Ready!</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">准备!</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_go">
+    <LocalizedStringEntry lang="en">Go!</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">开始!</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_please_choose">
+    <LocalizedStringEntry lang="en">Please Choose!</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">准备!</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_wrong">
+    <LocalizedStringEntry lang="en">Wrong</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">错误</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_correct">
+    <LocalizedStringEntry lang="en">Correct</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">正确</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_current_0">
+    <LocalizedStringEntry lang="en">Current: {0}</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">当前: {0}</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_answer_select_0">
+    <LocalizedStringEntry lang="en">Answer: Select {0}</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">答案: 选择 {0}</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_current">
+    <LocalizedStringEntry lang="en">Current:</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">当前:</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_answer">
+    <LocalizedStringEntry lang="en">Answer:</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">答案:</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_score">
+    <LocalizedStringEntry lang="en">Score:</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">分数:</LocalizedStringEntry>
   </LocalizedString>
 </LocalizedStrings>

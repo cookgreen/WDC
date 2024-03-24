@@ -79,11 +79,17 @@ namespace GarbageClassificationScript
 			winHeight = Engine.Instance.WinHeight;
             winWidth = Engine.Instance.WinWidth;
 
-            text1 = new GDIStaticText("Ready", "Arial", 50, Brushes.White, new PointF(0, winHeight), true);
-            text2 = new GDIStaticText("Go!", "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
-            text3 = new GDIStaticText("Please Choose!", "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
-            text4 = new GDIStaticText("Wrong!", "Arial", 40, Brushes.Red, new PointF(0, winHeight), true);
-            text5 = new GDIStaticText("Correct!", "Arial", 40, Brushes.Green, new PointF(0, winHeight), true);
+            string readyText = localizedStringsLoader.FindText("str_ready", engine.Locale);
+            string goText = localizedStringsLoader.FindText("str_go", engine.Locale);
+            string pleaseChooseText = localizedStringsLoader.FindText("str_please_choose", engine.Locale);
+            string wrongText = localizedStringsLoader.FindText("str_wrong", engine.Locale);
+            string correctText = localizedStringsLoader.FindText("str_correct", engine.Locale);
+
+            text1 = new GDIStaticText(readyText, "Arial", 50, Brushes.White, new PointF(0, winHeight), true);
+            text2 = new GDIStaticText(goText, "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
+            text3 = new GDIStaticText(pleaseChooseText, "Arial", 40, Brushes.White, new PointF(0, winHeight), true);
+            text4 = new GDIStaticText(wrongText, "Arial", 40, Brushes.Red, new PointF(0, winHeight), true);
+            text5 = new GDIStaticText(correctText, "Arial", 40, Brushes.Green, new PointF(0, winHeight), true);
 
             box1 = new GDISpriteButton(Resources.box_1, Resources.box_1_hover, new PointF(0.15f, 0.6f));
             box2 = new GDISpriteButton(Resources.box_2, Resources.box_2_hover, new PointF(0.35f, 0.6f));
@@ -94,13 +100,17 @@ namespace GarbageClassificationScript
             box3.Metrics = UIMetrics.Relative;
             box4.Metrics = UIMetrics.Relative;
 
-            txtScoreLabel = new GDIStaticText("Score:", "Arial", 55, Brushes.White, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
-            txtScoreValue = new GDIStaticText("--", "Arial", 55, Brushes.White, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
+			string scoreText = localizedStringsLoader.FindText("str_score", engine.Locale);
+			string currentText = localizedStringsLoader.FindText("str_current", engine.Locale);
+			string AnswerText = localizedStringsLoader.FindText("str_answer", engine.Locale);
+
+			txtScoreLabel = new GDIStaticText(scoreText, "黑体", 55, Brushes.Black, new PointF(0.7f, 0.12f), false, AlignMethod.PERCENT);
+            txtScoreValue = new GDIStaticText("--", "黑体", 55, Brushes.Green, new PointF(0.85f, 0.12f), false, AlignMethod.PERCENT);
             txtScoreLabel.Metrics = UIMetrics.Relative;
             txtScoreValue.Metrics = UIMetrics.Relative;
 
-            txtGarbageCurrent = new GDIStaticText("Current:", "Arial", 55, Brushes.White, new PointF(94, 90), false, AlignMethod.PERCENT);
-            txtGarbageCurrentAnswer = new GDIStaticText("Answer:", "Arial", 50, Brushes.White, new PointF(94, 200), false, AlignMethod.PERCENT);
+            txtGarbageCurrent = new GDIStaticText(currentText, "黑体", 55, Brushes.Black, new PointF(94, 90), false, AlignMethod.PERCENT);
+            txtGarbageCurrentAnswer = new GDIStaticText(AnswerText, "黑体", 50, Brushes.Black, new PointF(94, 200), false, AlignMethod.PERCENT);
 
 
             box1.MouseClicked += Box1_MouseClicked;
@@ -174,17 +184,19 @@ namespace GarbageClassificationScript
             }
             else if (score <= 0)
             {
-                ShutdownShowMessage?.Invoke("Game Over!", "wardeclarer.exe");
+                string gameTitle = localizedStringsLoader.FindText("str_game_title", Engine.Instance.Locale);
+                string gameOverText = localizedStringsLoader.FindText("str_game_over", Engine.Instance.Locale);
+                ShutdownShowMessage?.Invoke(gameOverText, gameTitle);
             }
             else if (waitingForInput)
             {
-                txtGarbageCurrent.Text = "Current: " + currentGarbage.Name;
+                txtGarbageCurrent.Text = string.Format(localizedStringsLoader.FindText("str_current_0", Engine.Instance.Locale), currentGarbage.Name);
                 txtGarbageCurrent.Draw(g);
                 text3.Draw(g);
 
                 if (showCurrentAnswer)
                 {
-                    txtGarbageCurrentAnswer.Text = "Answer: Select " + (((int)currentGarbage.Box) + 1).ToString() +"";
+                    txtGarbageCurrentAnswer.Text = string.Format(localizedStringsLoader.FindText("str_answer_select_0", Engine.Instance.Locale), ((int)currentGarbage.Box) + 1);
                     txtGarbageCurrentAnswer.Draw(g);
                 }
             }
