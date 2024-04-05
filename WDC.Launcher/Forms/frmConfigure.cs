@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WDC.Configure;
+using WDC.Localization;
 using WDC.Locate;
 using WDC.Script;
 
@@ -15,15 +16,33 @@ namespace WDC.Forms
 {
 	public partial class frmConfigure : Form
 	{
+		private localizedStringsLoader stringsLoader = new localizedStringsLoader("Localization/strings.xml");
+		private string locate;
 		public GameConfig Config { get; set; }
 
 		public frmConfigure()
 		{
-			InitializeComponent();
+			Config = GameConfig.Load("setting.xml");
+            locate = Config.CurrentSelectedLocate;
+
+            InitializeComponent();
 			LoadAvaiableResolutions();
-			cmbLanguages.SelectedIndex = 0;
+			cmbLanguages.SelectedItem = LocateTableManager.Instance.ConvertIDToDisplayStr(locate);
 			cmbResolutionList.SelectedIndex = cmbResolutionList.Items.Count - 1;
+
+            initLocalizedStrings();
 		}
+
+        private void initLocalizedStrings()
+        {
+			lbLanguage.Text = stringsLoader.FindText("str_language", locate);
+			lbResolution.Text = stringsLoader.FindText("str_resolution", locate);
+			tbScript.Text = stringsLoader.FindText("str_script", locate);
+			tbGame.Text = stringsLoader.FindText("str_game", locate);
+			gbScript.Text = stringsLoader.FindText("str_select_a_script", locate);
+			btnOK.Text = stringsLoader.FindText("str_ok", locate);
+			btnCancel.Text = stringsLoader.FindText("str_cancel", locate);
+        }
 
         private void LoadAvaiableResolutions()
         {
@@ -89,15 +108,16 @@ namespace WDC.Forms
 			Config.CurrentSelectedScript = selectedScript;
 			Config.CurrentSelectedLocate = LocateTableManager.Instance.ConvertDisplayStrToID(cmbLanguages.SelectedItem.ToString());
 			Config.Resolution = cmbResolutionList.SelectedItem.ToString();
+			Config.Save("setting.xml");
 
-			DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
 			Hide();
 			
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
-			Close();
+			Application.Exit();
 		}
 
 		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -111,5 +131,11 @@ namespace WDC.Forms
 				scriptList.SetItemChecked(scriptList.SelectedIndex, true);
 			}
 		}
-	}
+
+        private void cmbLanguages_SelectedIndexChanged(object sender, EventArgs e)
+        {
+			locate = LocateTableManager.Instance.ConvertDisplayStrToID(cmbLanguages.SelectedItem.ToString());
+			initLocalizedStrings();
+        }
+    }
 }

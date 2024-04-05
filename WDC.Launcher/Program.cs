@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WDC.Configure;
 using WDC.Forms;
 using WDC.Script;
 
@@ -13,6 +14,8 @@ namespace WDC
         [STAThread]
         static void Main(string[] args)
         {
+            GameConfig config = null;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -27,21 +30,37 @@ namespace WDC
                 }
             }
 
+            bool isStartConfigureWin = false;
             if (arugments.ContainsKey("script"))
             {
                 string scriptName = arugments["script"];
+                if(ScriptManager.Instance.scripts.ContainsKey(scriptName))
+                {
+                    config = GameConfig.Load("setting.xml");
+                    config.CurrentSelectedScript = ScriptManager.Instance.scripts[scriptName];
+                }
+                else
+                {
+                    isStartConfigureWin = true;
+                }
+            }
+            else
+            {
+                isStartConfigureWin = true;
             }
 
-            frmConfigure configureForm = new frmConfigure();
-            if (configureForm.ShowDialog() == DialogResult.OK)
+            if (isStartConfigureWin)
             {
-                int counter = 0;
-                while (counter < 100)
+                frmConfigure configureForm = new frmConfigure();
+                if (configureForm.ShowDialog() == DialogResult.OK)
                 {
-                    counter++;
-                    System.Threading.Thread.Sleep(10);
+                    config = configureForm.Config;
                 }
-                frmRenderPanel mainWindow = new frmRenderPanel(configureForm.Config);
+            }
+
+            if (config != null)
+            {
+                frmRenderPanel mainWindow = new frmRenderPanel(config);
                 Application.Run(mainWindow);
             }
         }

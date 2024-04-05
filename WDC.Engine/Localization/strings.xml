@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LocalizedStrings>
+  <LocalizedString id="str_loader_title">
+    <LocalizedStringEntry lang="en">WDC Loader</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">WDC Loader</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_script">
+    <LocalizedStringEntry lang="en">Script</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">脚本</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_select_a_script">
+    <LocalizedStringEntry lang="en">Select a script</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">选择载入的脚本</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_game">
+    <LocalizedStringEntry lang="en">Game</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">设置</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_language">
+    <LocalizedStringEntry lang="en">Language:</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">语言</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_resolution">
+    <LocalizedStringEntry lang="en">Resolution:</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">分辨率</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_ok">
+    <LocalizedStringEntry lang="en">OK</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">确定</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_cancel">
+    <LocalizedStringEntry lang="en">Cancel</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">取消</LocalizedStringEntry>
+  </LocalizedString>
+</LocalizedStrings>

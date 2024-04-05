@@ -28,35 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbScript = new System.Windows.Forms.GroupBox();
             this.scriptList = new System.Windows.Forms.CheckedListBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
+            this.tbScript = new System.Windows.Forms.TabPage();
+            this.tbGame = new System.Windows.Forms.TabPage();
+            this.lbResolution = new System.Windows.Forms.Label();
             this.cmbResolutionList = new System.Windows.Forms.ComboBox();
             this.cmbLanguages = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.lbLanguage = new System.Windows.Forms.Label();
+            this.gbScript.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tbScript.SuspendLayout();
+            this.tbGame.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // gbScript
             // 
-            this.groupBox1.Controls.Add(this.scriptList);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(4, 5);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(510, 443);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Select a script:";
+            this.gbScript.Controls.Add(this.scriptList);
+            this.gbScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbScript.Location = new System.Drawing.Point(4, 5);
+            this.gbScript.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbScript.Name = "gbScript";
+            this.gbScript.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbScript.Size = new System.Drawing.Size(510, 443);
+            this.gbScript.TabIndex = 0;
+            this.gbScript.TabStop = false;
+            this.gbScript.Text = "Select a script:";
             // 
             // scriptList
             // 
@@ -92,8 +92,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tbScript);
+            this.tabControl1.Controls.Add(this.tbGame);
             this.tabControl1.Location = new System.Drawing.Point(4, 5);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl1.Name = "tabControl1";
@@ -101,42 +101,43 @@
             this.tabControl1.Size = new System.Drawing.Size(526, 486);
             this.tabControl1.TabIndex = 1;
             // 
-            // tabPage1
+            // tbScript
             // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(518, 453);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Script";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tbScript.AccessibleRole = System.Windows.Forms.AccessibleRole.OutlineButton;
+            this.tbScript.Controls.Add(this.gbScript);
+            this.tbScript.Location = new System.Drawing.Point(4, 29);
+            this.tbScript.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbScript.Name = "tbScript";
+            this.tbScript.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbScript.Size = new System.Drawing.Size(518, 453);
+            this.tbScript.TabIndex = 0;
+            this.tbScript.Text = "Script";
+            this.tbScript.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tbGame
             // 
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.cmbResolutionList);
-            this.tabPage2.Controls.Add(this.cmbLanguages);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(518, 453);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Game";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tbGame.Controls.Add(this.lbResolution);
+            this.tbGame.Controls.Add(this.cmbResolutionList);
+            this.tbGame.Controls.Add(this.cmbLanguages);
+            this.tbGame.Controls.Add(this.lbLanguage);
+            this.tbGame.Location = new System.Drawing.Point(4, 29);
+            this.tbGame.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbGame.Name = "tbGame";
+            this.tbGame.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tbGame.Size = new System.Drawing.Size(518, 453);
+            this.tbGame.TabIndex = 1;
+            this.tbGame.Text = "Game";
+            this.tbGame.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lbResolution
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 62);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Resolution:";
+            this.lbResolution.AutoSize = true;
+            this.lbResolution.Location = new System.Drawing.Point(9, 62);
+            this.lbResolution.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbResolution.Name = "lbResolution";
+            this.lbResolution.Size = new System.Drawing.Size(91, 20);
+            this.lbResolution.TabIndex = 3;
+            this.lbResolution.Text = "Resolution:";
             // 
             // cmbResolutionList
             // 
@@ -165,16 +166,17 @@
             this.cmbLanguages.Name = "cmbLanguages";
             this.cmbLanguages.Size = new System.Drawing.Size(373, 28);
             this.cmbLanguages.TabIndex = 1;
+            this.cmbLanguages.SelectedIndexChanged += new System.EventHandler(this.cmbLanguages_SelectedIndexChanged);
             // 
-            // label1
+            // lbLanguage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 18);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Language:";
+            this.lbLanguage.AutoSize = true;
+            this.lbLanguage.Location = new System.Drawing.Point(9, 18);
+            this.lbLanguage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbLanguage.Name = "lbLanguage";
+            this.lbLanguage.Size = new System.Drawing.Size(84, 20);
+            this.lbLanguage.TabIndex = 0;
+            this.lbLanguage.Text = "Language:";
             // 
             // frmConfigure
             // 
@@ -193,27 +195,27 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WDC";
             this.Load += new System.EventHandler(this.frmScriptSelector_Load);
-            this.groupBox1.ResumeLayout(false);
+            this.gbScript.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tbScript.ResumeLayout(false);
+            this.tbGame.ResumeLayout(false);
+            this.tbGame.PerformLayout();
             this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox gbScript;
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TabPage tbScript;
+		private System.Windows.Forms.TabPage tbGame;
+		private System.Windows.Forms.Label lbLanguage;
 		private System.Windows.Forms.ComboBox cmbLanguages;
 		private System.Windows.Forms.CheckedListBox scriptList;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbResolution;
         private System.Windows.Forms.ComboBox cmbResolutionList;
     }
 }

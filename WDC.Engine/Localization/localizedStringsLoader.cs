@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace GarbageClassificationScript.Localization
+namespace WDC.Localization
 {
 	[XmlRoot("LocalizedStrings")]
 	public class LocalizedStrings

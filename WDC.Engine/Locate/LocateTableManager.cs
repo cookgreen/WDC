@@ -66,5 +66,23 @@ namespace WDC.Locate
 		{
 			this.currentLocate = currentLocate;
 		}
-	}
+
+        public object ConvertIDToDisplayStr(string id)
+        {
+            string displayStr = null;
+            switch (id)
+            {
+                case "cns":
+                    displayStr = "简体中文";
+                    break;
+                case "en":
+                    displayStr = "English";
+                    break;
+                default:
+                    displayStr = "unknown";
+                    break;
+            }
+            return displayStr;
+        }
+    }
 }

@@ -5,10 +5,10 @@ using WDC.Console;
 using WDC.Core;
 using WDC.Game;
 using WDC.Interface;
+using WDC.Localization;
 using WDC.Script;
 using WDC.UI;
 using GarbageClassificationScript.Console;
-using GarbageClassificationScript.Localization;
 using GarbageClassificationScript.Properties;
 using System.IO;
 
