@@ -64,18 +64,17 @@ namespace WDC.Forms
 				}
 			}
 			cmbResolutionList.Items.Add(
-				deviceResolutionWidth.ToString() +
-				"x" + 
-				deviceResolutionHeight.ToString());
+				string.Format("{0}x{1}", deviceResolutionWidth, deviceResolutionHeight));
 
 		}
 
         private void frmScriptSelector_Load(object sender, EventArgs e)
 		{
 			scriptList.Items.Clear();
-			for (int i = 0; i < ScriptManager.Instance.scripts.Count; i++)
+			scriptList.DisplayMember = "Name";
+            foreach(var item in ScriptManager.Instance.scripts)
 			{
-				scriptList.Items.Add(ScriptManager.Instance.scripts.ElementAt(i).Key);
+				scriptList.Items.Add(item.Value);
 			}
 			if (scriptList.Items.Count > 0)
 			{
@@ -102,7 +101,7 @@ namespace WDC.Forms
 			}
 
 
-			IWDCScript selectedScript = ScriptManager.Instance.scripts[scriptList.SelectedItem.ToString()];
+			IWDCScript selectedScript = (IWDCScript)scriptList.SelectedItem;
 
 			Config = new GameConfig();
 			Config.CurrentSelectedScript = selectedScript;

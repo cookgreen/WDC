@@ -15,6 +15,8 @@ namespace WDC.Script
 {
     public class WardeclarerScript : IWDCScript, INotifyMessageWhenShutdown
     {
+        public string Name { get { return "Wardeclarer"; } }
+
         private PointF missileShootEndPosition = new PointF();
 		private PointF missileShootStartPosition = new PointF(743, 134);
         private PointF missileShootEndPositionUSA = new PointF(153, 169);

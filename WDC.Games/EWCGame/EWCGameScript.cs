@@ -15,6 +15,8 @@ namespace EWCGame
     /// </summary>
     public class EWCGameScript : IWDCScript
     {
+        public string Name { get { return "East West Conflict: Dunbas War"; } }
+
         public string Icon { get { return ""; } }
 
         public void BeforeRunScript()

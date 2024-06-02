@@ -37,6 +37,8 @@ namespace DefendCastleScript
 		[DllImport("gdi32.dll", EntryPoint = "GetDeviceCaps", SetLastError = true)]
 		public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
 
+		public string Name { get { return "Defend Castle"; } }
+
 		private LevelStatus levelStatus;
 		private GameXml gameXml;
 

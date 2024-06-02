@@ -11,6 +11,8 @@ namespace WDC.Script
 {
 	public interface IWDCScript : IRenderable
 	{
+		string Name { get; }
+
 		string Icon { get; }
 
 		void BeforeRunScript();

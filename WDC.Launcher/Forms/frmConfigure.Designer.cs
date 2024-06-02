@@ -65,6 +65,7 @@
             this.scriptList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.scriptList.Name = "scriptList";
             this.scriptList.Size = new System.Drawing.Size(484, 400);
+            this.scriptList.Sorted = true;
             this.scriptList.TabIndex = 0;
             this.scriptList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 

@@ -16,6 +16,8 @@ namespace GarbageClassificationScript
 {
     public class GarbageClassificationScript : IWDCScript, INotifyMessageWhenShutdown
     {
+        public string Name { get { return "Garbage Classification"; } }
+
         private localizedStringsLoader localizedStringsLoader;
 
 		private int winWidth;

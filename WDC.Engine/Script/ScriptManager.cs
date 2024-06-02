@@ -49,7 +49,7 @@ namespace WDC.Script
 					var types = assembly.GetExportedTypes();
 					foreach (var type in types)
 					{
-						var scriptType = type.GetInterface("WDCScript");
+						var scriptType = type.GetInterface("IWDCScript");
 						if (scriptType != null)
 						{
 							IWDCScript script = (IWDCScript)Activator.CreateInstance(type);
