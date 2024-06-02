@@ -9,7 +9,7 @@ using WDC.Forms;
 
 namespace WDC.Script
 {
-	public interface WDCScript : IRenderable
+	public interface IWDCScript : IRenderable
 	{
 		string Icon { get; }
 

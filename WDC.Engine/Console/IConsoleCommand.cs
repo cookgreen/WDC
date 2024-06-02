@@ -14,6 +14,6 @@ namespace WDC.Console
 	{
 		string Name { get; }
 
-		void Execute(Engine engine, WDCScript currentScript, DeveloperConsoleForm console, object arg);
+		void Execute(Engine engine, IWDCScript currentScript, DeveloperConsoleForm console, object arg);
 	}
 }

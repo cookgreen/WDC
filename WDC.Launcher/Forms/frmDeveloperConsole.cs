@@ -16,9 +16,9 @@ namespace WDC.Forms
 	public partial class frmDeveloperConsole : DeveloperConsoleForm
 	{
 		private Engine engine;
-		private WDCScript currentScript;
+		private IWDCScript currentScript;
 
-		public frmDeveloperConsole(Engine engine, WDCScript currentScript)
+		public frmDeveloperConsole(Engine engine, IWDCScript currentScript)
 		{
 			InitializeComponent();
 			Deactivate += FrmDeveloperConsole_Deactivate;

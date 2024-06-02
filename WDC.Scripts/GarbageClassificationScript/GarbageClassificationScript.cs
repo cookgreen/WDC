@@ -14,7 +14,7 @@ using System.IO;
 
 namespace GarbageClassificationScript
 {
-    public class GarbageClassificationScript : WDCScript, INotifyMessageWhenShutdown
+    public class GarbageClassificationScript : IWDCScript, INotifyMessageWhenShutdown
     {
         private localizedStringsLoader localizedStringsLoader;
 

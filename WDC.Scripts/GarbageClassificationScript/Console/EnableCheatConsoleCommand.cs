@@ -14,7 +14,7 @@ namespace GarbageClassificationScript.Console
 	{
 		public string Name { get { return "enable_cheat"; } }
 
-		public void Execute(Engine engine, WDCScript script, DeveloperConsoleForm consoleForm, object arg)
+		public void Execute(Engine engine, IWDCScript script, DeveloperConsoleForm consoleForm, object arg)
 		{
 			string[] arr = arg as string[];
 			if (arr.Count() == 1)

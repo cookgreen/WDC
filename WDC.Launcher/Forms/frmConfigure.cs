@@ -102,7 +102,7 @@ namespace WDC.Forms
 			}
 
 
-			WDCScript selectedScript = ScriptManager.Instance.scripts[scriptList.SelectedItem.ToString()];
+			IWDCScript selectedScript = ScriptManager.Instance.scripts[scriptList.SelectedItem.ToString()];
 
 			Config = new GameConfig();
 			Config.CurrentSelectedScript = selectedScript;

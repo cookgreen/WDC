@@ -13,7 +13,7 @@ using WDC.Core;
 
 namespace WDC.Script
 {
-    public class WardeclarerScript : WDCScript, INotifyMessageWhenShutdown
+    public class WardeclarerScript : IWDCScript, INotifyMessageWhenShutdown
     {
         private PointF missileShootEndPosition = new PointF();
 		private PointF missileShootStartPosition = new PointF(743, 134);

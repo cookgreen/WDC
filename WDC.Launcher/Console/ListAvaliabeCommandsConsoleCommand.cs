@@ -17,7 +17,7 @@ namespace WDC.Console
 			get { return "list"; }
 		}
 
-		public void Execute(Engine engine, WDCScript currentScript, DeveloperConsoleForm console, object arg)
+		public void Execute(Engine engine, IWDCScript currentScript, DeveloperConsoleForm console, object arg)
 		{
 			foreach (var kpl in ConsoleCommandManager.Instance.AvaiableConsoleCommands)
 			{

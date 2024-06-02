@@ -14,7 +14,7 @@ namespace WDC.Configure
 	public class GameConfig
 	{
 		[XmlIgnore]
-		public WDCScript CurrentSelectedScript { get; set; }
+		public IWDCScript CurrentSelectedScript { get; set; }
 
 		[XmlAttribute("locate")]
 		public string CurrentSelectedLocate { get; set; }

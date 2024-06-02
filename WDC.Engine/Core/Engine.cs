@@ -21,7 +21,7 @@ namespace WDC.Core
 	{
         private static int winHeight;
         private static int winWidth;
-        private WDCScript script;
+        private IWDCScript script;
 		private GameObject lastEnterGameObject;
 		private bool isEnableCheat;
 		private List<Actor> actors;

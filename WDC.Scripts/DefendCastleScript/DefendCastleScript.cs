@@ -32,7 +32,7 @@ namespace DefendCastleScript
 		Stopped
 	}
 
-	public class DefendCastleScript : WDCScript
+	public class DefendCastleScript : IWDCScript
 	{
 		[DllImport("gdi32.dll", EntryPoint = "GetDeviceCaps", SetLastError = true)]
 		public static extern int GetDeviceCaps(IntPtr hdc, int nIndex);

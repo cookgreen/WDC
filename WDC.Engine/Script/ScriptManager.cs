@@ -11,7 +11,7 @@ namespace WDC.Script
 {
 	public class ScriptManager
 	{
-		public Dictionary<string, WDCScript> scripts;
+		public Dictionary<string, IWDCScript> scripts;
 		private static ScriptManager instance;
 		public static ScriptManager Instance
 		{
@@ -27,7 +27,7 @@ namespace WDC.Script
 
 		public ScriptManager()
 		{
-			scripts = new Dictionary<string, WDCScript>();
+			scripts = new Dictionary<string, IWDCScript>();
 		}
 
 		public void InitScripts()
@@ -52,7 +52,7 @@ namespace WDC.Script
 						var scriptType = type.GetInterface("WDCScript");
 						if (scriptType != null)
 						{
-							WDCScript script = (WDCScript)Activator.CreateInstance(type);
+							IWDCScript script = (IWDCScript)Activator.CreateInstance(type);
 							scripts.Add(Path.GetFileNameWithoutExtension(file.Name), script);
 						}
 					}

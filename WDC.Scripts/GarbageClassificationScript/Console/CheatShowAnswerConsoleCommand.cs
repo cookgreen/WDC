@@ -14,7 +14,7 @@ namespace GarbageClassificationScript.Console
 	{
 		public string Name { get { return "cheat_show_answer"; } }
 
-		public void Execute(Engine engine, WDCScript currentScript, DeveloperConsoleForm console, object arg)
+		public void Execute(Engine engine, IWDCScript currentScript, DeveloperConsoleForm console, object arg)
 		{
 			if (engine.CheatEnabled && currentScript is GarbageClassificationScript)
 			{
