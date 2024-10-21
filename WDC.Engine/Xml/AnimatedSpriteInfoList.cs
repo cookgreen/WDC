@@ -25,6 +25,19 @@ namespace WDC.Xml
             fileStream.Close();
             return ast;
         }
+
+        public void Save(string animatedSpriteInfoListXml)
+        {
+            if (File.Exists(animatedSpriteInfoListXml))
+            {
+                File.Delete(animatedSpriteInfoListXml);
+            }
+
+            FileStream fileStream = new FileStream(animatedSpriteInfoListXml, FileMode.OpenOrCreate);
+            XmlSerializer serializer = new XmlSerializer(typeof(AnimatedSpriteInfoList));
+            serializer.Serialize(fileStream, this);
+            fileStream.Close();
+        }
     }
 
     [XmlRoot]
