@@ -36,7 +36,7 @@ namespace WDC.UI
             }
         }
 
-        public GDISelectableOption(string text, string fontName, int fontSize, Brush brush, PointF position, ref List<GDISelectableOption> options, bool needAdjustWithFont = false, AlignMethod alignment = AlignMethod.CENTER, UIMetrics metrics = UIMetrics.Absolute)
+        public GDISelectableOption(string text, string fontName, int fontSize, Brush brush, PointF position, ref List<GDISelectableOption> options, bool needAdjustWithFont = false, AlignMethod alignment = AlignMethod.CENTER, UIMetrics metrics = UIMetrics.Pixel)
         {
             winHeight = Engine.Instance.WinHeight;
             winWidth = Engine.Instance.WinWidth;

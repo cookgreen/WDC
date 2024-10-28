@@ -6,7 +6,7 @@
     <Data Name="Spearman">
       <DataPair Name="HP">VALUE{120}</DataPair>
       <DataPair Name="Armour">VALUE{20}</DataPair>
-      <DataPair Name="Speed">RANDOM{1-3}</DataPair>
+      <DataPair Name="Speed">RANDOM{0.1f-0.3f}</DataPair>
     </Data>
     <Data Name="Knight">
       <DataPair Name="HP">VALUE{160}</DataPair>

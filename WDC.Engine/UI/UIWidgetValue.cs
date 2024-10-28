@@ -18,7 +18,7 @@ namespace WDC.UI
             {
                 switch(metrics)
                 {
-                    case UIMetrics.Absolute:
+                    case UIMetrics.Pixel:
                         actualValue = value;
                         break;
                     case UIMetrics.Relative:

@@ -18,6 +18,7 @@ namespace WDC.Game
 
 		public event Action<string> SequenceFinished;
 		public event Action<AnimatedSprite> DestReached;
+		public Anchor Anchor { get; set; }
 
 		public AnimatedSpriteSequence CurrentSequence
 		{
@@ -53,7 +54,8 @@ namespace WDC.Game
 			AnimatedSpriteInfo animatedSpriteInfos, 
 			PointF position,
 			AlignMethod align = AlignMethod.CENTER,
-			float scale = 1f) : base(typeName)
+			float scale = 1f,
+			Anchor anchor = Anchor.LeftTop) : base(typeName)
 		{
 			this.position = position;
 
@@ -81,8 +83,9 @@ namespace WDC.Game
 							GraphicsUnit.Pixel
 						);
 					}
-
+					Anchor = anchor;
 					Sprite sprite = new Sprite(typeName, newImage, position, align, scale);
+					sprite.Anchor = anchor;
 					sprites.Add(sprite);
 				}
 
@@ -204,7 +207,7 @@ namespace WDC.Game
 			
 			this.loop = loop;
 
-			timer = new AnimatedSpriteTimer(5);
+			timer = new AnimatedSpriteTimer(5, 1);
 			timer.Tick += Timer_Tick;
 			timer.Start();
 		}

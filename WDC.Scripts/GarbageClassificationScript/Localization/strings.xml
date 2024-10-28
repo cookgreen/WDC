@@ -4,6 +4,22 @@
     <LocalizedStringEntry lang="en">Garbage Classification</LocalizedStringEntry>
     <LocalizedStringEntry lang="cns">垃圾分类小游戏</LocalizedStringEntry>
   </LocalizedString>
+  <LocalizedString id="str_kitchen_garbage">
+    <LocalizedStringEntry lang="en">Kitchen Garbage</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">厨余垃圾</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_recyclables">
+    <LocalizedStringEntry lang="en">Recyclable Garbage</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">可回收垃圾</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_other_garbage">
+    <LocalizedStringEntry lang="en">Other Garbage</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">其他垃圾</LocalizedStringEntry>
+  </LocalizedString>
+  <LocalizedString id="str_hazardous_garbage">
+    <LocalizedStringEntry lang="en">Hazardous Garbage</LocalizedStringEntry>
+    <LocalizedStringEntry lang="cns">有害垃圾</LocalizedStringEntry>
+  </LocalizedString>
   <LocalizedString id="str_pig_bones">
     <LocalizedStringEntry lang="en">Pig Bones</LocalizedStringEntry>
     <LocalizedStringEntry lang="cns">猪骨头</LocalizedStringEntry>

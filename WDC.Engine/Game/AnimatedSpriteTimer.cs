@@ -8,19 +8,21 @@ namespace WDC.Game
 {
 	public class AnimatedSpriteTimer
 	{
-		private int time;
-		private int initDelayTime;
-		private int currentDelayTime;
+		private float time;
+		private float initDelayTime;
+		private float currentDelayTime;
+		private float intervalTime;
 		private bool isActive;
 
-		public int CurrentTime { get { return time; } }
+		public float CurrentTime { get { return time; } }
 
 		public event Action Tick;
 
-		public AnimatedSpriteTimer(int initDelayTime)
+		public AnimatedSpriteTimer(float initDelayTime, float intervalTime)
 		{
 			time = 0;
 			this.initDelayTime = initDelayTime;
+			this.intervalTime = intervalTime;
 			currentDelayTime = initDelayTime;
 			isActive = false;
 		}
@@ -50,7 +52,7 @@ namespace WDC.Game
 			}
 			else
 			{
-				time++;
+				time += intervalTime;
 			}
 		}
 

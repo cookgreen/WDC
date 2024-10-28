@@ -67,25 +67,29 @@ namespace DefendCastleScript
 		private int initCounterdown = 10;
 		private int curCounterdown = 10;
 
-		private int initDelay = 50;
+		private int initDelay = 10;
 		private int curDelay = 0;
 
 		private string scriptDataDir;
-		private string iconFile;
+        private string scriptMapsDataDir;
+
+        private string iconFile;
 		private int winWidth;
 		private int winHeight;
 		private Engine engine;
+		private GameMapXml mapXml;
+        private Bitmap mapArt;
 
-		//1920x1080
-		private PointF archer1Pos = new PointF(1245, 571);
+        //1535x863
+        private PointF archer1Pos = new PointF(1245, 571);
 		private PointF archer2Pos = new PointF(1290, 388);
 		private PointF archer3Pos = new PointF(1160, 339);
 		private PointF archer4Pos = new PointF(1075, 225);
 
 		private PointF enemySpawnPoint = new PointF(10, 690);
-		private PointF castleGate1Pos = new PointF(900, 650);
-		private PointF castleGate2Pos = new PointF(1000, 725);
-		private PointF castleGate3Pos = new PointF(1150, 837);
+		private PointF castleGate1Pos = new PointF(1006, 658);
+		private PointF castleGate2Pos = new PointF(1080, 730);
+		private PointF castleGate3Pos = new PointF(1200, 840);
 
 		public string Icon
 		{
@@ -135,11 +139,17 @@ namespace DefendCastleScript
 			scriptDataDir = Path.Combine(Environment.CurrentDirectory, "Data\\DefendCastleScript\\");
 			string scriptSpriteDataDir = Path.Combine(scriptDataDir, "Sprites");
 			string scriptSettingsDataDir = Path.Combine(scriptDataDir, "Settings");
-			string scriptIconDataDir = Path.Combine(scriptDataDir, "Icon");
+            scriptMapsDataDir = Path.Combine(scriptDataDir, "Maps");
+            string scriptIconDataDir = Path.Combine(scriptDataDir, "Icon");
 			scriptSoundDataDir = Path.Combine(scriptDataDir, "Sound");
 
 			gameXml = GameXml.Parse(Path.Combine(scriptSettingsDataDir, "game.xml"));
-			AnimatedSpriteInfoList animatedSpriteInfoList = AnimatedSpriteInfoList.Parse(Path.Combine(scriptSettingsDataDir, gameXml.Art.file));
+			
+			string mapFile = gameXml.BoostMap.file;
+            mapXml = GameMapXml.Parse(Path.Combine(scriptMapsDataDir, mapFile));
+			mapArt = new Bitmap(Path.Combine(scriptMapsDataDir, mapXml.Art));
+
+            AnimatedSpriteInfoList animatedSpriteInfoList = AnimatedSpriteInfoList.Parse(Path.Combine(scriptSettingsDataDir, gameXml.Art.file));
 
 			spearmanSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "SpearmanSprite.png");
 			knightSpriteSheetBitmapFile = Path.Combine(scriptSpriteDataDir, "KnightSprite.png");
@@ -196,6 +206,8 @@ namespace DefendCastleScript
 		/* WAVE MODE */
 		public void Render(Graphics g, IRenderer renderer)
 		{
+			g.DrawImage(mapArt, 0, 0, winWidth, winHeight);
+
 			if (levelStatus == LevelStatus.Initizating)
 			{
 				curDelay = 0;
@@ -316,22 +328,22 @@ namespace DefendCastleScript
 			Actor actor = null;
 
 			PointF destPos = new PointF();
-			int randX = random.Next(10, 50);
+			int randX = random.Next(37, 59);
 			int randY = 0;
 
 			var randGateNo = random.Next(1, 4);
 			switch (randGateNo)
 			{
 				case 1:
-					randY = random.Next(543, 563);
+					randY = random.Next(630, 640);
 					destPos = castleGate1Pos;
 					break;
 				case 2:
-					randY = random.Next(613, 633);
+					randY = random.Next(680, 690);
 					destPos = castleGate2Pos;
 					break;
 				case 3:
-					randY = random.Next(725, 745);
+					randY = random.Next(720, 740);
 					destPos = castleGate3Pos;
 					break;
 			}
@@ -344,7 +356,7 @@ namespace DefendCastleScript
 						new Bitmap(spearmanSpriteSheetBitmapFile),
 						spearmanSpriteInfo,
 						enemySpawnPoint,
-						AlignMethod.MANUAL);
+						AlignMethod.MANUAL, 1, Anchor.Center);
 					actor = createActor(gameObject, gameXml["Spearman"].ToDic());
 					break;
 				case "Knight":
@@ -352,7 +364,7 @@ namespace DefendCastleScript
 						new Bitmap(knightSpriteSheetBitmapFile),
 						knightSpriteInfo,
 						enemySpawnPoint,
-						AlignMethod.MANUAL);
+						AlignMethod.MANUAL, 1, Anchor.Center);
 					actor = createActor(gameObject, gameXml["Knight"].ToDic());
 					break;
 				case "Crossbowman":
@@ -360,15 +372,11 @@ namespace DefendCastleScript
 						new Bitmap(crossbowmanSpriteSheetBitmapFile),
 						crossbowmanSpriteInfo,
 						enemySpawnPoint,
-						AlignMethod.MANUAL);
+						AlignMethod.MANUAL, 1, Anchor.Center);
 					actor = createActor(gameObject, gameXml["Crossbowman"].ToDic());
 					break;
 			}
-			var movement = new SpriteAxisMovement(
-				SpriteAxisMovementType.MovementByXAxis,
-				SpriteMovementDirection.Right,
-				actor.Position, destPos,
-				actor.GetActorProperty("Speed"), 5);
+            var movement = new SpriteAStarMovement(enemySpawnPoint, destPos, mapXml.MapInfo.AIMesh.AIMeshList, 5);
 			gameObject.SetSteering(movement);
 			gameObject.DestReached += GameObjectDestReached;
 			return actor;

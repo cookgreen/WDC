@@ -8,6 +8,6 @@ namespace WDC.Interface
 {
 	public interface INotifyMessageWhenShutdown
 	{
-		event Action<string, string> ShutdownShowMessage;
+		event Action<string, string, bool> ShutdownShowMessage;
 	}
 }

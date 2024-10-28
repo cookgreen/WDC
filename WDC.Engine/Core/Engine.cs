@@ -30,6 +30,7 @@ namespace WDC.Core
 		private IRenderer renderer;
 		private bool isDebug;
 		private string locale;
+		private Point mousePosition;
 
 		public bool IsDebug
 		{ 
@@ -77,6 +78,7 @@ namespace WDC.Core
 		{
 			lastEnterGameObject = null;
 			instance = this;
+			mousePosition = new Point();
 		}
 
         public void Init(GameConfig config)
@@ -143,13 +145,20 @@ namespace WDC.Core
 			formManager.DeveloperConsole = frmRenderPanel;
 		}
 
-		private void Render_ShutdownShowMessage(string message, string title)
+		private void Render_ShutdownShowMessage(string message, string title, bool showMsg)
         {
             formManager.RenderPanel.Hide();
-            if (MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
+			if (showMsg)
             {
-                Application.Exit();
-            }
+                if (MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error) == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
+			}
+			else
+			{
+				Application.Exit();
+			}
         }
 
         public void AddIfNotExisted(GameObject gameObject)
@@ -174,11 +183,6 @@ namespace WDC.Core
 
 		public void Render(Graphics g)
 		{
-			//if (IsDebug)
-			//{
-			//	Font font = new Font("Baskerville Old Face", 50);
-			//	g.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
-			//}
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
 				gameObjects[i].Render(g, renderer);
@@ -186,7 +190,13 @@ namespace WDC.Core
 
             script.Render(g, renderer);
 			UIManager.Instance.Render(g, renderer);
-		}
+
+            if (IsDebug)
+            {
+                Font font = new Font("Arial", 50);
+                g.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mousePosition.X, mousePosition.Y), font, Brushes.Black, 0, 0);
+            }
+        }
 
 		public void Update()
         {
@@ -207,6 +217,8 @@ namespace WDC.Core
 
 		public void MouseMoved(int x, int y)
 		{
+			mousePosition = new Point(x, y);
+
 			for (int i = 0; i < gameObjects.Count; i++)
 			{
 				var currentGameObject = gameObjects[i];

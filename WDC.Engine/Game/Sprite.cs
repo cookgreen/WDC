@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,11 @@ namespace WDC.Game
         public Image Image { get { return image; } }
         public float Scale { get { return scale; } }
         public SpriteMovement Movement { get { return movement; } }
-		public event Action DestReached;
+
+        public Anchor Anchor { get; set; }
+
+        public event Action DestReached;
+        public bool GreyScale;
 
 		public Sprite(
             string typeName, 
@@ -32,8 +37,8 @@ namespace WDC.Game
             this.typeName = typeName;
             this.image = image;
             this.position = position;
-            size = new SizeF(image.Width, image.Height);
             this.scale = scale;
+            size = new SizeF(image.Width * scale, image.Height * scale);
             switch (alignment)
             {
                 case AlignMethod.CENTER:
@@ -47,6 +52,7 @@ namespace WDC.Game
                 case AlignMethod.MANUAL:
                     break;
             }
+            Anchor = Anchor.LeftTop;
         }
 
         public void SetSteering(SpriteMovement movement)
@@ -70,13 +76,86 @@ namespace WDC.Game
                 position = movement.GetNext();
                 movement.CheckDestReached();
             }
+            PointF renderPos = position;
+            switch (Anchor)
+            {
+                case Anchor.Center:
+                    renderPos = new PointF(position.X - size.Width / 2, position.Y - size.Height / 2);
+                    break;
+                case Anchor.TopCenter:
+                    renderPos = new PointF(position.X - size.Width / 2, position.Y);
+                    break;
+                case Anchor.BottomCenter:
+                    renderPos = new PointF(position.X - size.Width / 2, position.Y - size.Height);
+                    break;
+                case Anchor.LeftBottom:
+                    renderPos = new PointF(position.X, position.Y + size.Height);
+                    break;
+                case Anchor.LeftCenter:
+                    renderPos = new PointF(position.X, position.Y - size.Height / 2);
+                    break;
+                case Anchor.LeftTop:
+                    break;
+                case Anchor.RightBottom:
+                    renderPos = new PointF(position.X - size.Width, position.Y - size.Height);
+                    break;
+                case Anchor.RightCenter:
+                    renderPos = new PointF(position.X - size.Width, position.Y - size.Height / 2);
+                    break;
+                case Anchor.RightTop:
+                    renderPos = new PointF(position.X - size.Width, position.Y);
+                    break;
+            }
 
-            g.DrawImage(image, position.X, position.Y, image.Width * scale, image.Height * scale);
+            if (GreyScale)
+            {
+                g.DrawImage(renderGreyScale(image), renderPos.X, renderPos.Y, image.Width * scale, image.Height * scale);
+            }
+            else
+            {
+                g.DrawImage(image, renderPos.X, renderPos.Y, image.Width * scale, image.Height * scale);
+            }
 
             if(Engine.Instance.IsDebug)
             {
-                g.DrawRectangle(new Pen(new SolidBrush(Color.White)), position.X, position.Y, image.Width * scale, image.Height * scale);
+                g.DrawString(string.Format("X - {0}, Y - {1}", position.X, position.Y), new Font("Arial", 10), Brushes.Black, position.X, position.Y - 20);
+                g.DrawRectangle(new Pen(new SolidBrush(Color.White)), renderPos.X, renderPos.Y, image.Width * scale, image.Height * scale);
             }
+        }
+
+        private Bitmap renderGreyScale(Image original)
+        {
+            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+            newBitmap.SetResolution(original.HorizontalResolution, original.VerticalResolution);
+
+            //get a graphics object from the new image
+            Graphics g = Graphics.FromImage(newBitmap);
+
+            //create the grayscale ColorMatrix
+            ColorMatrix colorMatrix = new ColorMatrix(
+               new float[][]
+                  {
+                 new float[] {.3f, .3f, .3f, 0, 0},
+                 new float[] {.59f, .59f, .59f, 0, 0},
+                 new float[] {.11f, .11f, .11f, 0, 0},
+                 new float[] {0, 0, 0, 1, 0},
+                 new float[] {0, 0, 0, 0, 1}
+                  });
+
+            //create some image attributes
+            ImageAttributes attributes = new ImageAttributes();
+
+            //set the color matrix attribute
+            attributes.SetColorMatrix(colorMatrix);
+
+            //draw the original image on the new image
+            //using the grayscale color matrix
+            g.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height),
+               0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+
+            //dispose the Graphics object
+            g.Dispose();
+            return newBitmap;
         }
     }
 }

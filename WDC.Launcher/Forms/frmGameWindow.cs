@@ -75,23 +75,12 @@ namespace WDC
         private void canvas_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
-			int renderX = (Screen.PrimaryScreen.Bounds.Width - resolution.X) / 2;
-			int renderY = 0;
-			int renderWidth = resolution.X;
-
-			if (WorldMap != null)
-			{
-				g.DrawImage(WorldMap, renderX, renderY, renderWidth, Height);
-				if (isEditMode)
-				{
-					Font font = new Font("Baskerville Old Face", 50);
-					e.Graphics.DrawString(string.Format("Mouse X: {0}, Mouse Y: {1}", mouseX, mouseY), font, Brushes.White, 0, 0);
-				}
-			}
+            
+            g.Clear(Color.White);
 
 			engine.Render(e.Graphics);
             engine.Update();
+
             g.Flush();
         }
 

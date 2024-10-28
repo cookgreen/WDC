@@ -34,7 +34,7 @@ namespace WDC.Script
         private Engine engine;
         private SpriteMovement spriteMovement;
 
-        public event Action<string, string> ShutdownShowMessage;
+        public event Action<string, string, bool> ShutdownShowMessage;
 
         public string Icon
         {
@@ -90,7 +90,7 @@ namespace WDC.Script
             this.engine = engine;
         }
 
-		private void Option1_MouseClicked()
+		private void Option1_MouseClicked(GameObject sender)
         {
             counter2 = counter;
             clicked = true;
@@ -104,7 +104,7 @@ namespace WDC.Script
             engine.GameObjects.Remove(optGermany);
         }
 
-        private void Option2_MouseClicked()
+        private void Option2_MouseClicked(GameObject sender)
         {
             counter2 = counter;
             clicked = true;
@@ -159,7 +159,7 @@ namespace WDC.Script
             }
             else if(counter > counter2 + 20)
             {
-                ShutdownShowMessage?.Invoke("Program wardeclarer.exe has stopped working\r\nbecause you are a fucking capitalist dog!", "wardeclarer.exe");
+                ShutdownShowMessage?.Invoke("Program wardeclarer.exe has stopped working\r\nbecause you are a fucking capitalist dog!", "wardeclarer.exe", true);
             }
             counter++;
         }

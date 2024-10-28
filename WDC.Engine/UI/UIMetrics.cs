@@ -8,7 +8,7 @@ namespace WDC.UI
 {
     public enum UIMetrics
     {
-        Absolute,
+        Pixel,
         Relative
     }
 }

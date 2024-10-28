@@ -17,17 +17,27 @@ namespace WDC.Game
 
 	public class GameObject : IRenderable
 	{
-		private string uniqueID;
+		protected string uniqueID;
+		protected Point mousePosition;
 		protected string typeName;
 		protected LayerDetectedState state;
 		protected PointF position;
 		protected SizeF size;
 		protected RectangleF area;
-		public event Action MouseClicked;
+
+		public event Action<GameObject> MouseClicked;
+
+		public object Tag 
+		{ 
+			get; 
+			set; 
+		}
+
 		public string UID
 		{
 			get { return uniqueID; }
 		}
+
 		public virtual PointF Position
 		{
 			get { return position; }
@@ -53,9 +63,11 @@ namespace WDC.Game
 			state = LayerDetectedState.None;
 		}
 
-		public bool CheckEnterArea(int x, int y, Engine engine)
+		public virtual bool CheckEnterArea(int x, int y, Engine engine)
 		{
-			if (!isValidArea(area))
+			mousePosition = new Point(x, y);
+
+            if (!isValidArea(area))
 			{
 				return false;
 			}
@@ -76,7 +88,7 @@ namespace WDC.Game
 
 		public void Click()
 		{
-			MouseClicked?.Invoke();
+			MouseClicked?.Invoke(this);
 		}
 
 		public virtual void Enter()

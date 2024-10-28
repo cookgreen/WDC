@@ -146,8 +146,9 @@
             this.cmbResolutionList.Items.AddRange(new object[] {
             "640x480",
             "800x600",
-            "1024x768",
-            "1280x960"});
+            "1024x576",
+            "1366x768",
+            "1920x1080"});
             this.cmbResolutionList.Location = new System.Drawing.Point(124, 57);
             this.cmbResolutionList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbResolutionList.Name = "cmbResolutionList";

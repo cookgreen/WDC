@@ -49,7 +49,7 @@ namespace WDC.UI
 
         public Widget()
         {
-            metrics = UIMetrics.Absolute;
+            metrics = UIMetrics.Pixel;
         }
     }
 }

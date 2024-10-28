@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 
 namespace WDC.UI
 {
+    public enum Anchor
+    {
+        LeftTop, 
+        LeftCenter,
+        LeftBottom,
+        RightTop,
+        RightCenter,
+        RightBottom,
+        TopCenter,
+        BottomCenter,
+        Center,
+    }
+
     public enum AlignMethod
     {
         CENTER,
@@ -14,5 +27,6 @@ namespace WDC.UI
         BOTTOM,
         PERCENT,
         MANUAL,
+        TOP,
     }
 }
